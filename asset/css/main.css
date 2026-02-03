@@ -1,0 +1,253 @@
+/* Import Google Fonts - phải đặt ở đầu file */
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+
+/* CSS Reset cơ bản */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* -----------------------------
+   Font & Typography System
+------------------------------ */
+
+@font-face {
+  font-family: "Mythshire";
+  src: url("../font/Mythshire Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  /* Base colors */
+  --colors-black: #2a2a2a;
+  --colors-white: #ffffff;
+
+  /* Primary scale */
+  --colors-primary-50: #f0f3fb;
+  --colors-primary-100: #cad6f1;
+  --colors-primary-200: #97aee4;
+  --colors-primary-300: #6587d7;
+  --colors-primary-400: #325fc9;
+  --colors-primary-500: #0038bc;
+  --colors-primary-600: #002d97;
+  --colors-primary-700: #002784;
+  --colors-primary-800: #002272;
+  --colors-primary-900: #001c5f;
+  --colors-primary-950: #001443;
+
+  /* Neutral scale */
+  --colors-neutral-100: #f8f8f3;
+  --colors-neutral-200: #f4f4ee;
+  --colors-neutral-300: #f1f1e9;
+  --colors-neutral-400: #eeeee4;
+  --colors-neutral-500: #ebebdf;
+  --colors-neutral-600: #bcbcb3;
+  --colors-neutral-700: #a5a59d;
+  --colors-neutral-800: #8e8e87;
+  --colors-neutral-900: #777771;
+
+  /* Heading font sizes (tạm thời, bạn có thể chỉnh lại theo Figma) */
+  --heading-1-size: 86px;
+  --heading-1-line-height: 1.6;
+
+  --heading-2-size: 60px;
+  --heading-2-line-height: 1.4;
+
+  --heading-3-size: 40px;
+  --heading-3-line-height: 1.3;
+
+  --heading-4-size: 30px;
+  --heading-4-line-height: 1.3;
+
+  --heading-5-size: 24px;
+  --heading-5-line-height: 1.3;
+
+  --heading-6-size: 20px;
+  --heading-6-line-height: 1.3;
+
+  /* Body font sizes */
+  --body-lg-size: 24px;
+  --body-lg-line-height: 1.4;
+  --body-lg-letter-spacing: 0.1em;
+
+  --body-md-size: 20px;
+  --body-md-line-height: 1.4;
+
+  --body-sm-size: 18px;
+  --body-sm-line-height: 1.4;
+
+  --body-xs-size: 16px;
+  --body-xs-line-height: 1.2;
+
+  /* Radius system */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-pill: 9999px;
+}
+
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4,
+.heading-5,
+.heading-6 {
+  font-family: "Mythshire", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.heading-1 {
+  font-size: var(--heading-1-size);
+  line-height: var(--heading-1-line-height);
+}
+
+.heading-2 {
+  font-size: var(--heading-2-size);
+  line-height: var(--heading-2-line-height);
+}
+
+.heading-3 {
+  font-size: var(--heading-3-size);
+  line-height: var(--heading-3-line-height);
+}
+
+.heading-4 {
+  font-size: var(--heading-4-size);
+  line-height: var(--heading-4-line-height);
+}
+
+.heading-5 {
+  font-size: var(--heading-5-size);
+  line-height: var(--heading-5-line-height);
+}
+
+.heading-6 {
+  font-size: var(--heading-6-size);
+  line-height: var(--heading-6-line-height);
+}
+
+/* Body Typography */
+.body-lg,
+.body-md,
+.body-sm,
+.body-xs {
+  font-family: "Poor Story", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-weight: 400;
+}
+
+.body-lg {
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-line-height);
+  letter-spacing: var(--body-lg-letter-spacing);
+}
+
+.body-md {
+  font-size: var(--body-md-size);
+  line-height: var(--body-md-line-height);
+}
+
+.body-sm {
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-line-height);
+}
+
+.body-xs {
+  font-size: var(--body-xs-size);
+  line-height: var(--body-xs-line-height);
+}
+
+/* Radius utility classes */
+.radius-xs {
+  border-radius: var(--radius-xs);
+}
+
+.radius-sm {
+  border-radius: var(--radius-sm);
+}
+
+.radius-md {
+  border-radius: var(--radius-md);
+}
+
+.radius-pill {
+  border-radius: var(--radius-pill);
+}
+
+
+
+/* Website Style */
+nav {
+  display: flex;
+
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 120px;
+}
+nav .right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+nav .right p {
+   text-decoration: underline;
+   cursor: pointer;
+}
