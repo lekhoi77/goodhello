@@ -11,20 +11,30 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
+  /* Hide scrollbar for all browsers */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  background: #fffaf0;
+  background: radial-gradient(71.35% 71.35% at 50% 28.65%, #FFEFD2 0%, var(--colors-white, #FFF) 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 img,
@@ -108,10 +118,10 @@ table {
 
   /* Heading font sizes (theo Design system Text styles) */
   --heading-1-size: 160px;
-  --heading-1-line-height: 86px;
+  --heading-1-line-height: 0.8;
 
   --heading-2-size: 120px;
-  --heading-2-line-height: 120px;
+  --heading-2-line-height: 0.6;
 
   --heading-3-size: 60px;
   --heading-3-line-height: 120px;
@@ -236,6 +246,89 @@ table {
   border-radius: var(--radius-pill);
 }
 
+/* -----------------------------
+   Button Design System
+------------------------------ */
+
+/* Base button with icon */
+.btn-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--colors-black);
+  background: var(--colors-white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Hover state */
+.btn-icon:hover {
+  border: 1px solid var(--colors-primary-50);
+  background: var(--colors-primary-300);
+  color: var(--colors-primary-50);
+}
+
+.btn-icon:hover svg path {
+  fill: var(--colors-primary-50);
+}
+
+/* Active state */
+.btn-icon.active {
+  border: 1px solid var(--colors-primary-500);
+  background: var(--colors-white);
+}
+
+.btn-icon.active svg path {
+  fill: var(--colors-primary-500);
+}
+
+/* Active state hover - keep same colors */
+.btn-icon.active:hover {
+  border: 1px solid var(--colors-primary-500);
+  background: var(--colors-white);
+  color: inherit;
+}
+
+.btn-icon.active:hover svg path {
+  fill: var(--colors-primary-500);
+}
+
+/* Icon animation */
+.btn-icon svg {
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+/* Bounce animation for icon when button becomes active */
+.btn-icon.active svg {
+  animation: heartBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes heartBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Accessibility and interaction improvements */
+.btn-icon:focus {
+  outline: none;
+}
+
+.btn-icon:active:not(.active) {
+  transform: scale(0.95);
+}
+
 
 
 /* Website Style */
@@ -289,7 +382,6 @@ nav .right p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #fffaf0;
   pointer-events: none;
 }
 
@@ -319,9 +411,21 @@ nav .right p {
   z-index: 2;
 }
 
+/* Make stamp placeholder clickable */
+.stamp-placeholder-group {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.stamp-placeholder-group:hover .stamp-placeholder {
+  stroke: #0038bc !important;
+  stroke-width: 2 !important;
+}
+
 .envelope-layer.svg-front {
   z-index: 3;
   filter: brightness(1.12);
+  pointer-events: none;
 }
 
 #flap {
@@ -377,8 +481,15 @@ nav .right p {
   align-items: center;
   position: relative;
   padding: 0 2rem 4rem 2rem;
-  background: #fffaf0;
+  margin-top: 64px;
   gap: 0;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.stamps-section.fading-out {
+  opacity: 0;
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 #stamps-section-title {
@@ -392,6 +503,14 @@ nav .right p {
   left: 50%;
   transform: translate(-50%, -50%) translateY(40px);
   z-index: 20;
+  color: var(--colors-primary-500);
+  min-height: 160px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
 #stamps-section-title.visible {
@@ -401,8 +520,8 @@ nav .right p {
 
 .stamps-grid {
   width: 100%;
-  max-width: 900px;
-  height: 600px;
+  max-width: 1000px;
+  height: 700px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -426,7 +545,6 @@ nav .right p {
 .stamp-item:hover {
   transform: scale(1.1) translateY(-20px) !important;
   z-index: 10;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
 }
 
 /* Responsive: Mobile horizontal scroll */
@@ -440,7 +558,6 @@ nav .right p {
     top: 2rem;
     z-index: 5;
     margin-bottom: 2rem;
-    background: #fffaf0;
     padding: 1rem 2rem;
   }
 
@@ -466,5 +583,271 @@ nav .right p {
 
   .stamp-item:hover {
     transform: scale(1.05) translateY(-10px) !important;
+  }
+}
+
+/* =============================================
+   STAMP DETAILS SECTIONS
+   ============================================= */
+.stamp-details-container {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  background: radial-gradient(71.35% 71.35% at 50% 28.65%, #FFEFD2 0%, var(--colors-white, #FFF) 100%);
+  opacity: 0;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.stamp-detail-section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 96px;
+  padding: 4rem 120px;
+  position: relative;
+}
+
+/* Back button in top right */
+.back-to-stamps {
+  position: absolute;
+  top: 32px;
+  right: 120px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--colors-black, #2A2A2A);
+  
+  /* Body/xs */
+  font-family: "Poor Story", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 0.032px;
+}
+
+.back-to-stamps:hover {
+  opacity: 0.7;
+}
+
+.back-to-stamps svg {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  transition: transform 0.3s ease;
+  stroke: currentColor;
+}
+
+.back-to-stamps:hover svg {
+  transform: translateX(-4px);
+}
+
+/* Stamp image container */
+.stamp-detail-image {
+  flex-shrink: 0;
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stamp-detail-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transform: scale(1.5);
+  object-fit: contain;
+}
+
+/* Content area */
+.stamp-detail-content {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stamp-detail-title {
+  color: var(--colors-primary-500);
+  margin: 0;
+}
+
+.stamp-detail-description {
+  font-family: "Poor Story", sans-serif;
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-line-height);
+  color: var(--colors-black);
+  margin: 0;
+}
+
+/* Favorite button - uses btn-icon from design system */
+.favorite-button {
+  align-self: flex-start;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: auto;
+  height: auto;
+  justify-content: center;
+  padding: 12px 20px;
+  gap: 0;
+}
+
+/* Hide text by default, show only icon */
+.favorite-button span {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition: max-width 0.4s ease, opacity 0.4s ease, margin-left 0.4s ease;
+  margin-left: 0;
+}
+
+/* Show text on hover or when active */
+.favorite-button:hover span,
+.favorite-button.active span {
+  max-width: 300px;
+  opacity: 1;
+  margin-left: 10px;
+}
+
+/* Override icon fill colors for favorite button */
+.favorite-button svg path {
+  fill: #2A2A2A;
+}
+
+.favorite-button:hover svg path {
+  fill: #F0F3FB;
+}
+
+.favorite-button.active {
+  color: var(--colors-primary-500);
+}
+
+.favorite-button.active svg path {
+  fill: var(--colors-primary-500);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .stamp-detail-section {
+    padding: 4rem 60px;
+    gap: 48px;
+  }
+
+  .back-to-stamps {
+    top: 24px;
+    right: 60px;
+  }
+
+  .stamp-detail-image {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stamp-detail-section {
+    flex-direction: column;
+    padding: 6rem 2rem 4rem 2rem;
+    gap: 32px;
+    min-height: auto;
+    padding-bottom: 4rem;
+  }
+
+  .back-to-stamps {
+    top: 16px;
+    right: 16px;
+  }
+
+  .stamp-detail-image {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .stamp-detail-content {
+    max-width: 100%;
+  }
+
+  .stamp-detail-title {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+
+  .stamp-detail-description {
+    font-size: var(--body-md-size);
+  }
+
+  .favorite-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =============================================
+   NOTIFICATION TOAST
+   ============================================= */
+.notification-toast {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  height: 39px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  background: var(--colors-white, #FFF);
+  border: 1px solid var(--colors-black, #2A2A2A);
+  border-radius: 8px;
+  z-index: 10000;
+  transition: bottom 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  
+  /* Typography */
+  color: var(--colors-black, #2A2A2A);
+  font-family: "Poor Story";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 0.032px;
+}
+
+.notification-toast.show {
+  bottom: 24px;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .notification-toast {
+    bottom: -60px;
+    max-width: calc(100% - 32px);
+    font-size: 14px;
+  }
+  
+  .notification-toast.show {
+    bottom: 16px;
   }
 }

@@ -12,12 +12,12 @@
     <nav>
         <img src="asset/img/logo.svg" alt="logo">
         <div class="right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 16 12" fill="none">
                 <path
                     d="M15.8076 10.8555C15.4869 11.5317 14.7982 11.9999 14 12H2C1.20168 12 0.512139 11.5318 0.191406 10.8555L6.76074 6.8291L8 7.58594L9.23828 6.8291L15.8076 10.8555ZM5.80273 6.24316L0 9.7998V2.69629L5.80273 6.24316ZM16 9.7998L10.1963 6.24316L16 2.69629V9.7998ZM14 0C14.9515 0.000172489 15.748 0.664366 15.9502 1.55469L8 6.41406L0.0488281 1.55469C0.251076 0.664224 1.04832 0 2 0H14Z"
                     fill="#2A2A2A" />
             </svg>
-            <p class="body-lg"> your invitation card</p>
+            <p class="body-md"> your invitation card</p>
         </div>
     </nav>
 
@@ -51,8 +51,10 @@
                     <g id="letter-text" aria-hidden="true" transform="rotate(-8.42 578 460)">
                         <text x="578" y="425" text-anchor="middle" fill="#0038bc" class="heading-2">You're invited</text>
                         <text x="578" y="495" text-anchor="middle" fill="#2a2a2a" class="heading-3">, but not yet</text>
-                        <rect class="stamp-placeholder" x="700" y="248" width="240" height="56" fill="none" stroke="#002d97" stroke-dasharray="6 4" stroke-width="1" rx="4"/>
-                        <text x="820" y="284" text-anchor="middle" class="heading-6 stamp-placeholder-text">Place stamp here</text>
+                        <g class="stamp-placeholder-group" style="cursor: pointer;">
+                            <rect class="stamp-placeholder" x="700" y="248" width="240" height="56" fill="none" stroke="#002d97" stroke-dasharray="6 4" stroke-width="1" rx="4"/>
+                            <text x="820" y="284" text-anchor="middle" class="heading-6 stamp-placeholder-text">Place stamp here</text>
+                        </g>
                     </g>
                 </g>
             </svg>
@@ -73,180 +75,25 @@
 
     <section class="stamps-section">
         <h1 id="stamps-section-title" class="heading-1">A 3-year<br>journey</h1>
-        <div class="stamps-grid">
-            <img src="asset/stamp/phatla/stamp-phatla-1.png" alt="Phat La 1" data-title="Phat La 1" class="stamp-item">
-            <img src="asset/stamp/phatla/stamp-phatla-2.png" alt="Phat La 2" data-title="Phat La 2" class="stamp-item">
-            <img src="asset/stamp/phatla/stamp-phatla-3.png" alt="Phat La 3" data-title="Phat La 3" class="stamp-item">
-            <img src="asset/stamp/phatla/stamp-phatla-4.png" alt="Phat La 4" data-title="Phat La 4" class="stamp-item">
-            <img src="asset/stamp/phatla/stamp-phatla-5.png" alt="Phat La 5" data-title="Phat La 5" class="stamp-item">
-            <img src="asset/stamp/phatla/stamp-phatla-6.png" alt="Phat La 6" data-title="Phat La 6" class="stamp-item">
+        <div class="stamps-grid" id="stamps-grid">
+            <!-- Stamps will be dynamically loaded here -->
         </div>
     </section>
 
+    <!-- Stamp Details Sections -->
+    <section class="stamp-details-container" id="stamp-details-container" style="display: none;">
+        <!-- Details sections will be dynamically generated here -->
+    </section>
+
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notification-toast">
+        This stamp gonna be used in your invitation
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const envelopeWrapper = document.querySelector('.envelope-wrapper');
-            const letterGroup = document.querySelector('#letter');
-            const flap = document.querySelector('#flap');
-
-            gsap.set(letterGroup, { y: 350 });
-
-            const mainTimeline = gsap.timeline({
-                defaults: { ease: 'power2.out' },
-                delay: 0.3
-            });
-
-            mainTimeline.to(envelopeWrapper, {
-                y: '-40%',
-                duration: 1.5,
-                ease: 'power3.out'
-            });
-
-            mainTimeline.to(flap, {
-                rotateX: -160,
-                duration: 0.6,
-                ease: 'power2.inOut'
-            }, '+=0.1');
-
-            mainTimeline.to(letterGroup, {
-                y: -20,
-                duration: 1,
-                ease: 'power3.out'
-            }, '-=0.3');
-        });
-
-        // STAMPS SECTION LOGIC
-        document.addEventListener('DOMContentLoaded', () => {
-            const stampsSection = document.querySelector('.stamps-section');
-            const stampsTitle = document.getElementById('stamps-section-title');
-            const stampsGrid = document.querySelector('.stamps-grid');
-            const stampItems = Array.from(document.querySelectorAll('.stamp-item'));
-            const defaultTitle = stampsTitle.innerHTML; // Use innerHTML to preserve <br>
-
-            // Predefined rotations for each stamp (fixed)
-            const fixedRotations = [-5, 3, -7, 4, -3, 6];
-
-            // 1. Position stamps in circular layout (desktop only)
-            function positionStampsCircular() {
-                if (window.innerWidth > 768) {
-                    const radius = 380;
-                    const centerX = stampsGrid.offsetWidth / 2;
-                    const centerY = stampsGrid.offsetHeight / 2;
-
-                    stampItems.forEach((stamp, index) => {
-                        const angle = (index / stampItems.length) * 2 * Math.PI - Math.PI / 2;
-                        let x = centerX + radius * Math.cos(angle) - stamp.offsetWidth / 2;
-                        let y = centerY + radius * Math.sin(angle) - stamp.offsetHeight / 2;
-                        
-                        // Custom offsets for specific stamps
-                        if (index === 0) { // phat la 1
-                            y += 50;
-                        }
-                        if (index === 3) { // phat la 4
-                            y -= 50;
-                        }
-                        
-                        // Use fixed rotation
-                        const rotation = fixedRotations[index] || 0;
-                        
-                        stamp.style.left = `${x}px`;
-                        stamp.style.top = `${y}px`;
-                        stamp.style.transform = `rotate(${rotation}deg)`;
-                        stamp.dataset.baseRotation = rotation;
-                    });
-                }
-            }
-
-            positionStampsCircular();
-            window.addEventListener('resize', positionStampsCircular);
-
-            // 3. Hover interaction: change title simply
-            // Helper function: Format title với 2 từ đầu, còn lại xuống hàng
-            function formatTitle(text) {
-                const words = text.split(' ');
-                if (words.length <= 2) return text;
-                const firstLine = words.slice(0, 2).join(' ');
-                const secondLine = words.slice(2).join(' ');
-                return `${firstLine}<br>${secondLine}`;
-            }
-            
-            stampItems.forEach(stamp => {
-                const hoverHandler = () => {
-                    const rawTitle = stamp.dataset.title || defaultTitle;
-                    const newTitle = formatTitle(rawTitle);
-                    stampsTitle.innerHTML = newTitle;
-                };
-
-                const resetHandler = () => {
-                    stampsTitle.innerHTML = defaultTitle;
-                };
-
-                stamp.addEventListener('mouseenter', hoverHandler);
-                stamp.addEventListener('mouseleave', resetHandler);
-
-                // Mobile: tap to change title
-                stamp.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        hoverHandler();
-                        setTimeout(resetHandler, 2000);
-                    }
-                });
-            });
-
-            // 4. Entrance animation with Intersection Observer
-            let hasAnimated = false;
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !hasAnimated) {
-                        hasAnimated = true;
-                        
-                        // Title slides up
-                        stampsTitle.classList.add('visible');
-                        
-                        // Stamps appear one by one in circular order with stagger
-                        stampItems.forEach((stamp, index) => {
-                            setTimeout(() => {
-                                stamp.classList.add('visible');
-                            }, 300 + index * 150);
-                        });
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            observer.observe(stampsSection);
-        });
-
-        // NAV HIDE/SHOW ON SCROLL
-        document.addEventListener('DOMContentLoaded', () => {
-            const nav = document.querySelector('nav');
-            let lastScrollY = window.scrollY;
-            let ticking = false;
-
-            function updateNavVisibility() {
-                const currentScrollY = window.scrollY;
-                
-                if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                    // Scrolling down & past 100px -> hide nav
-                    nav.classList.add('nav-hidden');
-                } else if (currentScrollY < lastScrollY) {
-                    // Scrolling up -> show nav
-                    nav.classList.remove('nav-hidden');
-                }
-                
-                lastScrollY = currentScrollY;
-                ticking = false;
-            }
-
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(updateNavVisibility);
-                    ticking = true;
-                }
-            });
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="asset/js/user-loader.js"></script>
+    <script src="asset/js/main.js"></script>
 </body>
 
 </html>
