@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const defaultTitle = stampsTitle.innerHTML; // Use innerHTML to preserve <br>
 
-        // Predefined rotations for each stamp (fixed
+        // Predefined rotations for each stamp (fixed)
         const fixedRotations = [-5, 3, -7, 4, -3, 6];
 
         // 1. Position stamps in circular layout (desktop only)
