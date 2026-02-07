@@ -297,3 +297,141 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// =============================================
+// INVITATION SECTION
+// =============================================
+document.addEventListener('DOMContentLoaded', async () => {
+    // Wait for user data to be loaded
+    if (!window.userLoader || !window.userLoader.userData) {
+        console.log('Waiting for user data...');
+        await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    const invitationSection = document.querySelector('.invitation-section');
+    const invitationCard = document.querySelector('.invitation-card');
+    const invitationStamp = document.getElementById('invitation-stamp');
+    const calendarBtn = document.getElementById('calendar-btn');
+    const locationBtn = document.getElementById('location-btn');
+    const messageBtn = document.getElementById('message-btn');
+
+    if (!invitationSection) return;
+
+    // =============================================
+    // 1. DISPLAY FAVORITE STAMP
+    // =============================================
+    function displayFavoriteStamp() {
+        if (!window.userLoader) {
+            console.error('User loader not initialized');
+            return;
+        }
+
+        const favoriteIndex = window.userLoader.getFavoriteStamp();
+        const userData = window.userLoader.userData;
+
+        if (!userData || !userData.stamps) {
+            console.error('No user stamp data available');
+            return;
+        }
+
+        // Use favorite stamp or default to first stamp
+        const stampIndex = favoriteIndex !== null ? parseInt(favoriteIndex) : 0;
+        const stamp = userData.stamps[stampIndex];
+
+        if (stamp && invitationStamp) {
+            invitationStamp.innerHTML = `
+                <img src="${stamp.src}" alt="${stamp.alt}" />
+            `;
+        }
+    }
+
+    // Display stamp immediately
+    displayFavoriteStamp();
+
+    // Listen for favorite stamp changes (when user selects new favorite)
+    window.addEventListener('storage', (e) => {
+        if (e.key && e.key.startsWith('favorite_stamp_')) {
+            displayFavoriteStamp();
+        }
+    });
+
+    // Custom event listener for same-window updates
+    window.addEventListener('favoriteStampChanged', () => {
+        displayFavoriteStamp();
+    });
+
+    // =============================================
+    // 2. CALENDAR BUTTON - GOOGLE CALENDAR
+    // =============================================
+    if (calendarBtn) {
+        calendarBtn.addEventListener('click', () => {
+            // Event details
+            const eventTitle = 'Graduation Ceremony';
+            const eventLocation = '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
+            const eventDescription = 'Join me for my graduation ceremony!';
+            
+            // Date: April 4, 2026, 14:00 (2:00 PM)
+            // Format: YYYYMMDDTHHmmSS
+            const startDate = '20260404T140000';
+            const endDate = '20260404T170000'; // 3 hours duration
+            
+            // Build Google Calendar URL
+            const calendarUrl = new URL('https://calendar.google.com/calendar/render');
+            calendarUrl.searchParams.append('action', 'TEMPLATE');
+            calendarUrl.searchParams.append('text', eventTitle);
+            calendarUrl.searchParams.append('dates', `${startDate}/${endDate}`);
+            calendarUrl.searchParams.append('details', eventDescription);
+            calendarUrl.searchParams.append('location', eventLocation);
+            
+            // Open in new tab
+            window.open(calendarUrl.toString(), '_blank');
+        });
+    }
+
+    // =============================================
+    // 3. LOCATION BUTTON - GOOGLE MAPS
+    // =============================================
+    if (locationBtn) {
+        locationBtn.addEventListener('click', () => {
+            const address = '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+            
+            // Open in new tab
+            window.open(mapsUrl, '_blank');
+        });
+    }
+
+    // =============================================
+    // 4. MESSAGE BUTTON - PLACEHOLDER
+    // =============================================
+    if (messageBtn) {
+        messageBtn.addEventListener('click', () => {
+            // Placeholder - no functionality yet
+            console.log('Message button clicked - functionality to be added later');
+            
+            // Optional: Show a tooltip or feedback
+            alert('Message feature coming soon!');
+        });
+    }
+
+    // =============================================
+    // 5. SCROLL ENTRANCE ANIMATION
+    // =============================================
+    let hasAnimated = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                
+                // Add visible class to card
+                if (invitationCard) {
+                    invitationCard.classList.add('visible');
+                }
+            }
+        });
+    }, { threshold: 0.2 });
+
+    if (invitationSection) {
+        observer.observe(invitationSection);
+    }
+});

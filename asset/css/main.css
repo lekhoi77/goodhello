@@ -851,3 +851,323 @@ nav .right p {
     bottom: 16px;
   }
 }
+
+/* =============================================
+   INVITATION SECTION
+   ============================================= */
+.invitation-section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  position: relative;
+  margin-top: 120px;
+}
+
+.invitation-card {
+  position: relative;
+  max-width: 940px;
+  width: 100%;
+  background: url('../img/invitation.webp') lightgray 50% / cover no-repeat;
+  border: 0.6px solid rgba(0, 0, 0, 0.20);
+  border-radius: 32px;
+  padding: 80px 96px;
+  transform: rotate(-4deg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  
+  /* Initial state for animation */
+  opacity: 0;
+  transform: rotate(-4deg) translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.invitation-card.visible {
+  opacity: 1;
+  transform: rotate(-4deg) translateY(0);
+  animation: cardFloat 3s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+  0%, 100% {
+    transform: rotate(-4deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-4deg) translateY(-10px);
+  }
+}
+
+/* Header: Greeting + Stamp Container */
+.invitation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+/* Stamp */
+.invitation-stamp {
+width: auto;
+height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.invitation-stamp img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Greeting */
+.invitation-greeting {
+  flex: 1;
+}
+
+.greeting-text {
+  width: 100%;
+  font-family: "Mythshire", sans-serif;
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 0.18px;
+  color: var(--colors-black, #2A2A2A);
+  margin-bottom: 24px;
+}
+
+.greeting-name {
+  color: var(--colors-primary-500);
+  font-family: "Mythshire", sans-serif;
+}
+
+/* Event Details Grid */
+.invitation-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 48px;
+  margin-bottom: 48px;
+}
+
+.detail-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-label {
+  display: flex;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  background: var(--colors-primary-600, #002D97);
+  color: var(--colors-white);
+  
+  font-family: "Poor Story", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  width: fit-content;
+}
+
+.detail-line {
+  height: 1px;
+  background: var(--colors-black, #2A2A2A);
+  width: 100%;
+}
+
+.detail-value-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.detail-value {
+  color: var(--colors-black, #2A2A2A);
+  font-family: "Poor Story", sans-serif;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 0.07px;
+  flex: 1;
+}
+
+.detail-item .btn-icon {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+  /* Keep Design System hover/active states - don't override border and background */
+}
+
+.detail-item .btn-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Design System already handles hover states, no need to override */
+
+/* Footer - Thank You Message */
+.invitation-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.thank-message,
+.thank-message-note {
+  font-family: "Poor Story", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--colors-black);
+  margin: 0;
+}
+
+.thank-message-note {
+  font-size: 16px;
+  color: rgba(42, 42, 42, 0.7);
+  margin-bottom: 24px;
+}
+
+.highlight-text {
+  /* No color styling as requested - keep text black */
+  font-style: normal;
+}
+
+.message-btn {
+  align-self: flex-start;
+  padding: 12px 24px;
+  gap: 12px;
+}
+
+.message-btn span {
+  font-family: "Poor Story", sans-serif;
+}
+
+.message-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.message-btn svg path {
+  fill: var(--colors-black);
+}
+
+.message-btn:hover svg path {
+  fill: var(--colors-primary-50);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .invitation-card {
+    padding: 48px 60px;
+  }
+
+  .invitation-header {
+    gap: 24px;
+  }
+
+  .invitation-stamp {
+    width: 140px;
+    height: 140px;
+  }
+
+  .greeting-text {
+    font-size: 36px;
+  }
+
+  .detail-value {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .invitation-section {
+    padding: 2rem 1rem;
+  }
+
+  .invitation-card {
+    padding: 40px 32px;
+    transform: rotate(0deg);
+  }
+
+  .invitation-card.visible {
+    transform: rotate(0deg) translateY(0);
+    animation: cardFloatMobile 3s ease-in-out infinite;
+  }
+
+  @keyframes cardFloatMobile {
+    0%, 100% {
+      transform: rotate(0deg) translateY(0);
+    }
+    50% {
+      transform: rotate(0deg) translateY(-8px);
+    }
+  }
+
+  /* Stack header vertically on mobile */
+  .invitation-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .invitation-stamp {
+    width: 120px;
+    height: 120px;
+    order: -1; /* Put stamp before greeting */
+  }
+
+  .invitation-greeting {
+    text-align: center;
+    width: 100%;
+  }
+
+  .greeting-text {
+    font-size: 28px;
+  }
+
+  .invitation-details {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .detail-value {
+    font-size: 20px;
+  }
+
+  /* Footer vertical on mobile */
+  .invitation-footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .thank-message,
+  .thank-message-note {
+    font-size: 16px;
+  }
+
+  .thank-message-note {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .message-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

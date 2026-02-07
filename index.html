@@ -90,6 +90,78 @@
         This stamp gonna be used in your invitation
     </div>
 
+    <!-- Invitation Section -->
+    <section class="invitation-section" id="invitation-section">
+        <div class="invitation-card">
+            <!-- Header: Greeting + Stamp -->
+            <div class="invitation-header">
+                <div class="invitation-greeting">
+                    <h2 class="greeting-text">
+                        Hi, <span class="greeting-name" id="guest-name">John</span>!<br>
+                        I'd love to invite you to<br>
+                        my graduation ceremony
+                    </h2>
+                </div>
+                
+                <div class="invitation-stamp" id="invitation-stamp">
+                    <!-- Favorite stamp will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Event Details Grid -->
+            <div class="invitation-details">
+                <!-- Date and Time -->
+                <div class="detail-item">
+                    <div class="detail-label">Date and Time</div>
+                    <div class="detail-line"></div>
+                    <div class="detail-value-row">
+                        <div class="detail-value">14:00, 4 April 2026</div>
+                        <button class="btn-icon calendar-btn" id="calendar-btn" aria-label="Add to calendar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+                                <path d="M12.2652 0.0010909C12.5407 -0.0181693 12.7796 0.189526 12.7989 0.464995L12.8337 0.963777L13.8313 0.89402C14.9332 0.816972 15.8889 1.64776 15.9659 2.74964L16.7333 13.7228C16.8103 14.8247 15.9795 15.7804 14.8777 15.8575L2.90689 16.6946C1.80501 16.7716 0.849298 15.9408 0.772245 14.8389L0.00492373 3.86574C-0.0721271 2.76386 0.75866 1.80815 1.86054 1.7311L2.8581 1.66134L2.82322 1.16256C2.80396 0.88709 3.01166 0.648162 3.28713 0.628899C3.5626 0.609639 3.80153 0.817335 3.82079 1.0928L3.85567 1.59159L11.8362 1.03353L11.8013 0.534751C11.782 0.259281 11.9897 0.0203536 12.2652 0.0010909ZM1.76981 14.7692C1.80834 15.3201 2.28619 15.7355 2.83713 15.697L14.8079 14.8599C15.3588 14.8214 15.7742 14.3435 15.7357 13.7926L15.0381 3.81696L1.07224 4.79355L1.76981 14.7692Z" fill="#212529"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="detail-item">
+                    <div class="detail-label">Location</div>
+                    <div class="detail-line"></div>
+                    <div class="detail-value-row">
+                        <div class="detail-value">59c Nguyen Dinh Chieu<br>Street, District 3</div>
+                        <button class="btn-icon location-btn" id="location-btn" aria-label="View on map">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <g clip-path="url(#clip0_317_141)">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.75231 11.6698C7.02778 11.6505 7.26671 11.8582 7.28597 12.1337C7.30523 12.4092 7.09753 12.6481 6.82207 12.6674L4.57755 12.8243L2.5423 15.9739L15.5106 15.0671L13.0568 12.2314L10.8123 12.3883C10.5369 12.4076 10.2979 12.1999 10.2787 11.9244C10.2594 11.649 10.4671 11.41 10.7426 11.3908L13.2365 11.2164C13.3935 11.2054 13.5469 11.2691 13.6499 11.3881L16.9216 15.1691C17.0453 15.3123 17.0775 15.5133 17.0049 15.688C16.9322 15.8629 16.7669 15.9817 16.578 15.9949L1.61449 17.0413C1.42557 17.0545 1.24534 16.9598 1.14904 16.7968C1.0528 16.6338 1.05671 16.4304 1.15928 16.2713L3.87295 12.0718C3.95837 11.9396 4.10141 11.8552 4.2584 11.8442L6.75231 11.6698ZM7.98012 0.557069C10.1839 0.402969 12.0953 2.06454 12.2494 4.2683C12.3917 6.30312 10.9859 8.08842 9.03477 8.47153L9.42061 13.9893C9.43987 14.2648 9.23218 14.5037 8.95671 14.523C8.68124 14.5422 8.44231 14.3345 8.42305 14.0591L8.03721 8.54129C6.05171 8.43346 4.41118 6.86118 4.26889 4.82635C4.11479 2.62259 5.77636 0.71117 7.98012 0.557069Z" fill="#212529"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_317_141">
+                                        <rect width="16" height="16" fill="white" transform="translate(0 1.1161) rotate(-4)"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thank You Message -->
+            <div class="invitation-footer">
+                <p class="thank-message">
+                    You can also send me a wish or a little message, <br> and your wish will appear like the claw machine down there
+                </p>
+                
+                <button class="btn-icon message-btn" id="message-btn" aria-label="Send a message">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M11.0718 2.13988C17.1322 1.7161 22.3456 5.67132 22.7164 10.9741C23.0872 16.2769 18.475 20.9192 12.4146 21.343C11.2944 21.4213 10.2028 21.35 9.16561 21.1483C8.47824 21.5592 6.98899 22.3239 4.51467 22.9967C4.50571 22.9992 4.49679 23.002 4.4878 23.0045C4.3636 23.0381 4.2363 23.0714 4.10713 23.1045C3.92608 23.1509 3.73983 23.1963 3.54892 23.2414C3.27933 23.305 3.05072 23.0348 3.14023 22.7727C3.19902 22.6014 3.25621 22.4216 3.31122 22.236C3.34612 22.1183 3.38034 21.9979 3.41327 21.8755C3.41467 21.8703 3.41662 21.8647 3.41802 21.8595C3.68879 20.8486 3.88535 19.6943 3.91267 18.6296C2.11216 17.06 0.938941 14.924 0.770039 12.5088C0.399233 7.20598 5.01153 2.56368 11.0718 2.13988ZM11.1678 3.51153C5.68721 3.89479 1.83549 8.03392 2.14169 12.4128C2.28251 14.4265 3.25952 16.2363 4.81622 17.5934C5.12503 17.8626 5.29809 18.2551 5.28761 18.6647C5.26407 19.5825 5.12942 20.5457 4.93285 21.4452C6.81516 20.8692 7.9481 20.2743 8.46047 19.968C8.75123 19.7942 9.09604 19.7338 9.42854 19.7985C10.3477 19.9773 11.3185 20.0413 12.3187 19.9713C17.7993 19.5881 21.651 15.4489 21.3448 11.07C21.0386 6.69109 16.6483 3.12829 11.1678 3.51153ZM11.5507 8.98839C13.6696 6.4822 19.6641 10.1894 12.043 16.0278C3.68345 11.3068 9.10369 6.80148 11.5507 8.98839Z" fill="#2A2A2A"/>
+                    </svg>
+                    <span class="body-md">Give me a message</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="asset/js/user-loader.js"></script>

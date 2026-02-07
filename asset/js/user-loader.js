@@ -349,6 +349,11 @@ class StampDetailsController {
       
       // Show notification toast
       this.showNotification();
+      
+      // Dispatch custom event for invitation card to update
+      window.dispatchEvent(new CustomEvent('favoriteStampChanged', { 
+        detail: { stampIndex } 
+      }));
     }
   }
 
