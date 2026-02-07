@@ -10,6 +10,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   width: 100%;
@@ -19,6 +23,8 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  background: #fffaf0;
 }
 
 img,
@@ -100,24 +106,24 @@ table {
   --colors-neutral-800: #8e8e87;
   --colors-neutral-900: #777771;
 
-  /* Heading font sizes (tạm thời, bạn có thể chỉnh lại theo Figma) */
-  --heading-1-size: 86px;
-  --heading-1-line-height: 1.6;
+  /* Heading font sizes (theo Design system Text styles) */
+  --heading-1-size: 160px;
+  --heading-1-line-height: 86px;
 
-  --heading-2-size: 60px;
-  --heading-2-line-height: 1.4;
+  --heading-2-size: 120px;
+  --heading-2-line-height: 120px;
 
-  --heading-3-size: 40px;
-  --heading-3-line-height: 1.3;
+  --heading-3-size: 60px;
+  --heading-3-line-height: 120px;
 
-  --heading-4-size: 30px;
-  --heading-4-line-height: 1.3;
+  --heading-4-size: 40px;
+  --heading-4-line-height: 120px;
 
-  --heading-5-size: 24px;
-  --heading-5-line-height: 1.3;
+  --heading-5-size: 30px;
+  --heading-5-line-height: 120px;
 
-  --heading-6-size: 20px;
-  --heading-6-line-height: 1.3;
+  --heading-6-size: 24px;
+  --heading-6-line-height: 120px;
 
   /* Body font sizes */
   --body-lg-size: 24px;
@@ -234,12 +240,21 @@ table {
 
 /* Website Style */
 nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
-
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 32px 120px;
+  transition: transform 0.3s ease-in-out;
+}
+
+nav.nav-hidden {
+  transform: translateY(-100%);
 }
 nav .right {
   display: flex;
@@ -250,4 +265,206 @@ nav .right {
 nav .right p {
    text-decoration: underline;
    cursor: pointer;
+}
+
+/* -----------------------------
+   Hero - Envelope Animation
+------------------------------ */
+
+.hero-viewport {
+  width: 100%;
+  min-height: 120vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  position: relative;
+  margin-bottom: 20rem;
+}
+
+.hero-viewport::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fffaf0;
+  pointer-events: none;
+}
+
+.envelope-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 200%);
+  width: 1080px;
+  height: 983px;
+}
+
+.envelope-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.envelope-layer.svg-back {
+  z-index: 1;
+  filter: brightness(1.12);
+}
+
+.envelope-layer.svg-letter {
+  z-index: 2;
+}
+
+.envelope-layer.svg-front {
+  z-index: 3;
+  filter: brightness(1.12);
+}
+
+#flap {
+  transform-origin: 50% 100%;
+  transform-box: fill-box;
+}
+
+@media (min-width: 1920px) {
+  .envelope-wrapper {
+    width: 1440px;
+    height: calc(1440px * 983 / 1260);
+  }
+}
+
+@media (max-width: 1330px) {
+  .envelope-wrapper {
+    width: 90vw;
+    height: calc(90vw * 983 / 1260);
+  }
+}
+
+@media (max-width: 768px) {
+  .envelope-wrapper {
+    width: 95vw;
+    height: calc(95vw * 983 / 1260);
+  }
+}
+
+/* Stamp placeholder – đường dash chạy nối đuôi (marching ants) */
+.stamp-placeholder {
+  stroke: var(--colors-primary-600, #002d97);
+  stroke-dasharray: 6 4;
+  animation: stampMarch 0.6s linear infinite;
+}
+
+.stamp-placeholder-text {
+  fill: var(--colors-primary-600, #002d97);
+}
+
+@keyframes stampMarch {
+  to { stroke-dashoffset: 10; }
+}
+
+/* =============================================
+   STAMPS SECTION
+   ============================================= */
+.stamps-section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 2rem 4rem 2rem;
+  background: #fffaf0;
+  gap: 0;
+}
+
+#stamps-section-title {
+  margin: 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(40px);
+  z-index: 20;
+}
+
+#stamps-section-title.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+.stamps-grid {
+  width: 100%;
+  max-width: 900px;
+  height: 600px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stamp-item {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: transform 0.3s ease, opacity 0.6s ease;
+  will-change: transform;
+}
+
+.stamp-item.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.stamp-item:hover {
+  transform: scale(1.1) translateY(-20px) !important;
+  z-index: 10;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+}
+
+/* Responsive: Mobile horizontal scroll */
+@media (max-width: 768px) {
+  .stamps-section {
+    padding: 2rem 0;
+  }
+
+  #stamps-section-title {
+    position: sticky;
+    top: 2rem;
+    z-index: 5;
+    margin-bottom: 2rem;
+    background: #fffaf0;
+    padding: 1rem 2rem;
+  }
+
+  .stamps-grid {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stamp-item {
+    position: relative;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+  }
+
+  .stamp-item:hover {
+    transform: scale(1.05) translateY(-10px) !important;
+  }
 }
