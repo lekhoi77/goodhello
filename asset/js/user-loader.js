@@ -178,7 +178,7 @@ class UserLoader {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
-          Back to Stamp list
+          Back to Stamp list (esc)
         </button>
 
         <div class="stamp-detail-image">
@@ -241,6 +241,15 @@ class StampDetailsController {
 
     // Load saved favorite
     this.loadFavoriteState();
+
+    // Setup global ESC key handler to close overlay
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' || event.key === 'Esc') {
+        if (this.container && this.container.style.display === 'block') {
+          this.hideAllDetails();
+        }
+      }
+    });
   }
 
   showDetail(stampIndex) {

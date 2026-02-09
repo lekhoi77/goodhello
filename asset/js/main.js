@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const envelopeWrapper = document.querySelector('.envelope-wrapper');
     const letterGroup = document.querySelector('#letter');
     const flap = document.querySelector('#flap');
+    const nav = document.querySelector('nav');
 
     gsap.set(letterGroup, { y: 350 });
 
@@ -76,6 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
             yoyo: true,
             repeat: -1
         });
+
+        // Show nav only after hero animation is done (slide down)
+        if (nav) {
+            nav.classList.remove('nav-hidden');
+        }
     });
 
     // Add click handler for stamp placeholder to scroll to stamps section
@@ -272,6 +278,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('nav');
+    const invitationLink = nav ? nav.querySelector('.right p') : null;
+    const logo = nav ? nav.querySelector('img') : null;
     let lastScrollY = window.scrollY;
     let ticking = false;
 
@@ -296,6 +304,47 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     });
+
+    // Start with nav hidden (will slide down after hero animation)
+    if (nav) {
+        nav.classList.add('nav-hidden');
+    }
+
+    // Scroll to invitation section when clicking "your invitation card"
+    if (invitationLink) {
+        invitationLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const invitationSection = document.getElementById('invitation-section');
+            if (!invitationSection) return;
+
+            if (window.lenis) {
+                window.lenis.scrollTo(invitationSection, {
+                    offset: 0,
+                    duration: 1.5,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                });
+            } else {
+                invitationSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // Scroll to top when clicking logo
+    if (logo) {
+        logo.style.cursor = 'pointer';
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.lenis) {
+                window.lenis.scrollTo(0, {
+                    offset: 0,
+                    duration: 1.5,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
 });
 
 // =============================================
@@ -361,19 +410,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // =============================================
-    // 2. CALENDAR BUTTON - GOOGLE CALENDAR
+    // 2. CALENDAR BUTTON - GOOGLE CALENDAR (PER USER)
     // =============================================
     if (calendarBtn) {
         calendarBtn.addEventListener('click', () => {
-            // Event details
-            const eventTitle = 'Graduation Ceremony';
-            const eventLocation = '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
-            const eventDescription = 'Join me for my graduation ceremony!';
+            const userData = window.userLoader && window.userLoader.userData ? window.userLoader.userData : {};
+            const eventData = userData.event || {};
+
+            // Event details (fallback to defaults if missing)
+            const eventTitle = eventData.title || 'Graduation Ceremony';
+            const eventLocation = eventData.location || '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
+            const eventDescription = eventData.description || 'Join me for my graduation ceremony!';
             
             // Date: April 4, 2026, 14:00 (2:00 PM)
             // Format: YYYYMMDDTHHmmSS
-            const startDate = '20260404T140000';
-            const endDate = '20260404T170000'; // 3 hours duration
+            const startDate = eventData.start || '20260404T140000';
+            const endDate = eventData.end || '20260404T170000'; // 3 hours duration
             
             // Build Google Calendar URL
             const calendarUrl = new URL('https://calendar.google.com/calendar/render');

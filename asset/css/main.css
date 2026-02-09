@@ -343,11 +343,12 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 32px 120px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }
 
 nav.nav-hidden {
   transform: translateY(-100%);
+  pointer-events: none;
 }
 nav .right {
   display: flex;
@@ -623,11 +624,11 @@ nav .right p {
   position: relative;
 }
 
-/* Back button in top right */
+/* Back button in top left */
 .back-to-stamps {
   position: absolute;
   top: 32px;
-  right: 120px;
+  left: 120px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -759,7 +760,7 @@ nav .right p {
 
   .back-to-stamps {
     top: 24px;
-    right: 60px;
+    left: 60px;
   }
 
   .stamp-detail-image {
@@ -778,7 +779,7 @@ nav .right p {
 
   .back-to-stamps {
     top: 16px;
-    right: 16px;
+    left: 16px;
   }
 
   .stamp-detail-image {

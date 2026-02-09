@@ -1,6 +1,13 @@
 {
   "phatla": {
     "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Phat La's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Phát mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T140000",
+      "end": "20260404T170000"
+    },
     "stamps": [
       {
         "src": "asset/stamp/phatla/stamp-phatla-1.png",
@@ -43,6 +50,13 @@
   },
   "lefacteur": {
     "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Le Facteur's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Le Facteur mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T140000",
+      "end": "20260404T170000"
+    },
     "stamps": [
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-1.png",
@@ -85,6 +99,13 @@
   },
   "hoangkaa": {
     "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Hoang Kaa's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Hoàng Kaa mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T140000",
+      "end": "20260404T170000"
+    },
     "stamps": [
       {
         "src": "asset/stamp/hoangkaa/stamp-hoang-1.png",
@@ -127,6 +148,13 @@
   },
   "huukhai": {
     "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Khai's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Khai mời bạn đến lễ tốt nghiệp...",
+      "start": "20260404T140000",
+      "end": "20260404T170000"
+    },
     "stamps": [
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-1.png",
@@ -169,6 +197,13 @@
   },
   "vinhnghi": {
     "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Vinh Nghi's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Vinh Nghi mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T140000",
+      "end": "20260404T170000"
+    },
     "stamps": [
       {
         "src": "asset/stamp/vinhnghi/stamp-nghi-1.png",
