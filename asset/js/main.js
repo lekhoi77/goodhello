@@ -445,8 +445,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =============================================
     if (locationBtn) {
         locationBtn.addEventListener('click', () => {
-            const address = '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
-            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+            const mapsUrl = 'https://maps.app.goo.gl/RGrHNW3o5mDidn2d8';
             
             // Open in new tab
             window.open(mapsUrl, '_blank');

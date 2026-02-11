@@ -265,6 +265,18 @@ table {
   position: relative;
 }
 
+/* Small button size */
+.btn-icon-sm {
+  padding: 8px;
+  gap: 8px;
+  border-radius: var(--radius-xs);
+}
+
+.btn-icon-sm svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* Hover state */
 .btn-icon:hover {
   border: 1px solid var(--colors-primary-50);
@@ -688,7 +700,7 @@ nav .right p {
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
 }
 
 .stamp-detail-title {
@@ -984,7 +996,7 @@ height: 200px;
 
 .detail-value-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
   align-self: stretch;
 }

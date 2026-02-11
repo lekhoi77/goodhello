@@ -188,11 +188,11 @@ class UserLoader {
         <div class="stamp-detail-content">
           <h2 class="stamp-detail-title heading-2">${stamp.title}</h2>
           <p class="stamp-detail-description">${description}</p>
-          <button class="btn-icon favorite-button" data-stamp-index="${index}">
+          <button class="btn-icon btn-icon-sm favorite-button" data-stamp-index="${index}">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
               <path d="M9.19743 1.28598C14.3112 -3.42097 26.2497 5.47686 9.00017 16.8748C-8.24949 5.47688 3.68811 -3.42075 8.80192 1.28598C8.86901 1.34773 8.93551 1.41191 9.00017 1.47836C9.06477 1.41196 9.1304 1.34769 9.19743 1.28598ZM16.425 3.43442C15.172 0.987378 11.7007 0.31487 9.80583 2.26254L9.00017 3.09164L8.19353 2.26254C6.29863 0.314925 2.82836 0.987397 1.57536 3.43442C0.986094 4.58528 0.853918 6.24633 1.92888 8.36704C2.96421 10.4095 5.11635 12.8543 9.00017 15.5184C12.8838 12.8543 15.0362 10.4095 16.0715 8.36704C17.1463 6.24652 17.0141 4.58525 16.425 3.43442Z" fill="#2A2A2A"/>
             </svg>
-            <span class="body-lg">Choose as your Favorite</span>
+            <span class="body-md">Choose as your Favorite</span>
           </button>
         </div>
       `;
@@ -329,7 +329,7 @@ class StampDetailsController {
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
           <path d="M9.19743 1.28598C14.3112 -3.42097 26.2497 5.47686 9.00017 16.8748C-8.24949 5.47688 3.68811 -3.42075 8.80192 1.28598C8.86901 1.34773 8.93551 1.41191 9.00017 1.47836C9.06477 1.41196 9.1304 1.34769 9.19743 1.28598ZM16.425 3.43442C15.172 0.987378 11.7007 0.31487 9.80583 2.26254L9.00017 3.09164L8.19353 2.26254C6.29863 0.314925 2.82836 0.987397 1.57536 3.43442C0.986094 4.58528 0.853918 6.24633 1.92888 8.36704C2.96421 10.4095 5.11635 12.8543 9.00017 15.5184C12.8838 12.8543 15.0362 10.4095 16.0715 8.36704C17.1463 6.24652 17.0141 4.58525 16.425 3.43442Z" fill="#2A2A2A"/>
         </svg>
-        <span class="body-lg">Choose as your Favorite</span>
+        <span class="body-md">Choose as your Favorite</span>
       `;
     } else {
       // Set new favorite
@@ -343,7 +343,7 @@ class StampDetailsController {
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
             <path d="M9.19743 1.28598C14.3112 -3.42097 26.2497 5.47686 9.00017 16.8748C-8.24949 5.47688 3.68811 -3.42075 8.80192 1.28598C8.86901 1.34773 8.93551 1.41191 9.00017 1.47836C9.06477 1.41196 9.1304 1.34769 9.19743 1.28598ZM16.425 3.43442C15.172 0.987378 11.7007 0.31487 9.80583 2.26254L9.00017 3.09164L8.19353 2.26254C6.29863 0.314925 2.82836 0.987397 1.57536 3.43442C0.986094 4.58528 0.853918 6.24633 1.92888 8.36704C2.96421 10.4095 5.11635 12.8543 9.00017 15.5184C12.8838 12.8543 15.0362 10.4095 16.0715 8.36704C17.1463 6.24652 17.0141 4.58525 16.425 3.43442Z" fill="#2A2A2A"/>
           </svg>
-          <span class="body-lg">Choose as your Favorite</span>
+          <span class="body-md">Choose as your Favorite</span>
         `;
       });
 
@@ -353,7 +353,7 @@ class StampDetailsController {
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
           <path d="M9 1.47828C13.9931 -3.65395 26.4758 5.32726 9 16.8748C-8.47605 5.32721 4.00684 -3.65397 9 1.47828Z" fill="#0038BC"/>
         </svg>
-        <span class="body-lg">Your Favorite</span>
+        <span class="body-md">Your Favorite</span>
       `;
       
       // Show notification toast
@@ -390,7 +390,7 @@ class StampDetailsController {
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
               <path d="M9 1.47828C13.9931 -3.65395 26.4758 5.32726 9 16.8748C-8.47605 5.32721 4.00684 -3.65397 9 1.47828Z" fill="#0038BC"/>
             </svg>
-            <span class="body-lg">Your Favorite</span>
+            <span class="body-md">Your Favorite</span>
           `;
         }
       });
