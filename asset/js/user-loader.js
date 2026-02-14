@@ -284,6 +284,16 @@ class StampDetailsController {
         
         // Scroll to top of the details container
         this.container.scrollTop = 0;
+
+        // Auto-show favourite button hint after delay
+        const favoriteButton = this.detailSections[stampIndex].querySelector('.favorite-button');
+        if (favoriteButton) {
+          // Wait 1 second before showing hint
+          setTimeout(() => {
+            // Add hint class to trigger auto-hover effect (stays permanently)
+            favoriteButton.classList.add('show-hint');
+          }, 1000);
+        }
       }
     }, 400); // Match CSS transition duration
   }

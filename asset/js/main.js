@@ -486,3 +486,287 @@ document.addEventListener('DOMContentLoaded', async () => {
         observer.observe(invitationSection);
     }
 });
+
+// =============================================
+// WISHES SECTION
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+    const wishesSection = document.querySelector('.wishes-section');
+    const wishesContainer = document.getElementById('wishes-container');
+    
+    if (!wishesSection || !wishesContainer) return;
+
+    // =============================================
+    // MOCK DATA - 6 wishes
+    // =============================================
+    const wishesData = [
+        { message: "Congratulations on your graduation! Wishing you all the best in your future endeavors!" },
+        { message: "So proud of you! Can't wait to see what amazing things you'll accomplish next!" },
+        { message: "Your hard work and dedication have paid off. Celebrate this special moment!" },
+        { message: "Wishing you success, happiness, and endless opportunities ahead!" },
+        { message: "You did it! May your future be as bright as your smile today!" },
+        { message: "Can't wait to see more amazing things you'll accomplish next!" }
+    ];
+
+    // Color palette for bookmarks - matching design
+    const bookmarkColors = [
+        '#0038BC', // Primary Blue
+        '#D32F2F', // Red
+        '#F57C00', // Orange
+        '#388E3C', // Green
+        '#7CB342'  // Lime Green
+    ];
+
+
+    // =============================================
+    // DRAG AND DROP VARIABLES
+    // =============================================
+    let isDragging = false;
+    let currentDraggedPaper = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let paperStartX = 0;
+    let paperStartY = 0;
+
+    // =============================================
+    // RENDER WISHES
+    // =============================================
+    function renderWishes() {
+        const containerWidth = wishesContainer.offsetWidth;
+        const paperWidth = window.innerWidth <= 768 ? 240 : window.innerWidth <= 1024 ? 280 : 330;
+        const paperHeight = 116; // Min height
+        
+        wishesData.forEach((wish, index) => {
+            // Create paper element
+            const paper = document.createElement('div');
+            paper.className = 'wish-paper';
+            
+            // Different rotation for each card (-15 to 15 degrees)
+            const rotations = [-12, 8, -5, 15, -8, 10];
+            const rotation = rotations[index % rotations.length];
+            paper.style.setProperty('--rotation', `${rotation}deg`);
+            
+            // Position cards at bottom, scattered horizontally with overlap
+            // Distribute cards across the container width with some overlap
+            const spacing = (containerWidth - paperWidth) / (wishesData.length - 1);
+            const baseLeft = index * spacing * 0.8; // 0.8 to create more overlap
+            const randomOffset = (Math.random() - 0.5) * 60; // Add some randomness
+            const left = Math.max(0, Math.min(containerWidth - paperWidth, baseLeft + randomOffset));
+            
+            // Position at bottom with slight variation
+            const bottomVariation = Math.random() * 40 - 20; // -20 to 20px variation
+            const bottom = -30 + bottomVariation; // Negative to allow cards to be cut off by overflow
+            
+            // Set position
+            paper.style.left = `${left}px`;
+            paper.style.bottom = `${bottom}px`;
+            paper.style.top = 'auto'; // Override any top positioning
+            
+            // Bookmark color
+            const bookmarkColor = bookmarkColors[index % bookmarkColors.length];
+            
+            // Create bookmark
+            const bookmark = document.createElement('div');
+            bookmark.className = 'wish-bookmark';
+            bookmark.style.background = bookmarkColor;
+            
+            // Create content
+            const content = document.createElement('div');
+            content.className = 'wish-content';
+            content.textContent = wish.message;
+            
+            // Append elements
+            paper.appendChild(bookmark);
+            paper.appendChild(content);
+            
+            // Add drag functionality
+            enableDrag(paper);
+            
+            // Append to container
+            wishesContainer.appendChild(paper);
+        });
+    }
+
+    // =============================================
+    // ENABLE DRAG FUNCTIONALITY
+    // =============================================
+    function enableDrag(paper) {
+        paper.addEventListener('mousedown', startDrag);
+        paper.addEventListener('touchstart', startDrag, { passive: false });
+    }
+
+    function startDrag(e) {
+        if (!this.classList.contains('visible')) return; // Only allow drag after card has landed
+        
+        isDragging = true;
+        currentDraggedPaper = this;
+        
+        // Get initial positions
+        const rect = this.getBoundingClientRect();
+        const containerRect = wishesContainer.getBoundingClientRect();
+        
+        if (e.type === 'mousedown') {
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+        } else {
+            dragStartX = e.touches[0].clientX;
+            dragStartY = e.touches[0].clientY;
+        }
+        
+        // Calculate paper's current position relative to container
+        paperStartX = rect.left - containerRect.left;
+        paperStartY = rect.top - containerRect.top;
+        
+        // Bring to front
+        this.style.zIndex = 1000;
+        
+        // Disable all transitions for smooth dragging, but keep rotation instant
+        this.style.transition = 'none';
+        
+        // Rotate straight and scale up immediately
+        this.style.transform = 'rotate(0deg) scale(1.1)';
+        
+        // Add dragging class
+        this.classList.add('dragging');
+        
+        // Prevent text selection
+        e.preventDefault();
+    }
+
+    // Global mouse/touch move handler
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag, { passive: false });
+
+    function drag(e) {
+        if (!isDragging || !currentDraggedPaper) return;
+        
+        let clientX, clientY;
+        if (e.type === 'mousemove') {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        } else {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        }
+        
+        const deltaX = clientX - dragStartX;
+        const deltaY = clientY - dragStartY;
+        
+        const newX = paperStartX + deltaX;
+        const newY = paperStartY + deltaY;
+        
+        // Update position
+        currentDraggedPaper.style.left = `${newX}px`;
+        currentDraggedPaper.style.top = `${newY}px`;
+        currentDraggedPaper.style.bottom = 'auto'; // Remove bottom positioning
+        
+        e.preventDefault();
+    }
+
+    // Global mouse/touch up handler
+    document.addEventListener('mouseup', endDrag);
+    document.addEventListener('touchend', endDrag);
+
+    function endDrag() {
+        if (!isDragging) return;
+        
+        if (currentDraggedPaper) {
+            // Get current position
+            const currentLeft = parseInt(currentDraggedPaper.style.left) || 0;
+            const currentTop = parseInt(currentDraggedPaper.style.top) || 0;
+            
+            // Calculate bottom position (rơi xuống đáy section)
+            const containerHeight = wishesContainer.offsetHeight;
+            const paperHeight = currentDraggedPaper.offsetHeight;
+            
+            // Random bottom variation
+            const bottomVariation = Math.random() * 40 - 20;
+            const targetBottom = -30 + bottomVariation;
+            
+            // Convert to top position
+            const targetTop = containerHeight - paperHeight + targetBottom;
+            
+            // Get original rotation
+            const rotation = currentDraggedPaper.style.getPropertyValue('--rotation');
+            
+            // Re-enable transitions for drop animation
+            currentDraggedPaper.style.transition = 'top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s ease';
+            
+            // Add drop animation class
+            currentDraggedPaper.classList.add('dropping');
+            currentDraggedPaper.classList.remove('dragging');
+            
+            // Animate to bottom, rotate back, and scale back to normal
+            currentDraggedPaper.style.top = `${targetTop}px`;
+            currentDraggedPaper.style.bottom = 'auto';
+            currentDraggedPaper.style.transform = `rotate(${rotation}) scale(1)`;
+            
+            // Remove dropping class after animation
+            setTimeout(() => {
+                if (currentDraggedPaper) {
+                    currentDraggedPaper.classList.remove('dropping');
+                    currentDraggedPaper.style.zIndex = '';
+                    currentDraggedPaper.style.transition = '';
+                }
+            }, 600);
+        }
+        
+        isDragging = false;
+        currentDraggedPaper = null;
+    }
+
+
+    // =============================================
+    // ANIMATE WISHES BOUNCE
+    // =============================================
+    function animateWishesBounce() {
+        const papers = wishesContainer.querySelectorAll('.wish-paper');
+        
+        papers.forEach((paper, index) => {
+            // Stagger the animation
+            setTimeout(() => {
+                paper.classList.add('falling');
+                
+                // After animation completes, add visible class and remove falling
+                setTimeout(() => {
+                    paper.classList.add('visible');
+                    paper.classList.remove('falling');
+                }, 1200); // Match the animation duration
+            }, index * 150); // Slightly longer stagger for better visual
+        });
+    }
+
+
+    // =============================================
+    // INTERSECTION OBSERVER FOR ENTRANCE
+    // =============================================
+    let hasAnimated = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateWishesBounce();
+            }
+        });
+    }, { threshold: 0.2 });
+
+    // =============================================
+    // INITIALIZE
+    // =============================================
+    renderWishes();
+    observer.observe(wishesSection);
+    
+    // Re-render on window resize to adjust positions
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            wishesContainer.innerHTML = '';
+            renderWishes();
+            if (hasAnimated) {
+                const papers = wishesContainer.querySelectorAll('.wish-paper');
+                papers.forEach(paper => paper.classList.add('visible'));
+            }
+        }, 250);
+    });
+});
