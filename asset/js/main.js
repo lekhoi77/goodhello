@@ -366,6 +366,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!invitationSection) return;
 
+    // Set guest name from localStorage (in case overlay already ran or returning visitor)
+    const guestNameEl = document.getElementById('guest-name');
+    if (guestNameEl && window.userLoader && window.userLoader.currentUser) {
+        const stored = localStorage.getItem('guest_name_' + window.userLoader.currentUser);
+        if (stored) guestNameEl.textContent = stored;
+    }
+
     // =============================================
     // 1. DISPLAY FAVORITE STAMP
     // =============================================
@@ -453,17 +460,111 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =============================================
-    // 4. MESSAGE BUTTON - PLACEHOLDER
+    // 4. MESSAGE BUTTON - Popup nhập lời chúc
     // =============================================
+    function sendWishFromForm(message) {
+        var host = window.userLoader && window.userLoader.currentUser ? window.userLoader.currentUser : 'phatla';
+        var guestName = '';
+        try {
+            guestName = localStorage.getItem('guest_name_' + host) || '';
+        } catch (e) {}
+        if (!guestName) guestName = 'Guest';
+        if (!message || String(message).trim() === '') {
+            return Promise.resolve({ success: false, error: 'Empty message' });
+        }
+        return window.googleSheetsAPI.addWish(host, guestName, String(message).trim());
+    }
+
     if (messageBtn) {
         messageBtn.addEventListener('click', () => {
-            // Placeholder - no functionality yet
-            console.log('Message button clicked - functionality to be added later');
-            
-            // Optional: Show a tooltip or feedback
-            alert('Message feature coming soon!');
+            var overlay = document.createElement('div');
+            overlay.className = 'wish-modal-overlay';
+            overlay.id = 'wish-modal-overlay';
+            overlay.innerHTML =
+                '<div class="wish-modal">' +
+                '<div class="wish-modal-content">' +
+                '<h2 class="heading-2">Gửi lời chúc</h2>' +
+                '<p class="body-lg">Viết lời chúc của bạn bên dưới, lời chúc sẽ xuất hiện ở section bên dưới.</p>' +
+                '<div class="wish-modal-field">' +
+                '<textarea id="wish-message-input" class="wish-textarea" placeholder="Chúc mừng tốt nghiệp! Chúc bạn thành công..." rows="4" maxlength="500"></textarea>' +
+                '<div class="wish-modal-error" id="wish-modal-error"></div>' +
+                '</div>' +
+                '<div class="wish-modal-actions">' +
+                '<button type="button" class="wish-btn wish-btn-cancel" id="wish-cancel-btn">Hủy</button>' +
+                '<button type="button" class="wish-btn wish-btn-submit" id="wish-submit-btn">Gửi</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            document.body.appendChild(overlay);
+            document.body.style.overflow = 'hidden';
+
+            var textarea = document.getElementById('wish-message-input');
+            var errorEl = document.getElementById('wish-modal-error');
+            var submitBtn = document.getElementById('wish-submit-btn');
+            var cancelBtn = document.getElementById('wish-cancel-btn');
+
+            function closeModal() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                setTimeout(function () {
+                    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                }, 250);
+            }
+
+            cancelBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) closeModal();
+            });
+
+            submitBtn.addEventListener('click', function () {
+                var msg = (textarea.value || '').trim();
+                if (!msg) {
+                    errorEl.textContent = 'Vui lòng nhập lời chúc.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+                errorEl.style.display = 'none';
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Đang gửi...';
+                sendWishFromForm(msg).then(function (res) {
+                    if (res.success) {
+                        closeModal();
+                        if (window.wishesSectionRefresh) window.wishesSectionRefresh();
+                        var toast = document.createElement('div');
+                        toast.className = 'guest-toast';
+                        toast.textContent = 'Đã gửi lời chúc!';
+                        document.body.appendChild(toast);
+                        requestAnimationFrame(function () { toast.classList.add('show'); });
+                        setTimeout(function () {
+                            toast.classList.remove('show');
+                            setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+                        }, 2500);
+                    } else {
+                        errorEl.textContent = (res.message || res.error || 'Gửi thất bại. Thử lại sau.') + ' (Mở F12 > Console để xem chi tiết.)';
+                        errorEl.style.display = 'block';
+                    }
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Gửi';
+                });
+            });
+            textarea.addEventListener('input', function () {
+                errorEl.style.display = 'none';
+            });
+            requestAnimationFrame(function () {
+                overlay.classList.add('active');
+                textarea.focus();
+            });
         });
     }
+
+    // Hàm gọi từ Console (vẫn dùng được): submitWish("Lời chúc")
+    window.submitWish = function (message) {
+        return sendWishFromForm(message).then(function (res) {
+            if (res.success) console.log('Đã gửi lời chúc.');
+            else console.error('Gửi thất bại:', res.error);
+            return res;
+        });
+    };
 
     // =============================================
     // 5. SCROLL ENTRANCE ANIMATION
@@ -490,23 +591,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =============================================
 // WISHES SECTION
 // =============================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const wishesSection = document.querySelector('.wishes-section');
     const wishesContainer = document.getElementById('wishes-container');
     
     if (!wishesSection || !wishesContainer) return;
 
-    // =============================================
-    // MOCK DATA - 6 wishes
-    // =============================================
-    const wishesData = [
-        { message: "Congratulations on your graduation! Wishing you all the best in your future endeavors!" },
-        { message: "So proud of you! Can't wait to see what amazing things you'll accomplish next!" },
-        { message: "Your hard work and dedication have paid off. Celebrate this special moment!" },
-        { message: "Wishing you success, happiness, and endless opportunities ahead!" },
-        { message: "You did it! May your future be as bright as your smile today!" },
-        { message: "Can't wait to see more amazing things you'll accomplish next!" }
-    ];
+    // Fetch wishes from Google Sheet for current host
+    let wishesData = [];
+    const host = window.userLoader && window.userLoader.currentUser ? window.userLoader.currentUser : 'phatla';
+    if (window.googleSheetsAPI && window.googleSheetsAPI.getWishes) {
+        try {
+            const result = await window.googleSheetsAPI.getWishes(host);
+            if (result.success && Array.isArray(result.wishes)) {
+                wishesData = result.wishes.map(function (w) {
+                    return { message: w.message || '', guestName: w.guestName };
+                });
+            }
+        } catch (e) {
+            console.warn('Could not load wishes from sheet:', e);
+        }
+    }
 
     // Color palette for bookmarks - matching design
     const bookmarkColors = [
@@ -547,8 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
             paper.style.setProperty('--rotation', `${rotation}deg`);
             
             // Position cards at bottom, scattered horizontally with overlap
-            // Distribute cards across the container width with some overlap
-            const spacing = (containerWidth - paperWidth) / (wishesData.length - 1);
+            const spacing = wishesData.length <= 1 ? 0 : (containerWidth - paperWidth) / (wishesData.length - 1);
             const baseLeft = index * spacing * 0.8; // 0.8 to create more overlap
             const randomOffset = (Math.random() - 0.5) * 60; // Add some randomness
             const left = Math.max(0, Math.min(containerWidth - paperWidth, baseLeft + randomOffset));
@@ -749,6 +853,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.2 });
+
+    // =============================================
+    // REFRESH (sau khi gửi lời chúc từ popup)
+    // =============================================
+    window.wishesSectionRefresh = function () {
+        if (!window.googleSheetsAPI || !window.googleSheetsAPI.getWishes) return Promise.resolve();
+        return window.googleSheetsAPI.getWishes(host, false).then(function (result) {
+            if (result.success && Array.isArray(result.wishes)) {
+                wishesData = result.wishes.map(function (w) {
+                    return { message: w.message || '', guestName: w.guestName };
+                });
+            }
+            wishesContainer.innerHTML = '';
+            renderWishes();
+            var papers = wishesContainer.querySelectorAll('.wish-paper');
+            papers.forEach(function (paper) { paper.classList.add('visible'); });
+        });
+    };
 
     // =============================================
     // INITIALIZE

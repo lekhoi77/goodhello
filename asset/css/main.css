@@ -1345,3 +1345,233 @@ height: 200px;
     font-size: 16px;
   }
 }
+
+/* =============================================
+   Guest name overlay
+   ============================================= */
+.guest-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(42, 42, 42, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.guest-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.guest-modal {
+  background: var(--colors-white, #fff);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  max-width: 90vw;
+  width: 400px;
+  padding: 2rem;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.guest-overlay.active .guest-modal {
+  transform: scale(1);
+}
+
+.guest-modal-content h2 {
+  color: var(--colors-primary, #0038BC);
+  margin-bottom: 0.5rem;
+}
+
+.guest-modal-content .body-lg {
+  color: var(--colors-black, #2a2a2a);
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.guest-input-group {
+  margin-bottom: 1.25rem;
+}
+
+.guest-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.guest-input:focus {
+  outline: none;
+  border-color: var(--colors-primary, #0038BC);
+}
+
+.guest-input.error {
+  border-color: #d32f2f;
+}
+
+.guest-error {
+  display: none;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: #d32f2f;
+}
+
+.guest-submit-btn {
+  width: 100%;
+  padding: 12px 24px;
+  background: var(--colors-primary, #0038BC);
+  color: var(--colors-white, #fff);
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.guest-submit-btn:hover:not(:disabled) {
+  background: #002d97;
+}
+
+.guest-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Wish modal (gửi lời chúc) */
+.wish-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(42, 42, 42, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.wish-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wish-modal {
+  background: var(--colors-white, #fff);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  max-width: 90vw;
+  width: 440px;
+  padding: 1.75rem;
+  transform: scale(0.95);
+  transition: transform 0.25s ease;
+}
+
+.wish-modal-overlay.active .wish-modal {
+  transform: scale(1);
+}
+
+.wish-modal-content h2 {
+  color: var(--colors-primary, #0038BC);
+  margin-bottom: 0.5rem;
+}
+
+.wish-modal-content .body-lg {
+  color: var(--colors-black, #2a2a2a);
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.wish-modal-field {
+  margin-bottom: 1.25rem;
+}
+
+.wish-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.2s;
+}
+
+.wish-textarea:focus {
+  outline: none;
+  border-color: var(--colors-primary, #0038BC);
+}
+
+.wish-modal-error {
+  display: none;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: #d32f2f;
+}
+
+.wish-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.wish-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.wish-btn-cancel {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.wish-btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+.wish-btn-submit {
+  background: var(--colors-primary, #0038BC);
+  color: var(--colors-white, #fff);
+}
+
+.wish-btn-submit:hover:not(:disabled) {
+  background: #002d97;
+}
+
+.wish-btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Toast (guest-input + wish success) */
+.guest-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 12px 20px;
+  background: #2a2a2a;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.guest-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
