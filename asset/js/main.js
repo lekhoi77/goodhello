@@ -509,6 +509,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 '</div>';
             document.body.appendChild(overlay);
             document.body.style.overflow = 'hidden';
+            if (window.lenis) window.lenis.stop();
 
             var textarea = document.getElementById('wish-message-input');
             var errorEl = document.getElementById('wish-modal-error');
@@ -518,6 +519,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             function closeModal() {
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
+                if (window.lenis) window.lenis.start();
                 setTimeout(function () {
                     if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
                 }, 250);

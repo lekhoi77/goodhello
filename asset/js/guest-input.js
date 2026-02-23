@@ -52,6 +52,7 @@
         }
 
         document.body.style.overflow = 'hidden';
+        if (window.lenis) window.lenis.stop();
 
         var overlay = document.createElement('div');
         overlay.className = 'guest-overlay active';
@@ -78,6 +79,7 @@
         function hideOverlay() {
             overlay.classList.remove('active');
             document.body.style.overflow = '';
+            if (window.lenis) window.lenis.start();
             setTimeout(function () {
                 if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
             }, 300);
