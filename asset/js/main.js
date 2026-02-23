@@ -24,8 +24,16 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
+/** Strip Vietnamese diacritics so font displays correctly (shared for name + wish inputs) */
+function stripVietnameseDiacritics(str) {
+    if (!str) return str;
+    var map = { 'à':'a','á':'a','ả':'a','ã':'a','ạ':'a','ă':'a','ằ':'a','ắ':'a','ẳ':'a','ẵ':'a','ặ':'a','â':'a','ầ':'a','ấ':'a','ẩ':'a','ẫ':'a','ậ':'a','À':'A','Á':'A','Ả':'A','Ã':'A','Ạ':'A','Ă':'A','Ằ':'A','Ắ':'A','Ẳ':'A','Ẵ':'A','Ặ':'A','Â':'A','Ầ':'A','Ấ':'A','Ẩ':'A','Ẫ':'A','Ậ':'A','è':'e','é':'e','ẻ':'e','ẽ':'e','ẹ':'e','ê':'e','ề':'e','ế':'e','ể':'e','ễ':'e','ệ':'e','È':'E','É':'E','Ẻ':'E','Ẽ':'E','Ẹ':'E','Ê':'E','Ề':'E','Ế':'E','Ể':'E','Ễ':'E','Ệ':'E','ì':'i','í':'i','ỉ':'i','ĩ':'i','ị':'i','Ì':'I','Í':'I','Ỉ':'I','Ĩ':'I','Ị':'I','ò':'o','ó':'o','ỏ':'o','õ':'o','ọ':'o','ô':'o','ồ':'o','ố':'o','ổ':'o','ỗ':'o','ộ':'o','ơ':'o','ờ':'o','ớ':'o','ở':'o','ỡ':'o','ợ':'o','Ò':'O','Ó':'O','Ỏ':'O','Õ':'O','Ọ':'O','Ô':'O','Ồ':'O','Ố':'O','Ổ':'O','Ỗ':'O','Ộ':'O','Ơ':'O','Ờ':'O','Ớ':'O','Ở':'O','Ỡ':'O','Ợ':'O','ù':'u','ú':'u','ủ':'u','ũ':'u','ụ':'u','ư':'u','ừ':'u','ứ':'u','ử':'u','ữ':'u','ự':'u','Ù':'U','Ú':'U','Ủ':'U','Ũ':'U','Ụ':'U','Ư':'U','Ừ':'U','Ứ':'U','Ử':'U','Ữ':'U','Ự':'U','ỳ':'y','ý':'y','ỷ':'y','ỹ':'y','ỵ':'y','Ỳ':'Y','Ý':'Y','Ỷ':'Y','Ỹ':'Y','Ỵ':'Y','đ':'d','Đ':'D' };
+    return String(str).replace(/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ]/g, function (c) { return map[c] || c; });
+}
+window.stripVietnameseDiacritics = stripVietnameseDiacritics;
+
 // =============================================
-// ENVELOPE ANIMATION
+// ENVELOPE ANIMATION (starts after guest name is entered)
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
     const envelopeWrapper = document.querySelector('.envelope-wrapper');
@@ -35,63 +43,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gsap.set(letterGroup, { y: 350 });
 
-    const mainTimeline = gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        delay: 0.3
-    });
-
-    mainTimeline.to(envelopeWrapper, {
-        y: '-40%',
-        duration: 1.5,
-        ease: 'power3.out'
-    });
-
-    mainTimeline.to(flap, {
-        rotateX: -160,
-        duration: 0.6,
-        ease: 'power2.inOut'
-    }, '+=0.1');
-
-    mainTimeline.to(letterGroup, {
-        y: -20,
-        duration: 1,
-        ease: 'power3.out'
-    }, '-=0.3');
-
-    // Add infinite floating animation after the main animation completes
-    mainTimeline.call(() => {
-        // Floating animation for the entire envelope (up and down)
-        gsap.to(envelopeWrapper, {
-            y: '-42%',
-            duration: 2.5,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1
+    function startHeroAnimation() {
+        const mainTimeline = gsap.timeline({
+            defaults: { ease: 'power2.out' },
+            delay: 0.3
         });
 
-        // Subtle rotation for more natural floating effect
-        gsap.to(envelopeWrapper, {
-            rotation: 1.5,
-            duration: 3.5,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1
+        mainTimeline.to(envelopeWrapper, {
+            y: '-40%',
+            duration: 1.5,
+            ease: 'power3.out'
         });
 
-        // Show nav only after hero animation is done (slide down)
-        if (nav) {
-            nav.classList.remove('nav-hidden');
-        }
-    });
+        mainTimeline.to(flap, {
+            rotateX: -160,
+            duration: 0.6,
+            ease: 'power2.inOut'
+        }, '+=0.1');
+
+        mainTimeline.to(letterGroup, {
+            y: -20,
+            duration: 1,
+            ease: 'power3.out'
+        }, '-=0.3');
+
+        // Add infinite floating animation after the main animation completes
+        mainTimeline.call(() => {
+            // Floating animation for the entire envelope (up and down)
+            gsap.to(envelopeWrapper, {
+                y: '-42%',
+                duration: 2.5,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1
+            });
+
+            // Subtle rotation for more natural floating effect
+            gsap.to(envelopeWrapper, {
+                rotation: 1.5,
+                duration: 3.5,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1
+            });
+
+            // Show nav only after hero animation is done (slide down)
+            if (nav) {
+                nav.classList.remove('nav-hidden');
+            }
+        });
+    }
+
+    // Start hero only after guest has entered their name (event from guest-input.js)
+    window.addEventListener('guestNameReady', startHeroAnimation);
 
     // Add click handler for stamp placeholder to scroll to stamps section
     const stampPlaceholderGroup = document.querySelector('.stamp-placeholder-group');
-    
+
     if (stampPlaceholderGroup) {
         stampPlaceholderGroup.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
+
             const stampsSection = document.querySelector('.stamps-section');
             if (stampsSection && window.lenis) {
                 window.lenis.scrollTo(stampsSection, {
@@ -483,14 +496,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             overlay.innerHTML =
                 '<div class="wish-modal">' +
                 '<div class="wish-modal-content">' +
-                '<h2 class="heading-2">Send a message</h2>' +
                 '<div class="wish-modal-field">' +
-                '<textarea id="wish-message-input" class="wish-textarea" placeholder="Write your wish below; it will appear in the section below." rows="4" maxlength="500"></textarea>' +
+                '<textarea id="wish-message-input" class="wish-textarea" placeholder="Good luck! or xin chao, chuc ban thanh cong :3" rows="4" maxlength="500"></textarea>' +
                 '<div class="wish-modal-error" id="wish-modal-error"></div>' +
                 '</div>' +
                 '<div class="wish-modal-actions">' +
                 '<button type="button" class="wish-btn wish-btn-cancel body-md" id="wish-cancel-btn">Cancel</button>' +
-                '<button type="button" class="wish-btn wish-btn-submit body-md" id="wish-submit-btn">Send</button>' +
+                '<button type="button" class="wish-btn wish-btn-submit body-md" id="wish-submit-btn">' +
+                '<span class="wish-btn-send-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M16.8957 0.0400623C17.1046 -0.0433812 17.3431 0.00600926 17.5022 0.165062C17.6612 0.324149 17.7107 0.562664 17.6272 0.771508L11.0803 17.1367C10.8249 17.7751 9.95431 17.8565 9.58518 17.2764L6.00998 11.6572L0.390844 8.08205C-0.189224 7.71292 -0.107895 6.84229 0.530492 6.58694L16.8957 0.0400623ZM7.13401 11.3291L10.2395 16.21L15.5647 2.89846L7.13401 11.3291ZM1.45725 7.42678L6.33811 10.5332L14.7688 2.10256L1.45725 7.42678Z" fill="currentColor"/></svg></span> Send</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -523,31 +536,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
                 errorEl.style.display = 'none';
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
+                // Optimistic: đóng modal ngay, gửi ở background
+                closeModal();
+                var toast = document.createElement('div');
+                toast.className = 'notification-toast';
+                toast.textContent = 'Sending...';
+                document.body.appendChild(toast);
+                requestAnimationFrame(function () { toast.classList.add('show'); });
+                function hideToast() {
+                    toast.classList.remove('show');
+                    setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 400);
+                }
                 sendWishFromForm(msg).then(function (res) {
-                    if (res.success) {
-                        closeModal();
-                        if (window.wishesSectionRefresh) window.wishesSectionRefresh();
-                        var toast = document.createElement('div');
-                        toast.className = 'guest-toast';
-                        toast.textContent = 'Wish sent! Thank you.';
-                        document.body.appendChild(toast);
-                        requestAnimationFrame(function () { toast.classList.add('show'); });
-                        setTimeout(function () {
-                            toast.classList.remove('show');
-                            setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
-                        }, 2500);
-                    } else {
-                        errorEl.textContent = (res.message || res.error || 'Failed to send. Try again later.') + ' (Open F12 > Console for details.)';
-                        errorEl.style.display = 'block';
-                    }
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Send';
+                    toast.textContent = res.success ? 'Wish sent! Thank you.' : (res.message || res.error || 'Failed to send. Try again later.');
+                    if (!res.success) toast.classList.add('notification-toast-error');
+                    setTimeout(hideToast, 2500);
+                    if (res.success && window.wishesSectionRefresh) window.wishesSectionRefresh();
+                }).catch(function () {
+                    toast.textContent = 'Failed to send. Try again later.';
+                    toast.classList.add('notification-toast-error');
+                    setTimeout(hideToast, 2500);
                 });
             });
             textarea.addEventListener('input', function () {
                 errorEl.style.display = 'none';
+                var stripped = stripVietnameseDiacritics(textarea.value);
+                if (stripped !== textarea.value) textarea.value = stripped;
             });
             requestAnimationFrame(function () {
                 overlay.classList.add('active');
@@ -891,3 +905,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 250);
     });
 });
+
+// Footer title → scroll to invitation section
+const footerScrollBtn = document.getElementById('footer-scroll-top');
+if (footerScrollBtn) {
+    footerScrollBtn.addEventListener('click', () => {
+        const target = document.getElementById('invitation-section');
+        if (!target) return;
+        if (window.lenis) {
+            window.lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+        } else {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+}

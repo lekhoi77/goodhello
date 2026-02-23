@@ -59,13 +59,14 @@
         overlay.innerHTML =
             '<div class="guest-modal">' +
             '<div class="guest-modal-content">' +
-            '<h2 class="heading-2">Before you enter...</h2>' +
-            '<p class="body-lg">May I know your name?</p>' +
+            '<h2 class="guest-modal-title">good<br>hello</h2>' +
+            '<p class="guest-modal-question">Can I ask what your name is?</p>' +
+            '<p class="guest-modal-note">Don\'t need to worry much about privacy, it\'s just to send a greeting.</p>' +
             '<div class="guest-input-group">' +
             '<input type="text" id="guest-name-input" class="guest-input" placeholder="Your name" maxlength="50" autocomplete="name" />' +
             '<div class="guest-error" id="guest-error"></div>' +
             '</div>' +
-            '<button type="button" class="guest-submit-btn" id="guest-submit-btn">Enter</button>' +
+            '<button type="button" class="guest-submit-btn" id="guest-submit-btn">Let\'s find out something!</button>' +
             '</div>' +
             '</div>';
         document.body.appendChild(overlay);
@@ -97,7 +98,13 @@
         input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') submit();
         });
-        input.addEventListener('input', clearError);
+        input.addEventListener('input', function () {
+            clearError();
+            if (window.stripVietnameseDiacritics) {
+                var stripped = window.stripVietnameseDiacritics(input.value);
+                if (stripped !== input.value) input.value = stripped;
+            }
+        });
         setTimeout(function () {
             input.focus();
         }, 200);
@@ -113,31 +120,22 @@
             input.disabled = true;
             btn.textContent = '...';
 
-            var doneCalled = false;
-            function done() {
-                if (doneCalled) return;
-                doneCalled = true;
-                setStoredGuestName(host, v.name);
-                updateInvitationName(v.name);
-                hideOverlay();
-                btn.disabled = false;
-                input.disabled = false;
-                btn.textContent = 'Enter';
-            }
+            // Optimistic: đóng overlay ngay, không chờ API
+            setStoredGuestName(host, v.name);
+            updateInvitationName(v.name);
+            hideOverlay();
+            window.dispatchEvent(new CustomEvent('guestNameReady'));
+            btn.disabled = false;
+            input.disabled = false;
+            btn.textContent = 'Let\'s find out something!';
 
-            // Timeout: đóng overlay sau 6 giây dù API chưa xong (tránh treo)
-            var timeoutId = setTimeout(done, 6000);
-
+            // Gửi record visit ở background (fire-and-forget)
             var api = window.googleSheetsAPI;
-            var promise = api && api.recordVisit ? api.recordVisit(host, v.name) : Promise.resolve({ success: false });
-
-            promise.then(function (res) {
-                clearTimeout(timeoutId);
-                done();
-            }).catch(function () {
-                clearTimeout(timeoutId);
-                done();
-            });
+            if (api && api.recordVisit) {
+                api.recordVisit(host, v.name).catch(function (err) {
+                    console.warn('recordVisit background:', err);
+                });
+            }
         }
     }
 
@@ -146,6 +144,10 @@
         var name = getStoredGuestName(host);
         if (name) {
             updateInvitationName(name);
+            // Fire sau 1 frame để main.js kịp đăng ký listener guestNameReady (tránh race trên DOMContentLoaded)
+            requestAnimationFrame(function () {
+                window.dispatchEvent(new CustomEvent('guestNameReady'));
+            });
             return;
         }
         if (window.userLoader && typeof window.userLoader.init === 'function') {
