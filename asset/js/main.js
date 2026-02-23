@@ -1,174 +1,36 @@
 /**
  * Main JavaScript - GoodHello Invitation
- * All interactive functionality for the invitation page
+ * (Legacy entry point)
+ *
+ * Logic has been split into smaller files for better maintainability:
+ *  - lenis-core.js
+ *  - hero-envelope.js
+ *  - stamps-section.js
+ *  - invitation-section.js
+ *  - wishes-section.js
+ *
+ * This file is kept as a lightweight compatibility stub.
  */
 
-// =============================================
-// LENIS SMOOTH SCROLL INITIALIZATION
-// =============================================
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    smoothTouch: false,
-    touchMultiplier: 2
-});
+// You can safely add any future global helpers here if needed.
+console.debug('goodhello main.js loaded (stub).');
 
-// Make lenis globally accessible
-window.lenis = lenis;
+/**
+ * Main JavaScript - GoodHello Invitation
+ * (Legacy entry point)
+ *
+ * Logic has been split into smaller files for better maintainability:
+ *  - lenis-core.js
+ *  - hero-envelope.js
+ *  - stamps-section.js
+ *  - invitation-section.js
+ *  - wishes-section.js
+ *
+ * This file is kept as a lightweight compatibility stub.
+ */
 
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
-
-requestAnimationFrame(raf);
-
-/** Strip Vietnamese diacritics so font displays correctly (shared for name + wish inputs) */
-function stripVietnameseDiacritics(str) {
-    if (!str) return str;
-    var map = { 'à':'a','á':'a','ả':'a','ã':'a','ạ':'a','ă':'a','ằ':'a','ắ':'a','ẳ':'a','ẵ':'a','ặ':'a','â':'a','ầ':'a','ấ':'a','ẩ':'a','ẫ':'a','ậ':'a','À':'A','Á':'A','Ả':'A','Ã':'A','Ạ':'A','Ă':'A','Ằ':'A','Ắ':'A','Ẳ':'A','Ẵ':'A','Ặ':'A','Â':'A','Ầ':'A','Ấ':'A','Ẩ':'A','Ẫ':'A','Ậ':'A','è':'e','é':'e','ẻ':'e','ẽ':'e','ẹ':'e','ê':'e','ề':'e','ế':'e','ể':'e','ễ':'e','ệ':'e','È':'E','É':'E','Ẻ':'E','Ẽ':'E','Ẹ':'E','Ê':'E','Ề':'E','Ế':'E','Ể':'E','Ễ':'E','Ệ':'E','ì':'i','í':'i','ỉ':'i','ĩ':'i','ị':'i','Ì':'I','Í':'I','Ỉ':'I','Ĩ':'I','Ị':'I','ò':'o','ó':'o','ỏ':'o','õ':'o','ọ':'o','ô':'o','ồ':'o','ố':'o','ổ':'o','ỗ':'o','ộ':'o','ơ':'o','ờ':'o','ớ':'o','ở':'o','ỡ':'o','ợ':'o','Ò':'O','Ó':'O','Ỏ':'O','Õ':'O','Ọ':'O','Ô':'O','Ồ':'O','Ố':'O','Ổ':'O','Ỗ':'O','Ộ':'O','Ơ':'O','Ờ':'O','Ớ':'O','Ở':'O','Ỡ':'O','Ợ':'O','ù':'u','ú':'u','ủ':'u','ũ':'u','ụ':'u','ư':'u','ừ':'u','ứ':'u','ử':'u','ữ':'u','ự':'u','Ù':'U','Ú':'U','Ủ':'U','Ũ':'U','Ụ':'U','Ư':'U','Ừ':'U','Ứ':'U','Ử':'U','Ữ':'U','Ự':'U','ỳ':'y','ý':'y','ỷ':'y','ỹ':'y','ỵ':'y','Ỳ':'Y','Ý':'Y','Ỷ':'Y','Ỹ':'Y','Ỵ':'Y','đ':'d','Đ':'D' };
-    return String(str).replace(/[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ]/g, function (c) { return map[c] || c; });
-}
-window.stripVietnameseDiacritics = stripVietnameseDiacritics;
-
-// =============================================
-// ENVELOPE ANIMATION (starts after guest name is entered)
-// =============================================
-document.addEventListener('DOMContentLoaded', () => {
-    const envelopeWrapper = document.querySelector('.envelope-wrapper');
-    const letterGroup = document.querySelector('#letter');
-    const flap = document.querySelector('#flap');
-    const nav = document.querySelector('nav');
-
-    gsap.set(letterGroup, { y: 350 });
-
-    function startHeroAnimation() {
-        const mainTimeline = gsap.timeline({
-            defaults: { ease: 'power2.out' },
-            delay: 0.3
-        });
-
-        mainTimeline.to(envelopeWrapper, {
-            y: '-40%',
-            duration: 1.5,
-            ease: 'power3.out'
-        });
-
-        mainTimeline.to(flap, {
-            rotateX: -160,
-            duration: 0.6,
-            ease: 'power2.inOut'
-        }, '+=0.1');
-
-        mainTimeline.to(letterGroup, {
-            y: -20,
-            duration: 1,
-            ease: 'power3.out'
-        }, '-=0.3');
-
-        // Add infinite floating animation after the main animation completes
-        mainTimeline.call(() => {
-            // Floating animation for the entire envelope (up and down)
-            gsap.to(envelopeWrapper, {
-                y: '-42%',
-                duration: 2.5,
-                ease: 'sine.inOut',
-                yoyo: true,
-                repeat: -1
-            });
-
-            // Subtle rotation for more natural floating effect
-            gsap.to(envelopeWrapper, {
-                rotation: 1.5,
-                duration: 3.5,
-                ease: 'sine.inOut',
-                yoyo: true,
-                repeat: -1
-            });
-
-            // Show nav only after hero animation is done (slide down)
-            if (nav) {
-                nav.classList.remove('nav-hidden');
-            }
-        });
-    }
-
-    // Start hero only after guest has entered their name (event from guest-input.js)
-    window.addEventListener('guestNameReady', startHeroAnimation);
-
-    // Add click handler for stamp placeholder to scroll to stamps section
-    const stampPlaceholderGroup = document.querySelector('.stamp-placeholder-group');
-
-    if (stampPlaceholderGroup) {
-        stampPlaceholderGroup.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const stampsSection = document.querySelector('.stamps-section');
-            if (stampsSection && window.lenis) {
-                window.lenis.scrollTo(stampsSection, {
-                    offset: 0,
-                    duration: 1.5,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-                });
-            }
-        });
-    }
-});
-
-// =============================================
-// STAMPS SECTION LOGIC - DYNAMIC VERSION
-// =============================================
-document.addEventListener('DOMContentLoaded', async () => {
-    const stampsSection = document.querySelector('.stamps-section');
-    const stampsTitle = document.getElementById('stamps-section-title');
-    const stampsGrid = document.getElementById('stamps-grid');
-
-    // Initialize user loader and get data
-    try {
-        await window.userLoader.init();
-        
-        // Update main title
-        window.userLoader.updateMainTitle(stampsTitle);
-        
-        // Render stamps dynamically
-        const stampItems = window.userLoader.renderStamps(stampsGrid);
-        
-        if (!stampItems || stampItems.length === 0) {
-            console.error('No stamps rendered');
-            return;
-        }
-
-        const defaultTitle = stampsTitle.innerHTML; // Use innerHTML to preserve <br>
-
-        // Predefined rotations for each stamp (fixed)
-        const fixedRotations = [-5, 3, -7, 4, -3, 6];
-
-        // 1. Position stamps in circular layout (desktop only)
-        function positionStampsCircular() {
-            if (window.innerWidth > 768) {
-                const radius = 450;
-                const centerX = stampsGrid.offsetWidth / 2;
-                const centerY = stampsGrid.offsetHeight / 2;
-
-                stampItems.forEach((stamp, index) => {
-                    const angle = (index / stampItems.length) * 2 * Math.PI - Math.PI / 2;
-                    let x = centerX + radius * Math.cos(angle) - stamp.offsetWidth / 2;
-                    let y = centerY + radius * Math.sin(angle) - stamp.offsetHeight / 2;
-                    
-                    // Custom offsets for specific stamps
-                    if (index === 0) {
-                        y += 100;
-                    }
-                    if (index === 3) {
-                        y -= 100;
-                    }
-                    
-                    // Use fixed rotation
-                    const rotation = fixedRotations[index] || 0;
-                    
-                    stamp.style.left = `${x}px`;
+// You can safely add any future global helpers here if needed.
+console.debug('goodhello main.js loaded (stub).');
                     stamp.style.top = `${y}px`;
                     stamp.style.transform = `rotate(${rotation}deg)`;
                     stamp.dataset.baseRotation = rotation;
@@ -376,6 +238,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const calendarBtn = document.getElementById('calendar-btn');
     const locationBtn = document.getElementById('location-btn');
     const messageBtn = document.getElementById('message-btn');
+    const downloadBtn = document.getElementById('download-btn');
 
     if (!invitationSection) return;
 
@@ -569,6 +432,72 @@ document.addEventListener('DOMContentLoaded', async () => {
                 overlay.classList.add('active');
                 textarea.focus();
             });
+        });
+    }
+
+    // =============================================
+    // 5. DOWNLOAD BUTTON - Export invitation as PDF
+    // =============================================
+    async function downloadInvitationPdf() {
+        if (!invitationCard || !window.html2canvas || !window.jspdf) {
+            window.print();
+            return;
+        }
+
+        // Smooth scroll card into view before capture
+        if (window.lenis) {
+            window.lenis.scrollTo(invitationSection, { duration: 0.6 });
+            await new Promise(resolve => setTimeout(resolve, 700));
+        } else {
+            invitationSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            await new Promise(resolve => setTimeout(resolve, 700));
+        }
+
+        // Temporarily reset transforms/shadows for clean capture
+        const previousTransform = invitationCard.style.transform;
+        const previousBoxShadow = invitationCard.style.boxShadow;
+        invitationCard.style.transform = 'none';
+        invitationCard.style.boxShadow = 'none';
+
+        try {
+            const canvas = await window.html2canvas(invitationCard, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            const margin = 10;
+            const maxWidth = pageWidth - margin * 2;
+            const imgWidth = maxWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const y = (pageHeight - imgHeight) / 2;
+
+            pdf.addImage(imgData, 'PNG', margin, Math.max(y, margin), imgWidth, imgHeight, undefined, 'FAST');
+
+            const guestNameEl = document.getElementById('guest-name');
+            const guestName = guestNameEl ? guestNameEl.textContent.trim() : '';
+            const safeName = guestName ? guestName.replace(/[^a-z0-9\-]+/gi, '_') : 'guest';
+
+            pdf.save(`goodhello-invitation-${safeName}.pdf`);
+        } catch (err) {
+            console.error('Error generating invitation PDF:', err);
+            window.print();
+        } finally {
+            invitationCard.style.transform = previousTransform;
+            invitationCard.style.boxShadow = previousBoxShadow;
+        }
+    }
+
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+            downloadInvitationPdf();
         });
     }
 
@@ -850,7 +779,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 setTimeout(() => {
                     paper.classList.add('visible');
                     paper.classList.remove('falling');
-                }, 1200); // Match the animation duration
+                }, 1800); // Match the animation duration
             }, index * 150); // Slightly longer stagger for better visual
         });
     }

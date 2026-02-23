@@ -133,6 +133,7 @@ class UserLoader {
       img.src = stamp.src;
       img.alt = stamp.alt;
       img.dataset.title = stamp.title;
+      img.dataset.tooltip = 'View story';
       img.className = 'stamp-item';
       container.appendChild(img);
     });
