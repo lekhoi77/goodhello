@@ -483,15 +483,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             overlay.innerHTML =
                 '<div class="wish-modal">' +
                 '<div class="wish-modal-content">' +
-                '<h2 class="heading-2">Gửi lời chúc</h2>' +
-                '<p class="body-lg">Viết lời chúc của bạn bên dưới, lời chúc sẽ xuất hiện ở section bên dưới.</p>' +
+                '<h2 class="heading-2">Send a message</h2>' +
                 '<div class="wish-modal-field">' +
-                '<textarea id="wish-message-input" class="wish-textarea" placeholder="Chúc mừng tốt nghiệp! Chúc bạn thành công..." rows="4" maxlength="500"></textarea>' +
+                '<textarea id="wish-message-input" class="wish-textarea" placeholder="Write your wish below; it will appear in the section below." rows="4" maxlength="500"></textarea>' +
                 '<div class="wish-modal-error" id="wish-modal-error"></div>' +
                 '</div>' +
                 '<div class="wish-modal-actions">' +
-                '<button type="button" class="wish-btn wish-btn-cancel" id="wish-cancel-btn">Hủy</button>' +
-                '<button type="button" class="wish-btn wish-btn-submit" id="wish-submit-btn">Gửi</button>' +
+                '<button type="button" class="wish-btn wish-btn-cancel body-md" id="wish-cancel-btn">Cancel</button>' +
+                '<button type="button" class="wish-btn wish-btn-submit body-md" id="wish-submit-btn">Send</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -519,20 +518,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             submitBtn.addEventListener('click', function () {
                 var msg = (textarea.value || '').trim();
                 if (!msg) {
-                    errorEl.textContent = 'Vui lòng nhập lời chúc.';
+                    errorEl.textContent = 'Please enter your wish.';
                     errorEl.style.display = 'block';
                     return;
                 }
                 errorEl.style.display = 'none';
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Đang gửi...';
+                submitBtn.textContent = 'Sending...';
                 sendWishFromForm(msg).then(function (res) {
                     if (res.success) {
                         closeModal();
                         if (window.wishesSectionRefresh) window.wishesSectionRefresh();
                         var toast = document.createElement('div');
                         toast.className = 'guest-toast';
-                        toast.textContent = 'Đã gửi lời chúc!';
+                        toast.textContent = 'Wish sent! Thank you.';
                         document.body.appendChild(toast);
                         requestAnimationFrame(function () { toast.classList.add('show'); });
                         setTimeout(function () {
@@ -540,11 +539,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                             setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
                         }, 2500);
                     } else {
-                        errorEl.textContent = (res.message || res.error || 'Gửi thất bại. Thử lại sau.') + ' (Mở F12 > Console để xem chi tiết.)';
+                        errorEl.textContent = (res.message || res.error || 'Failed to send. Try again later.') + ' (Open F12 > Console for details.)';
                         errorEl.style.display = 'block';
                     }
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Gửi';
+                    submitBtn.textContent = 'Send';
                 });
             });
             textarea.addEventListener('input', function () {
