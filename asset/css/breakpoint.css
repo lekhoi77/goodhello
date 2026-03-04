@@ -213,6 +213,7 @@
 @media (max-width: 768px) {
   .invitation-section {
     padding: 2rem 1rem;
+    margin-top: 60px;
   }
 
   .invitation-card {
