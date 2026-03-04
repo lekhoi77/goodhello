@@ -9,7 +9,7 @@
 /* Scroll indicator — ẩn trên desktop, bật trên mobile qua media query bên dưới */
 .scroll-indicator {
   position: absolute;
-  bottom: 2rem;
+  bottom: calc(2rem + 80px);
   left: 50%;
   transform: translateX(-50%);
   display: none;
