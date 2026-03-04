@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Track if hover is enabled (only after animation completes)
         let isHoverEnabled = false;
 
+        // Scroll indicator cho mobile (set bởi initMobileLayout, show bởi IntersectionObserver)
+        let stampsScrollIndicator = null;
+
         // Mobile: wrapper tall + position sticky + lenis scroll → translateX ngang
         // Không dùng GSAP pin, section ở đúng vị trí tự nhiên trong viewport
         function initMobileLayout() {
@@ -136,6 +139,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     stampsTitle.innerHTML = formatTitle(stampItems[0].dataset.title || defaultTitle);
                 }
 
+                // Scroll indicator: ẩn ban đầu, sẽ được show sau entrance animation
+                stampsScrollIndicator = document.createElement('div');
+                stampsScrollIndicator.className = 'stamps-scroll-indicator';
+                stampsScrollIndicator.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>scroll</span>
+                `;
+                stampsSection.appendChild(stampsScrollIndicator);
+
                 // Drive translateX theo scroll progress trong wrapper
                 let currentTitleIdx = 0;
                 if (window.lenis) {
@@ -144,6 +158,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                             (l.scroll - wrapperTop) / pinDistance
                         ));
                         stampsGrid.style.transform = `translateX(${-progress * scrollDistance}px)`;
+
+                        // Ẩn indicator khi user bắt đầu scroll qua stamps
+                        if (stampsScrollIndicator) {
+                            if (progress > 0.04) {
+                                stampsScrollIndicator.classList.add('hidden');
+                            } else {
+                                stampsScrollIndicator.classList.remove('hidden');
+                            }
+                        }
 
                         const idx = Math.min(
                             Math.round(progress * (stampItems.length - 1)),
@@ -211,6 +234,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const totalAnimationTime = 300 + (stampItems.length - 1) * 150 + 600;
                     setTimeout(() => {
                         isHoverEnabled = true;
+                        if (stampsScrollIndicator) {
+                            stampsScrollIndicator.classList.add('visible');
+                        }
                     }, totalAnimationTime);
                 }
             });
