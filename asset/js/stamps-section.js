@@ -41,7 +41,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const rotation = fixedRotations[index] || 0;
                     stamp.style.left = `${x}px`;
                     stamp.style.top = `${y}px`;
-                    stamp.style.transform = `rotate(${rotation}deg)`;
+                    stamp.style.setProperty('--base-rotation', `${rotation}deg`);
+                    stamp.style.setProperty('--float-delay', `-${index * 0.45}s`);
                     stamp.dataset.baseRotation = rotation;
                 });
             }

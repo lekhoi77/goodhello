@@ -12,6 +12,35 @@
 }
 
 /* =============================================
+   STAMP FLOATING ANIMATION (desktop only)
+   ============================================= */
+
+@media (min-width: 769px) {
+  /* Dùng CSS variable cho rotation để animation không bị mất */
+  .stamp-item {
+    transform: rotate(var(--base-rotation, 0deg)) scale(0.8);
+  }
+
+  .stamp-item.visible {
+    transform: rotate(var(--base-rotation, 0deg)) scale(1);
+    animation: stampFloat 3.5s ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+  }
+
+  /* Hover: chỉ dừng float animation.
+     Transform (straighten + scale) do main.css xử lý: scale(1.1) translateY(-20px).
+     Transition trên .stamp-item smooth từ vị trí float hiện tại → hover state. */
+  .stamp-item:hover {
+    animation: none !important;
+  }
+
+  @keyframes stampFloat {
+    0%, 100% { transform: rotate(var(--base-rotation, 0deg)) scale(1) translateY(0);     }
+    50%       { transform: rotate(var(--base-rotation, 0deg)) scale(1) translateY(-14px); }
+  }
+}
+
+/* =============================================
    HERO SECTION
    ============================================= */
 
@@ -201,7 +230,7 @@
     margin: 0;
   }
 
-  /* Grid translate ngang bởi scroll listener, không cần flex: 1 */
+  /* Grid translate ngang bởi scroll listener, khgoông cần flex: 1 */
   .stamps-section.st-mode .stamps-grid {
     overflow: visible;
     align-items: center;
