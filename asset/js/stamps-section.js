@@ -98,6 +98,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const scrollDistance = stampsGrid.scrollWidth - window.innerWidth;
             if (scrollDistance <= 0) return;
 
+            // Tỉ lệ scroll dọc / dịch chuyển ngang: 2 = phải scroll gấp đôi mới hết stamps
+            const speedFactor = 2;
+            const pinDistance = scrollDistance * speedFactor;
+
             // Kích hoạt layout st-mode (overflow: hidden, gap, v.v.)
             stampsSection.classList.add('st-mode');
 
@@ -109,10 +113,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const topOffset = Math.max(0, Math.round((viewportHeight - sectionHeight) / 2));
 
                 // Wrapper: padding-top = topOffset để section BẮT ĐẦU đúng ở giữa khi vào viewport
-                // Height = scrollDistance + sectionHeight + topOffset*2 để sticky hoạt động suốt
+                // Height dùng pinDistance thay vì scrollDistance để kéo dài vùng pin
                 const wrapper = document.createElement('div');
                 wrapper.style.cssText = [
-                    `height: ${scrollDistance + sectionHeight + topOffset * 2}px`,
+                    `height: ${pinDistance + sectionHeight + topOffset * 2}px`,
                     `position: relative`,
                     `padding-top: ${topOffset}px`
                 ].join('; ') + ';';
@@ -137,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (window.lenis) {
                     window.lenis.on('scroll', (l) => {
                         const progress = Math.max(0, Math.min(1,
-                            (l.scroll - wrapperTop) / scrollDistance
+                            (l.scroll - wrapperTop) / pinDistance
                         ));
                         stampsGrid.style.transform = `translateX(${-progress * scrollDistance}px)`;
 
