@@ -66,6 +66,25 @@
   .scroll-indicator {
     display: flex;
   }
+
+  /* Nav: gọn hơn trên mobile */
+  nav {
+    padding: 16px 20px;
+  }
+
+  nav img {
+    width: 96px;
+    height: auto;
+  }
+
+  nav .right {
+    gap: 8px;
+  }
+
+  nav .right p {
+    font-size: 16px;
+    line-height: 1.3;
+  }
 }
 
 /* =============================================
@@ -240,5 +259,14 @@
 
   .guest-input {
     font-size: 16px;
+  }
+
+  /* Nav nhỏ hơn trên màn rất hẹp */
+  nav {
+    padding: 12px 16px;
+  }
+
+  nav .right p {
+    font-size: 14px;
   }
 }
