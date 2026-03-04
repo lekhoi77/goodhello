@@ -2,6 +2,76 @@
    RESPONSIVE BREAKPOINTS
    ============================================= */
 
+/* =============================================
+   HERO SECTION
+   ============================================= */
+
+/* Scroll indicator — ẩn trên desktop, bật trên mobile qua media query bên dưới */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+}
+
+.scroll-indicator-arrow {
+  animation: scrollBounce 1.4s ease-in-out infinite;
+  color: var(--colors-primary-500, #0038bc);
+}
+
+.scroll-indicator-text {
+  font-family: "Poor Story", sans-serif;
+  font-size: 14px;
+  color: var(--colors-primary-500, #0038bc);
+  letter-spacing: 0.08em;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* Mobile - 768px and below */
+@media (max-width: 768px) {
+  .hero-viewport {
+    min-height: 100vh;
+    margin-bottom: 6rem;
+  }
+
+  /* Fixed width — envelope không scale theo màn hình,
+     tràn ra 2 bên nhờ overflow-x: hidden trên body.
+     Text giữ kích thước đọc được (~55px heading-2).
+     Dùng left thay vì translateX(-50%) để tránh GSAP
+     convert % sang px sai kích thước khi animate y. */
+  .envelope-wrapper {
+    width: 650px;
+    height: calc(650px * 983 / 1260);
+    top: calc(50% + 50px);
+    left: calc(50% - 275px);
+    transform: translateY(200%);
+  }
+
+  .scroll-indicator {
+    display: flex;
+  }
+}
+
+/* =============================================
+   INVITATION SECTION
+   ============================================= */
+
 /* Tablet - 1024px and below */
 @media (max-width: 1024px) {
   .invitation-card {

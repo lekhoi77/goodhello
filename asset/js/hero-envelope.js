@@ -57,6 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (nav) {
                 nav.classList.remove('nav-hidden');
             }
+
+            // Show scroll indicator on mobile, hide when user starts scrolling
+            const indicator = document.getElementById('scroll-indicator');
+            if (indicator && window.innerWidth <= 768) {
+                indicator.classList.add('visible');
+                const hideIndicator = () => {
+                    indicator.classList.remove('visible');
+                    if (window.lenis) window.lenis.off('scroll', hideIndicator);
+                };
+                if (window.lenis) {
+                    window.lenis.on('scroll', hideIndicator);
+                } else {
+                    window.addEventListener('scroll', hideIndicator, { once: true, passive: true });
+                }
+            }
         });
     }
 
