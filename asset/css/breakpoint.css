@@ -58,8 +58,8 @@
   .envelope-wrapper {
     width: 650px;
     height: calc(650px * 983 / 1260);
-    top: calc(50% + 50px);
-    left: calc(50% - 225px);
+    top: 50%;
+    left: calc(50% - 275px);
     transform: translateY(200%);
   }
 
