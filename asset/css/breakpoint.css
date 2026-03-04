@@ -379,8 +379,10 @@
   }
 
   .dayblock-note {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 16px;
+    left: 19px;
+    top: 29px;
   }
 }
 

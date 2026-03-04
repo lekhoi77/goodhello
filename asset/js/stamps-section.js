@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         Promise.all(imageLoadPromises).then(() => {
             positionStampsCircular();
+            initMobileLayout();
         });
         
         window.addEventListener('resize', positionStampsCircular);
@@ -217,7 +218,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const totalAnimationTime = 300 + (stampItems.length - 1) * 150 + 600;
                     setTimeout(() => {
                         isHoverEnabled = true;
-                        initMobileLayout(); // khởi tạo scroll-title sync cho mobile
                     }, totalAnimationTime);
                 }
             });
