@@ -16,12 +16,18 @@ const lenis = new Lenis({
 // Make lenis globally accessible
 window.lenis = lenis;
 
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
+// Dùng GSAP ticker thay manual RAF để Lenis và ScrollTrigger đồng bộ cùng 1 clock
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000); // GSAP time = giây, Lenis raf = milliseconds
+});
+gsap.ticker.lagSmoothing(0);
 
-requestAnimationFrame(raf);
+// Báo ScrollTrigger cập nhật khi Lenis scroll (nếu ScrollTrigger được load)
+lenis.on('scroll', () => {
+    if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.update();
+    }
+});
 
 /** Strip Vietnamese diacritics so font displays correctly (shared for name + wish inputs) */
 function stripVietnameseDiacritics(str) {

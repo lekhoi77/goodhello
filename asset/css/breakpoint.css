@@ -3,6 +3,15 @@
    ============================================= */
 
 /* =============================================
+   GLOBAL OVERRIDES
+   ============================================= */
+
+/* Wish card dùng body font thay vì Mythshire */
+.wish-content {
+  font-family: "Poor Story", system-ui, sans-serif;
+}
+
+/* =============================================
    HERO SECTION
    ============================================= */
 
@@ -59,7 +68,7 @@
     width: 650px;
     height: calc(650px * 983 / 1260);
     top: 50%;
-    left: calc(50% - 275px);
+    left: calc(50% - 295px);
     transform: translateY(200%);
   }
 
@@ -70,6 +79,7 @@
   /* Nav: gọn hơn trên mobile */
   nav {
     padding: 16px 20px;
+    top: 10px;
   }
 
   nav img {
@@ -84,6 +94,90 @@
   nav .right p {
     font-size: 16px;
     line-height: 1.3;
+  }
+}
+
+/* =============================================
+   STAMPS SECTION
+   ============================================= */
+
+@media (max-width: 768px) {
+  .stamps-section {
+    margin-top: 40px;
+    padding: 0 0 3rem 0;
+    min-height: auto;
+    align-items: flex-start;
+  }
+
+  /* Desktop dùng translate(-50%, -50%) để căn tuyệt đối vào giữa.
+     Mobile dùng position: sticky nên chỉ cần translateY cho entrance animation. */
+  #stamps-section-title {
+    text-align: left;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    font-size: 72px;
+    line-height: 0.9;
+    min-height: auto;
+    width: 100%;
+    max-width: 100%;
+    left: 0;
+    transform: translateY(40px);
+  }
+
+  #stamps-section-title.visible {
+    transform: translateY(0);
+  }
+
+  /* Center-snap carousel:
+     padding = (100vw - 75vw) / 2 = 12.5vw
+     để stamp đầu và stamp cuối cũng có thể snap vào giữa */
+  .stamps-grid {
+    padding: 1rem 12.5vw;
+    gap: 4vw;
+    scrollbar-width: none;
+  }
+
+  .stamps-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stamp-item {
+    width: auto;
+    height: 60vw;
+    object-fit: contain;
+  }
+
+  .stamp-item:hover {
+    transform: scale(1) !important;
+  }
+}
+
+/* ScrollTrigger pin mode — kích hoạt khi JS thêm class .st-mode */
+@media (max-width: 768px) {
+  /* Section clip horizontal overflow, height tự nhiên (không phải 100vh)
+     sticky + top được set bởi JS để căn giữa trong wrapper */
+  .stamps-section.st-mode {
+    overflow: hidden;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    margin-top: 0;
+    gap: 2rem;
+  }
+
+  /* Title vẫn ở trên, bỏ sticky vì section đã được pin bởi GSAP */
+  .stamps-section.st-mode #stamps-section-title {
+    position: relative;
+    flex-shrink: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Grid translate ngang bởi scroll listener, không cần flex: 1 */
+  .stamps-section.st-mode .stamps-grid {
+    overflow: visible;
+    align-items: center;
+    margin: 0;
   }
 }
 
@@ -149,8 +243,8 @@
   }
 
   .invitation-stamp {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     order: -1; /* Put stamp before greeting */
   }
 
@@ -268,5 +362,44 @@
 
   nav .right p {
     font-size: 14px;
+  }
+}
+
+/* =============================================
+   FOOTER SECTION
+   ============================================= */
+
+@media (max-width: 768px) {
+  .footer-title {
+    font-size: 13px;
+  }
+
+  .footer-month {
+    font-size: 16px;
+  }
+
+  .dayblock-note {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+/* =============================================
+   WISHES SECTION
+   ============================================= */
+
+@media (max-width: 768px) {
+  .wish-paper {
+    width: 180px;
+    min-height: 100px;
+  }
+
+  .wish-content {
+    padding: 16px 14px;
+    font-size: 15px;
+  }
+
+  .wish-bookmark {
+    width: 14px;
   }
 }
