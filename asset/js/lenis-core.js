@@ -9,8 +9,8 @@ const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
-    smoothTouch: true,
-    touchMultiplier: 0.8
+    smoothTouch: false,
+    touchMultiplier: 2
 });
 
 // Make lenis globally accessible

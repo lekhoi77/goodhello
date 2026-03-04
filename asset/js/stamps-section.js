@@ -6,14 +6,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const stampsTitle = document.getElementById('stamps-section-title');
     const stampsGrid = document.getElementById('stamps-grid');
 
-    // Initialize user loader and get data
     try {
         await window.userLoader.init();
         
-        // Update main title
         window.userLoader.updateMainTitle(stampsTitle);
         
-        // Render stamps dynamically
         const stampItems = window.userLoader.renderStamps(stampsGrid);
         
         if (!stampItems || stampItems.length === 0) {
@@ -21,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const defaultTitle = stampsTitle.innerHTML; // Use innerHTML to preserve <br>
+        const defaultTitle = stampsTitle.innerHTML;
 
         // Predefined rotations for each stamp (fixed)
         const fixedRotations = [-5, 3, -7, 4, -3, 6];
@@ -38,17 +35,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     let x = centerX + radius * Math.cos(angle) - stamp.offsetWidth / 2;
                     let y = centerY + radius * Math.sin(angle) - stamp.offsetHeight / 2;
                     
-                    // Custom offsets for specific stamps
-                    if (index === 0) {
-                        y += 100;
-                    }
-                    if (index === 3) {
-                        y -= 100;
-                    }
+                    if (index === 0) y += 100;
+                    if (index === 3) y -= 100;
                     
-                    // Use fixed rotation
                     const rotation = fixedRotations[index] || 0;
-                    
                     stamp.style.left = `${x}px`;
                     stamp.style.top = `${y}px`;
                     stamp.style.transform = `rotate(${rotation}deg)`;
@@ -64,19 +54,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                     resolve();
                 } else {
                     stamp.addEventListener('load', resolve);
-                    stamp.addEventListener('error', resolve); // Resolve even on error
+                    stamp.addEventListener('error', resolve);
                 }
             });
         });
 
         Promise.all(imageLoadPromises).then(() => {
             positionStampsCircular();
-            initMobileLayout();
+            initMobileCarousel();
         });
         
         window.addEventListener('resize', positionStampsCircular);
 
-        // 2. Hover interaction: change title simply
         // Helper function: Format title with 2 words first, rest on new line
         function formatTitle(text) {
             const words = text.split(' ');
@@ -89,103 +78,59 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Track if hover is enabled (only after animation completes)
         let isHoverEnabled = false;
 
-        // Scroll indicator cho mobile (set bởi initMobileLayout, show bởi IntersectionObserver)
-        let stampsScrollIndicator = null;
+        // Swipe indicator reference (created in initMobileCarousel)
+        let swipeIndicator = null;
 
-        // Mobile: wrapper tall + position sticky + lenis scroll → translateX ngang
-        // Không dùng GSAP pin, section ở đúng vị trí tự nhiên trong viewport
-        function initMobileLayout() {
+        // 2. Mobile: native swipe carousel + title sync + swipe indicator
+        function initMobileCarousel() {
             if (window.innerWidth > 768) return;
 
-            // Đo scrollWidth khi overflow-x còn là auto (trước khi st-mode đổi thành visible)
-            const scrollDistance = stampsGrid.scrollWidth - window.innerWidth;
-            if (scrollDistance <= 0) return;
+            // Init title với stamp đầu tiên
+            if (stampItems[0]) {
+                stampsTitle.innerHTML = formatTitle(stampItems[0].dataset.title || defaultTitle);
+            }
 
-            // Tỉ lệ scroll dọc / dịch chuyển ngang: 3 = phải scroll gấp 3 mới hết stamps
-            const speedFactor = 3;
-            const pinDistance = scrollDistance * speedFactor;
+            // Tạo swipe indicator (góc phải trên của section)
+            swipeIndicator = document.createElement('div');
+            swipeIndicator.className = 'stamps-swipe-indicator';
+            swipeIndicator.innerHTML = `
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            `;
+            stampsSection.appendChild(swipeIndicator);
 
-            // Kích hoạt layout st-mode (overflow: hidden, gap, v.v.)
-            stampsSection.classList.add('st-mode');
+            // Title sync: tính stamp nào đang ở giữa viewport khi user swipe
+            let titleSyncTimeout;
+            stampsGrid.addEventListener('scroll', () => {
+                // Ẩn indicator ngay khi user bắt đầu swipe
+                if (swipeIndicator) swipeIndicator.classList.add('hidden');
 
-            requestAnimationFrame(() => {
-                const sectionHeight = stampsSection.offsetHeight;
-                const viewportHeight = window.innerHeight;
+                clearTimeout(titleSyncTimeout);
+                titleSyncTimeout = setTimeout(() => {
+                    const gridCenter = stampsGrid.scrollLeft + stampsGrid.offsetWidth / 2;
+                    let closestIdx = 0;
+                    let closestDist = Infinity;
 
-                // Khoảng cách để section nằm chính giữa viewport theo chiều dọc
-                const topOffset = Math.max(0, Math.round((viewportHeight - sectionHeight) / 2));
-
-                // Wrapper: padding-top = topOffset để section BẮT ĐẦU đúng ở giữa khi vào viewport
-                // Height dùng pinDistance thay vì scrollDistance để kéo dài vùng pin
-                const wrapper = document.createElement('div');
-                wrapper.style.cssText = [
-                    `height: ${pinDistance + sectionHeight + topOffset * 2}px`,
-                    `position: relative`,
-                    `padding-top: ${topOffset}px`
-                ].join('; ') + ';';
-                stampsSection.parentNode.insertBefore(wrapper, stampsSection);
-                wrapper.appendChild(stampsSection);
-
-                // Section sticky ở đúng topOffset — trùng với vị trí ban đầu → giữ nguyên suốt
-                stampsSection.style.position = 'sticky';
-                stampsSection.style.top = `${topOffset}px`;
-
-                // Vị trí tuyệt đối của wrapper trong document tại thời điểm init
-                const wrapperTop = wrapper.getBoundingClientRect().top
-                    + (window.lenis ? window.lenis.scroll : window.scrollY);
-
-                // Init title với stamp đầu tiên
-                if (stampItems[0]) {
-                    stampsTitle.innerHTML = formatTitle(stampItems[0].dataset.title || defaultTitle);
-                }
-
-                // Scroll indicator: ẩn ban đầu, sẽ được show sau entrance animation
-                stampsScrollIndicator = document.createElement('div');
-                stampsScrollIndicator.className = 'stamps-scroll-indicator';
-                stampsScrollIndicator.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span>scroll</span>
-                `;
-                stampsSection.appendChild(stampsScrollIndicator);
-
-                // Drive translateX theo scroll progress trong wrapper
-                let currentTitleIdx = 0;
-                if (window.lenis) {
-                    window.lenis.on('scroll', (l) => {
-                        const progress = Math.max(0, Math.min(1,
-                            (l.scroll - wrapperTop) / pinDistance
-                        ));
-                        stampsGrid.style.transform = `translateX(${-progress * scrollDistance}px)`;
-
-                        // Ẩn indicator khi user bắt đầu scroll qua stamps
-                        if (stampsScrollIndicator) {
-                            if (progress > 0.04) {
-                                stampsScrollIndicator.classList.add('hidden');
-                            } else {
-                                stampsScrollIndicator.classList.remove('hidden');
-                            }
-                        }
-
-                        const idx = Math.min(
-                            Math.round(progress * (stampItems.length - 1)),
-                            stampItems.length - 1
-                        );
-                        if (idx !== currentTitleIdx && stampItems[idx]) {
-                            currentTitleIdx = idx;
-                            stampsTitle.innerHTML = formatTitle(stampItems[idx].dataset.title || defaultTitle);
+                    stampItems.forEach((stamp, i) => {
+                        const stampCenter = stamp.offsetLeft + stamp.offsetWidth / 2;
+                        const dist = Math.abs(gridCenter - stampCenter);
+                        if (dist < closestDist) {
+                            closestDist = dist;
+                            closestIdx = i;
                         }
                     });
-                }
-            });
+
+                    stampsTitle.innerHTML = formatTitle(stampItems[closestIdx].dataset.title || defaultTitle);
+                }, 50);
+            }, { passive: true });
         }
-        
+
+        // 3. Hover interaction (desktop only)
         stampItems.forEach(stamp => {
             const hoverHandler = () => {
                 if (!isHoverEnabled) return;
-                const rawTitle = stamp.dataset.title || defaultTitle;
-                stampsTitle.innerHTML = formatTitle(rawTitle);
+                stampsTitle.innerHTML = formatTitle(stamp.dataset.title || defaultTitle);
             };
 
             const resetHandler = () => {
@@ -195,7 +140,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             stamp.addEventListener('mouseenter', hoverHandler);
             stamp.addEventListener('mouseleave', resetHandler);
-
         });
 
         // Initialize stamp details controller
@@ -211,32 +155,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             stamp.style.cursor = 'pointer';
         });
 
-        // 3. Entrance animation with Intersection Observer
+        // 4. Entrance animation with Intersection Observer
         let hasAnimated = false;
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !hasAnimated) {
                     hasAnimated = true;
                     
-                    // Title slides up
                     stampsTitle.classList.add('visible');
                     
-                    // Stamps appear one by one in circular order with stagger
                     stampItems.forEach((stamp, index) => {
                         setTimeout(() => {
                             stamp.classList.add('visible');
                         }, 300 + index * 150);
                     });
                     
-                    // Enable hover after all animations complete
-                    // Last stamp appears at: 300 + (6-1) * 150 = 1050ms
-                    // Add buffer for opacity transition (600ms)
+                    // Enable hover + show swipe indicator after animation completes
                     const totalAnimationTime = 300 + (stampItems.length - 1) * 150 + 600;
                     setTimeout(() => {
                         isHoverEnabled = true;
-                        if (stampsScrollIndicator) {
-                            stampsScrollIndicator.classList.add('visible');
-                        }
+                        if (swipeIndicator) swipeIndicator.classList.add('visible');
                     }, totalAnimationTime);
                 }
             });
@@ -248,4 +186,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Failed to initialize stamps section:', error);
     }
 });
-
