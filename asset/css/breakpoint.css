@@ -185,10 +185,15 @@
    STAMP DETAIL
    ============================================= */
 
+/* Desktop: giảm scale từ 1.5 xuống 1.1 */
+.stamp-detail-image img {
+  transform: scale(1.1);
+}
+
 /* Tablet - 1024px and below */
 @media (max-width: 1024px) {
   .stamp-detail-image img {
-    transform: scale(1.2);
+    transform: scale(1.05);
   }
 }
 

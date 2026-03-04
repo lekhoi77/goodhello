@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const scrollDistance = stampsGrid.scrollWidth - window.innerWidth;
             if (scrollDistance <= 0) return;
 
-            // Tỉ lệ scroll dọc / dịch chuyển ngang: 2 = phải scroll gấp đôi mới hết stamps
-            const speedFactor = 2;
+            // Tỉ lệ scroll dọc / dịch chuyển ngang: 3 = phải scroll gấp 3 mới hết stamps
+            const speedFactor = 3;
             const pinDistance = scrollDistance * speedFactor;
 
             // Kích hoạt layout st-mode (overflow: hidden, gap, v.v.)
