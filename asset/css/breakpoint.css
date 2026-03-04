@@ -177,3 +177,68 @@
     justify-content: center;
   }
 }
+
+/* =============================================
+   GUEST NAME MODAL
+   ============================================= */
+
+@media (max-width: 768px) {
+  .guest-modal {
+    width: min(100vw - 32px, 520px);
+    padding: 32px 24px;
+    border-radius: 14px;
+  }
+
+  .guest-modal-title {
+    font-size: 72px;
+    line-height: 0.9;
+    margin-bottom: 24px;
+  }
+
+  .guest-modal-question {
+    font-size: 20px;
+  }
+
+  .guest-modal-note {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .guest-input-group {
+    margin-bottom: 32px;
+  }
+
+  .guest-input {
+    font-size: 18px;
+    padding: 10px 14px;
+  }
+
+  .guest-submit-btn {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .guest-modal {
+    width: calc(100vw - 24px);
+    padding: 24px 18px;
+  }
+
+  .guest-modal-title {
+    font-size: 56px;
+  }
+
+  .guest-modal-question {
+    font-size: 18px;
+  }
+
+  .guest-modal-note {
+    font-size: 14px;
+  }
+
+  .guest-input {
+    font-size: 16px;
+  }
+}
