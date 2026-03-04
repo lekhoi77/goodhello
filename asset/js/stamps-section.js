@@ -173,12 +173,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             stamp.addEventListener('mouseenter', hoverHandler);
             stamp.addEventListener('mouseleave', resetHandler);
 
-            // Mobile: tap is handled by scroll-snap, không cần thay title thủ công
-            stamp.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                }
-            });
         });
 
         // Initialize stamp details controller
@@ -188,15 +182,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Add click handlers to stamps to show details
         stampItems.forEach((stamp, index) => {
             stamp.addEventListener('click', () => {
-                if (window.innerWidth > 768 && isHoverEnabled) {
-                    window.stampDetailsController.showDetail(index);
-                }
+                window.stampDetailsController.showDetail(index);
             });
 
-            // Add cursor pointer for desktop
-            if (window.innerWidth > 768) {
-                stamp.style.cursor = 'pointer';
-            }
+            stamp.style.cursor = 'pointer';
         });
 
         // 3. Entrance animation with Intersection Observer

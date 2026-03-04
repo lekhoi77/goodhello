@@ -182,6 +182,49 @@
 }
 
 /* =============================================
+   STAMP DETAIL
+   ============================================= */
+
+/* Tablet - 1024px and below */
+@media (max-width: 1024px) {
+  .stamp-detail-image img {
+    transform: scale(1.2);
+  }
+}
+
+/* Mobile - 768px and below */
+@media (max-width: 768px) {
+  /* Reset scale — ở mobile detail section đã column nên ảnh full width,
+     scale(1.5) sẽ tràn ra ngoài */
+  .stamp-detail-image img {
+    transform: scale(1);
+  }
+
+  /* Giới hạn chiều cao ảnh để không chiếm hết màn hình */
+  .stamp-detail-image {
+    max-height: 55vw;
+    overflow: visible;
+  }
+
+  /* Title nhỏ hơn để fit mobile */
+  .stamp-detail-title {
+    font-size: 44px;
+    line-height: 1;
+  }
+
+  /* Back button rõ hơn trên nền nhỏ */
+  .back-to-stamps {
+    font-size: 16px;
+    gap: 8px;
+  }
+
+  /* Favorite button full width, center */
+  .favorite-button {
+    align-self: stretch;
+  }
+}
+
+/* =============================================
    INVITATION SECTION
    ============================================= */
 
