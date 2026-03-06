@@ -150,6 +150,7 @@
     max-width: 100%;
     left: 0;
     transform: translateY(40px);
+    white-space: nowrap;
   }
 
   #stamps-section-title.visible {
@@ -489,6 +490,16 @@
     line-height: 18px;
     left: 19px;
     top: 29px;
+  }
+}
+
+/* =============================================
+   DESKTOP STAMPS TITLE (NO WRAP)
+   ============================================= */
+
+@media (min-width: 769px) {
+  #stamps-section-title {
+    white-space: nowrap;
   }
 }
 

@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Helper function: Format title with 2 words first, rest on new line
         function formatTitle(text) {
+            // If title already contains <br> tags (pre-formatted), return as-is
+            if (text.includes('<br>')) {
+                return text;
+            }
+            
             const words = text.split(' ');
             if (words.length <= 2) return text;
             const firstLine = words.slice(0, 2).join(' ');

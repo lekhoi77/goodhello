@@ -28,7 +28,7 @@ class UserLoader {
     }
 
     // For localhost or main domain, default to 'phatla'
-    if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === 'goodhello.com') {
+    if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === 'goodhello.space') {
       return 'phatla';
     }
 
