@@ -52,10 +52,10 @@ class AudioManager {
                 displayName: 'lemonade-KLICKAUD'
             },
             {
-                id: 'nhunggiadieukhac-minhtoc-lam',
-                name: 'nhunggiadieukhac-minhtoc&lam',
-                file: './asset/audio/bg/nhunggiadieukhac-minhtoc&lam.mp3',
-                displayName: 'nhunggiadieukhac-minhtoc&lam'
+                id: 'nhunggiaidieukhac-minhtoc-lam',
+                name: 'nhunggiaidieukhac-minhtoc&lam',
+                file: './asset/audio/bg/nhunggiaidieukhac-minhtoc&lam.mp3',
+                displayName: 'nhunggiaidieukhac-minhtoc&lam'
             },  
             {
                 id: 'motlantoiradoi-thaidinh',
