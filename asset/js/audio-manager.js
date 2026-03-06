@@ -356,7 +356,9 @@ class AudioManager {
             
         } catch (error) {
             console.warn('⚠️ Failed to play track:', error);
-            this.handleAudioError();
+            if (!this._countdownPlayStarted) {
+                this.handleAudioError();
+            }
         }
     }
 
@@ -579,6 +581,94 @@ class AudioManager {
     }
 
     /**
+     * Gọi từ queueMicrotask trong guest submit - chạy ngay sau click để giữ user gesture
+     */
+    async startMusicForCountdownFromGesture() {
+        if (this.isMobile()) return;
+        try {
+            if (!this.isInitialized) await this.init();
+            this.setVolume(0);
+            this.preferences.enabled = true;
+            await this.playTrack(this.preferences.currentTrackId);
+            this._countdownPlayStarted = true;
+        } catch (e) {
+            console.warn('Could not pre-start music:', e);
+            this._countdownPlayStarted = false;
+        }
+    }
+
+    /**
+     * Sau khi guest nhập tên: hiển thị đếm ngược 5s, sau đó tăng volume lên 10%
+     * Nhạc đã được start bởi startMusicForCountdownFromGesture (chạy trong microtask)
+     * Có nút Mute để hủy
+     */
+    async scheduleMusicAfterGuestReady() {
+        if (this.isMobile()) return;
+
+        const toast = document.getElementById('notification-toast');
+        if (!toast) return;
+
+        this._countdownPlayStarted = false;
+
+        // Đợi microtask chạy xong (startMusicForCountdownFromGesture)
+        await new Promise(r => setTimeout(r, 500));
+
+        let cancelled = false;
+
+        const renderContent = (num) => {
+            const label = num === 1 ? 'second' : 'seconds';
+            return `Music will start in  <span class="toast-countdown"> ${num} </span> ${label}... <button type="button" class="toast-mute-btn">Mute</button>`;
+        };
+
+        const hideToast = () => {
+            toast.classList.remove('show');
+            toast.textContent = '';
+        };
+
+        toast.classList.remove('show');
+        toast.classList.remove('notification-toast-error');
+        toast.innerHTML = renderContent(5);
+        toast.querySelector('.toast-mute-btn').addEventListener('click', () => {
+            cancelled = true;
+            this.mute();
+            if (window.localStorage) localStorage.setItem('audioEnabled', 'false');
+            hideToast();
+        });
+
+        toast.offsetHeight;
+        requestAnimationFrame(() => toast.classList.add('show'));
+
+        for (let i = 4; i >= 1; i--) {
+            await new Promise(r => setTimeout(r, 1000));
+            if (cancelled) return;
+            toast.innerHTML = renderContent(i);
+            toast.querySelector('.toast-mute-btn').addEventListener('click', () => {
+                cancelled = true;
+                this.mute();
+                if (window.localStorage) localStorage.setItem('audioEnabled', 'false');
+                hideToast();
+            });
+        }
+
+        await new Promise(r => setTimeout(r, 1000));
+        if (cancelled) return;
+        hideToast();
+
+        if (this._countdownPlayStarted) {
+            this.setVolume(0.1);
+        } else {
+            try {
+                if (!this.isInitialized) await this.init();
+                this.setVolume(0.1);
+                this.preferences.enabled = true;
+                await this.playTrack(this.preferences.currentTrackId);
+            } catch (e) {
+                console.warn('Could not start music:', e);
+            }
+        }
+    }
+
+    /**
      * Bind global events
      */
     bind() {
@@ -593,6 +683,11 @@ class AudioManager {
         document.addEventListener('click', initOnFirstClick, { capture: true, once: true });
 
         // Giữ nhạc phát liên tục khi chuyển tab (không pause khi tab ẩn)
+
+        // Khi user nhập tên xong: thông báo đếm ngược 5s, sau đó mở nhạc ở 10%
+        window.addEventListener('guestNameReady', () => {
+            this.scheduleMusicAfterGuestReady();
+        });
 
         // Respect user's reduced motion preference
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

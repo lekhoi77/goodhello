@@ -122,6 +122,13 @@
             input.disabled = true;
             btn.textContent = '...';
 
+            // Gọi play nhạc ngay trong context của click (tránh browser chặn autoplay)
+            if (window.audioManager && window.audioManager.startMusicForCountdownFromGesture) {
+                queueMicrotask(function () {
+                    window.audioManager.startMusicForCountdownFromGesture();
+                });
+            }
+
             // Optimistic: đóng overlay ngay, không chờ API
             setStoredGuestName(host, v.name);
             updateInvitationName(v.name);

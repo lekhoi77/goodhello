@@ -381,6 +381,8 @@ class StampDetailsController {
     const toast = document.getElementById('notification-toast');
     if (!toast) return;
     
+    toast.textContent = 'This stamp gonna be used in your invitation later :>';
+    
     // Play notification sound
     if (window.playSFX) {
       window.playSFX('notification', 0.6);
