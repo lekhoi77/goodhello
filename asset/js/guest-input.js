@@ -122,11 +122,9 @@
             input.disabled = true;
             btn.textContent = '...';
 
-            // Gọi play nhạc ngay trong context của click (tránh browser chặn autoplay)
+            // Gọi play nhạc NGAY trong click handler (không async, không queueMicrotask)
             if (window.audioManager && window.audioManager.startMusicForCountdownFromGesture) {
-                queueMicrotask(function () {
-                    window.audioManager.startMusicForCountdownFromGesture();
-                });
+                window.audioManager.startMusicForCountdownFromGesture();
             }
 
             // Optimistic: đóng overlay ngay, không chờ API

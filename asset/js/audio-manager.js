@@ -120,11 +120,10 @@ class AudioManager {
             // Setup UI
             this.setupUI();
             
-            // Start playing if enabled
-            if (this.preferences.enabled) {
+            // Start playing if enabled - nhưng bỏ qua nếu countdown đang xử lý
+            if (this.preferences.enabled && !this._gestureAudio) {
                 await this.playTrack(this.preferences.currentTrackId);
             } else {
-                // Still update display even if not playing
                 this.updateTrackDisplay();
             }
             
@@ -552,6 +551,8 @@ class AudioManager {
      * Handle audio errors gracefully
      */
     handleAudioError() {
+        // Nếu gesture audio đang phát thì không cần báo lỗi
+        if (this._gestureAudio) return;
         const audioControl = document.getElementById('audio-control');
         if (audioControl) {
             audioControl.style.opacity = '0.5';
@@ -581,20 +582,38 @@ class AudioManager {
     }
 
     /**
-     * Gọi từ queueMicrotask trong guest submit - chạy ngay sau click để giữ user gesture
+     * Gọi TRỰC TIẾP trong click handler của submit - play() phải chạy trong cùng gesture.
+     * Không đợi loadTracks(). Tạo Audio element mới và play() ngay lập tức ở volume 0.
      */
-    async startMusicForCountdownFromGesture() {
+    startMusicForCountdownFromGesture() {
         if (this.isMobile()) return;
-        try {
-            if (!this.isInitialized) await this.init();
-            this.setVolume(0);
-            this.preferences.enabled = true;
-            await this.playTrack(this.preferences.currentTrackId);
+
+        const trackId = this.preferences.currentTrackId;
+        const track = this.trackList.find(t => t.id === trackId) || this.trackList[0];
+        if (!track) return;
+
+        const audio = new Audio();
+        audio.volume = 0;
+        audio.loop = false;
+        audio.src = encodeURI(track.file).replace(/#/g, '%23');
+
+        audio.play().then(() => {
+            this._gestureAudio = { audio, trackId: track.id };
             this._countdownPlayStarted = true;
-        } catch (e) {
+
+            // Khi bài hết, tiếp tục bài kế
+            audio.addEventListener('ended', () => {
+                if (this.isPlaying) this.playTrack(this.getNextTrackId(track.id));
+            });
+
+            // Init audio manager ở background (load các bài còn lại)
+            if (!this.isInitialized) {
+                this.init().catch(console.warn);
+            }
+        }).catch(e => {
             console.warn('Could not pre-start music:', e);
             this._countdownPlayStarted = false;
-        }
+        });
     }
 
     /**
@@ -609,9 +628,16 @@ class AudioManager {
         if (!toast) return;
 
         this._countdownPlayStarted = false;
+        this._gestureAudio = null;
 
-        // Đợi microtask chạy xong (startMusicForCountdownFromGesture)
-        await new Promise(r => setTimeout(r, 500));
+        // Đợi gesture audio play() promise resolve (microtask) + overlay đóng
+        await new Promise(r => setTimeout(r, 300));
+
+        // Nếu không có gesture audio (returning user, không có click) → bỏ qua countdown
+        if (!this._countdownPlayStarted) return;
+
+        // Đợi thêm để overlay đóng hoàn toàn
+        await new Promise(r => setTimeout(r, 200));
 
         let cancelled = false;
 
@@ -628,12 +654,17 @@ class AudioManager {
         toast.classList.remove('show');
         toast.classList.remove('notification-toast-error');
         toast.innerHTML = renderContent(5);
-        toast.querySelector('.toast-mute-btn').addEventListener('click', () => {
+        const muteAndCancel = () => {
             cancelled = true;
-            this.mute();
+            if (this._gestureAudio) this._gestureAudio.audio.pause();
+            this.isPlaying = false;
+            this.preferences.enabled = false;
             if (window.localStorage) localStorage.setItem('audioEnabled', 'false');
+            this.updateButtonState();
             hideToast();
-        });
+        };
+
+        toast.querySelector('.toast-mute-btn').addEventListener('click', muteAndCancel);
 
         toast.offsetHeight;
         requestAnimationFrame(() => toast.classList.add('show'));
@@ -642,20 +673,25 @@ class AudioManager {
             await new Promise(r => setTimeout(r, 1000));
             if (cancelled) return;
             toast.innerHTML = renderContent(i);
-            toast.querySelector('.toast-mute-btn').addEventListener('click', () => {
-                cancelled = true;
-                this.mute();
-                if (window.localStorage) localStorage.setItem('audioEnabled', 'false');
-                hideToast();
-            });
+            toast.querySelector('.toast-mute-btn').addEventListener('click', muteAndCancel);
         }
 
         await new Promise(r => setTimeout(r, 1000));
         if (cancelled) return;
         hideToast();
 
-        if (this._countdownPlayStarted) {
-            this.setVolume(0.1);
+        if (this._countdownPlayStarted && this._gestureAudio) {
+            // Nhạc đang chạy ở volume 0, chỉ cần tăng volume
+            const { audio, trackId } = this._gestureAudio;
+            audio.volume = 0.1;
+            this.currentTrack = audio;
+            this.isPlaying = true;
+            this.preferences.enabled = true;
+            this.preferences.currentTrackId = trackId;
+            this.volume = 0.1;
+            this.updateButtonState();
+            this.updateTrackDisplay();
+            this.savePreferences();
         } else {
             try {
                 if (!this.isInitialized) await this.init();
