@@ -15,12 +15,18 @@ class AudioManager {
         // Audio preferences from localStorage
         this.preferences = {
             enabled: localStorage.getItem('audioEnabled') !== 'false',
-            currentTrackId: 'soulful-mie',
+            currentTrackId: 'motthoi-truantfu',
             volume: parseFloat(localStorage.getItem('audioVolume')) || 0.2 // Default 20%
         };
 
         // Track definitions (use paths without spaces for reliability)
         this.trackList = [
+            {
+                id: 'motthoi-truantfu',
+                name: 'motthoi-truantfu',
+                file: './asset/audio/bg/motthoi-truantfu.mp3',
+                displayName: 'motthoi-truantfu'
+            },
             {
                 id: 'soulful-mie',
                 name: 'soulful_mie',
