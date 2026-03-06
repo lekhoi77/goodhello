@@ -37,19 +37,37 @@ class AudioManager {
                 id: 'myyoshi-brianjcb',
                 name: 'myyoshi- brianjcb',
                 file: './asset/audio/bg/myyoshi- brianjcb.mp3',
-                displayName: 'myyoshi- brianjcb'
+                displayName: 'myyoshi-brianjcb'
             },
             {
                 id: 'why-dominicfike',
                 name: 'why -dominicfike',
                 file: './asset/audio/bg/why -dominicfike.mp3',
-                displayName: 'why -dominicfike'
+                displayName: 'why-dominicfike'
             },
             {
                 id: 'lemonade-klickaud',
                 name: 'lemonade_KLICKAUD',
                 file: './asset/audio/bg/lemonade_KLICKAUD.mp3',
-                displayName: 'lemonade_KLICKAUD'
+                displayName: 'lemonade-KLICKAUD'
+            },
+            {
+                id: 'nhunggiadieukhac-minhtoc-lam',
+                name: 'nhunggiadieukhac-minhtoc&lam',
+                file: './asset/audio/bg/nhunggiadieukhac-minhtoc&lam.mp3',
+                displayName: 'nhunggiadieukhac-minhtoc&lam'
+            },  
+            {
+                id: 'motlantoiradoi-thaidinh',
+                name: 'motlantoiradoi-thaidinh',
+                file: './asset/audio/bg/motlantoiradoi-thaidinh.mp3',
+                displayName: 'motlantoiradoi-thaidinh'
+            },
+            {
+                id: 'neverbealone-lefthand',
+                name: 'neverbealone-lefthand',
+                file: './asset/audio/bg/neverbealone-lefthand.mp3',
+                displayName: 'neverbealone-lefthand'
             }
         ];
 
