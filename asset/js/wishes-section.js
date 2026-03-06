@@ -241,6 +241,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => {
                 paper.classList.add('falling');
                 
+                // Play wish drop sound effect
+                if (window.playSFX && index < 3) { // Only play for first few papers to avoid spam
+                    window.playSFX('wish-drop', 0.4 + Math.random() * 0.3); // Vary volume slightly
+                }
+                
                 // After animation completes, add visible class and remove falling
                 setTimeout(() => {
                     paper.classList.add('visible');

@@ -42,7 +42,7 @@ window.stripVietnameseDiacritics = stripVietnameseDiacritics;
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('nav');
-    const invitationLink = nav ? nav.querySelector('.right p') : null;
+    const invitationLink = nav ? nav.querySelector('.invitation-link') : null;
     const logo = nav ? nav.querySelector('img') : null;
     let lastScrollY = window.scrollY;
     let ticking = false;
@@ -78,6 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (invitationLink) {
         invitationLink.addEventListener('click', (e) => {
             e.preventDefault();
+            
+            // Play button click sound
+            if (window.playSFX) {
+                window.playSFX('button-click', 0.5);
+            }
+            
             const invitationSection = document.getElementById('invitation-section');
             if (!invitationSection) return;
 

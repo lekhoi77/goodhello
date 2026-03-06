@@ -298,6 +298,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Add visible class to card
                 if (invitationCard) {
                     invitationCard.classList.add('visible');
+                    
+                    // Play gentle sound when invitation appears
+                    if (window.playSFX) {
+                        window.playSFX('notification', 0.4);
+                    }
                 }
             }
         });

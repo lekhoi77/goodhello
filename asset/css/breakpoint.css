@@ -120,9 +120,19 @@
     gap: 8px;
   }
 
-  nav .right p {
+  .invitation-link p {
     font-size: 16px;
     line-height: 1.3;
+  }
+
+  /* Audio controls: hide on mobile */
+  .audio-control-wrapper,
+  .track-selector-wrapper {
+    display: none !important;
+  }
+
+  .invitation-link {
+    gap: 8px;
   }
 }
 
@@ -467,8 +477,29 @@
     padding: 12px 16px;
   }
 
-  nav .right p {
+  .invitation-link p {
     font-size: 14px;
+  }
+
+  /* Audio controls for very small screens */
+  .audio-control, .track-selector {
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .invitation-link {
+    gap: 6px;
+    padding: 2px 4px;
+  }
+
+  .track-dropdown {
+    font-size: var(--body-md-size, 20px);
+  }
+  
+  .track-option {
+    padding: 5px 6px;
+    font-size: var(--body-md-size, 20px);
   }
 }
 
@@ -491,6 +522,259 @@
     left: 19px;
     top: 29px;
   }
+}
+
+/* =============================================
+   AUDIO CONTROLS
+   ============================================= */
+
+.audio-control, .track-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  min-height: 40px;
+  outline: none;
+  min-width: 80px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(42, 42, 42, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poor Story", sans-serif;
+  font-size: var(--body-md-size, 20px);
+  color: var(--colors-black);
+  justify-content: center;
+  position: relative;
+}
+
+.audio-control:focus, .track-selector:focus {
+  outline: none;
+}
+
+.audio-control:hover, .track-selector:hover {
+  background: rgba(42, 42, 42, 0.05);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.audio-control {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.audio-control:hover {
+  box-shadow: none !important;
+}
+
+.audio-control.muted .speaker-unmuted {
+  display: none;
+}
+
+.audio-control.muted .speaker-muted {
+  display: block !important;
+}
+
+.audio-control:not(.muted) .speaker-muted {
+  display: none;
+}
+
+.audio-control:not(.muted) .audio-icon {
+  animation: audioPlaying 2s ease-in-out infinite;
+}
+
+.audio-control:not(.muted),
+.audio-control:not(.muted) .audio-text {
+  color: var(--colors-primary-500);
+}
+
+.audio-control:not(.muted) .audio-icon path {
+  fill: var(--colors-primary-500);
+}
+
+.audio-control.muted,
+.audio-control.muted .audio-text {
+  color: var(--colors-black, #2a2a2a);
+}
+
+.audio-control.muted .audio-icon path {
+  fill: var(--colors-black, #2a2a2a);
+}
+
+@keyframes audioPlaying {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.track-selector .dropdown-arrow {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.track-selector.open .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.track-selector-wrapper {
+  position: relative;
+}
+
+.track-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 130px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(42, 42, 42, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.track-option {
+  padding: 8px 12px;
+  font-family: "Poor Story", sans-serif;
+  font-size: var(--body-md-size, 20px);
+  color: var(--colors-black);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.track-option:hover {
+  background: rgba(42, 42, 42, 0.1);
+}
+
+.track-option.selected {
+  background: rgba(0, 56, 188, 0.1);
+  color: var(--colors-primary-500);
+  font-weight: 500;
+}
+
+.invitation-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.invitation-link:hover {
+  background: rgba(42, 42, 42, 0.05);
+  transform: translateY(-1px);
+}
+
+.invitation-link p {
+  text-decoration: underline;
+  margin: 0;
+}
+
+/* =============================================
+   VOLUME CONTROL
+   ============================================= */
+
+.audio-control-wrapper {
+  position: relative;
+}
+
+/* Ẩn audio controls trên điện thoại */
+@media (max-width: 768px) {
+  .audio-control-wrapper,
+  .track-selector-wrapper {
+    display: none !important;
+  }
+}
+
+.volume-popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(42, 42, 42, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  min-width: 44px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.audio-control-wrapper:hover .volume-popup,
+.volume-popup:hover {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+.volume-label {
+  font-family: "Poor Story", sans-serif;
+  font-size: 11px;
+  color: var(--colors-black);
+  min-width: 28px;
+  text-align: center;
+}
+
+/* Vertical slider */
+.volume-slider {
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 6px;
+  height: 80px;
+  cursor: pointer;
+  accent-color: var(--colors-primary-500);
+  background: transparent;
+}
+
+.volume-slider::-webkit-slider-runnable-track {
+  background: rgba(42, 42, 42, 0.15);
+  border-radius: 4px;
+  width: 4px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--colors-primary-500);
+  cursor: pointer;
+  margin-left: -5px;
+  box-shadow: 0 1px 4px rgba(0, 56, 188, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.volume-slider::-moz-range-track {
+  background: rgba(42, 42, 42, 0.15);
+  border-radius: 4px;
+  width: 4px;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--colors-primary-500);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 56, 188, 0.3);
 }
 
 /* =============================================

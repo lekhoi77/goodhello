@@ -137,6 +137,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const hoverHandler = () => {
                 if (!isHoverEnabled) return;
                 stampsTitle.innerHTML = formatTitle(stamp.dataset.title || defaultTitle);
+                
+                // Play hover sound effect
+                if (window.playSFX) {
+                    window.playSFX('stamp-hover', 0.3);
+                }
             };
 
             const resetHandler = () => {
@@ -155,6 +160,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Add click handlers to stamps to show details
         stampItems.forEach((stamp, index) => {
             stamp.addEventListener('click', () => {
+                // Play click sound effect
+                if (window.playSFX) {
+                    window.playSFX('stamp-click', 0.7);
+                }
+                
                 window.stampDetailsController.showDetail(index);
             });
 

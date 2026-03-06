@@ -381,6 +381,11 @@ class StampDetailsController {
     const toast = document.getElementById('notification-toast');
     if (!toast) return;
     
+    // Play notification sound
+    if (window.playSFX) {
+      window.playSFX('notification', 0.6);
+    }
+    
     // Show toast
     toast.classList.add('show');
     

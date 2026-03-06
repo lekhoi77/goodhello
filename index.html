@@ -25,12 +25,61 @@
     <nav class="nav-hidden">
         <img src="asset/img/logo.svg" alt="logo">
         <div class="right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 16 12" fill="none">
-                <path
-                    d="M15.8076 10.8555C15.4869 11.5317 14.7982 11.9999 14 12H2C1.20168 12 0.512139 11.5318 0.191406 10.8555L6.76074 6.8291L8 7.58594L9.23828 6.8291L15.8076 10.8555ZM5.80273 6.24316L0 9.7998V2.69629L5.80273 6.24316ZM16 9.7998L10.1963 6.24316L16 2.69629V9.7998ZM14 0C14.9515 0.000172489 15.748 0.664366 15.9502 1.55469L8 6.41406L0.0488281 1.55469C0.251076 0.664224 1.04832 0 2 0H14Z"
-                    fill="#2A2A2A" />
-            </svg>
-            <p class="body-md"> your invitation card</p>
+            <!-- Invitation Link -->
+            <div class="invitation-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 16 12" fill="none">
+                    <path
+                        d="M15.8076 10.8555C15.4869 11.5317 14.7982 11.9999 14 12H2C1.20168 12 0.512139 11.5318 0.191406 10.8555L6.76074 6.8291L8 7.58594L9.23828 6.8291L15.8076 10.8555ZM5.80273 6.24316L0 9.7998V2.69629L5.80273 6.24316ZM16 9.7998L10.1963 6.24316L16 2.69629V9.7998ZM14 0C14.9515 0.000172489 15.748 0.664366 15.9502 1.55469L8 6.41406L0.0488281 1.55469C0.251076 0.664224 1.04832 0 2 0H14Z"
+                        fill="#2A2A2A" />
+                </svg>
+                <p class="body-md"> your invitation card</p>
+            </div>
+            
+            <!-- Audio Control Wrapper -->
+            <div class="audio-control-wrapper">
+                <button class="audio-control muted" id="audio-control" aria-label="Toggle music mute">
+                    <svg class="audio-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <!-- Speaker Icon (unmuted) -->
+                        <path class="speaker-unmuted" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="#2A2A2A"/>
+                        <!-- Muted Speaker Icon (hidden by default) -->
+                        <path class="speaker-muted" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" fill="#2A2A2A" style="display: none;"/>
+                    </svg>
+                    <span class="audio-text body-md">play music</span>
+                </button>
+
+                <!-- Volume Popup (appears on hover) -->
+                <div class="volume-popup" id="volume-popup">
+                    <input
+                        type="range"
+                        class="volume-slider"
+                        id="volume-slider"
+                        min="0"
+                        max="100"
+                        value="20"
+                        aria-label="Volume"
+                    >
+                    <span class="volume-label" id="volume-label">20%</span>
+                </div>
+            </div>
+            
+            <!-- Track Selector Wrapper (dropdown anchored here) -->
+            <div class="track-selector-wrapper">
+                <button class="track-selector" id="track-selector" aria-label="Select background music">
+                    <span class="track-name" id="track-name">soulful_mie</span>
+                    <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 10l5 5 5-5z" fill="#2A2A2A"/>
+                    </svg>
+                </button>
+                
+                <!-- Hidden Track Options -->
+                <div class="track-dropdown" id="track-dropdown" style="display: none;">
+                    <div class="track-option selected" data-value="soulful-mie">soulful_mie</div>
+                    <div class="track-option" data-value="huuhan-lefacteur">huuhan-lefacteur</div>
+                    <div class="track-option" data-value="myyoshi-brianjcb">myyoshi- brianjcb</div>
+                    <div class="track-option" data-value="why-dominicfike">why -dominicfike</div>
+                    <div class="track-option" data-value="lemonade-klickaud">lemonade_KLICKAUD</div>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -251,6 +300,7 @@
     <script src="asset/js/google-sheets-api.js"></script>
     <script src="asset/js/user-loader.js"></script>
     <script src="asset/js/guest-input.js"></script>
+    <script src="asset/js/audio-manager.js"></script>
 
     <!-- Split main logic into smaller files for better maintainability -->
     <script src="asset/js/lenis-core.js"></script>

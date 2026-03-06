@@ -18,19 +18,37 @@ document.addEventListener('DOMContentLoaded', () => {
         mainTimeline.to(envelopeWrapper, {
             y: '-40%',
             duration: 1.5,
-            ease: 'power3.out'
+            ease: 'power3.out',
+            onStart: () => {
+                // Play envelope lift sound effect
+                if (window.playSFX) {
+                    window.playSFX('envelope-open', 0.8);
+                }
+            }
         });
 
         mainTimeline.to(flap, {
             rotateX: -160,
             duration: 0.6,
-            ease: 'power2.inOut'
+            ease: 'power2.inOut',
+            onStart: () => {
+                // Play flap opening sound effect  
+                if (window.playSFX) {
+                    window.playSFX('stamp-click', 0.6);
+                }
+            }
         }, '+=0.1');
 
         mainTimeline.to(letterGroup, {
             y: -20,
             duration: 1,
-            ease: 'power3.out'
+            ease: 'power3.out',
+            onStart: () => {
+                // Play letter sliding sound effect
+                if (window.playSFX) {
+                    window.playSFX('wish-drop', 0.5);
+                }
+            }
         }, '-=0.3');
 
         // Add infinite floating animation after the main animation completes
