@@ -18,6 +18,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
+        let firstStampWrapper = null;
+        if (stampItems[0]) {
+            firstStampWrapper = document.createElement('div');
+            firstStampWrapper.className = 'stamp-first-hint-wrapper';
+            firstStampWrapper.innerHTML = `
+                <svg class="stamp-hint-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect class="stamp-hint-rect" x="0" y="0" width="100" height="100" fill="none" stroke="currentColor"/>
+                </svg>
+            `;
+            stampsGrid.insertBefore(firstStampWrapper, stampItems[0]);
+            firstStampWrapper.appendChild(stampItems[0]);
+        }
+
         const defaultTitle = stampsTitle.innerHTML;
 
         // Predefined rotations for each stamp (fixed)
@@ -31,19 +44,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const centerY = stampsGrid.offsetHeight / 2;
 
                 stampItems.forEach((stamp, index) => {
+                    const el = index === 0 && firstStampWrapper ? firstStampWrapper : stamp;
+                    const w = index === 0 && firstStampWrapper ? firstStampWrapper.offsetWidth : stamp.offsetWidth;
+                    const h = index === 0 && firstStampWrapper ? firstStampWrapper.offsetHeight : stamp.offsetHeight;
                     const angle = (index / stampItems.length) * 2 * Math.PI - Math.PI / 2;
-                    let x = centerX + radius * Math.cos(angle) - stamp.offsetWidth / 2;
-                    let y = centerY + radius * Math.sin(angle) - stamp.offsetHeight / 2;
+                    let x = centerX + radius * Math.cos(angle) - w / 2;
+                    let y = centerY + radius * Math.sin(angle) - h / 2;
                     
                     if (index === 0) y += 100;
                     if (index === 3) y -= 100;
                     
                     const rotation = fixedRotations[index] || 0;
-                    stamp.style.left = `${x}px`;
-                    stamp.style.top = `${y}px`;
+                    el.style.left = `${x}px`;
+                    el.style.top = `${y}px`;
                     stamp.style.setProperty('--base-rotation', `${rotation}deg`);
                     stamp.style.setProperty('--float-delay', `-${index * 0.45}s`);
                     stamp.dataset.baseRotation = rotation;
+                    if (index === 0 && firstStampWrapper) {
+                        firstStampWrapper.style.setProperty('--base-rotation', `${rotation}deg`);
+                        firstStampWrapper.style.setProperty('--float-delay', `-${index * 0.45}s`);
+                    }
                 });
             }
         }
@@ -160,6 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Add click handlers to stamps to show details
         stampItems.forEach((stamp, index) => {
             stamp.addEventListener('click', () => {
+                if (index === 0 && firstStampWrapper) firstStampWrapper.classList.add('hint-dismissed');
                 // Play click sound effect
                 if (window.playSFX) {
                     window.playSFX('stamp-click', 0.7);
@@ -183,6 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     stampItems.forEach((stamp, index) => {
                         setTimeout(() => {
                             stamp.classList.add('visible');
+                            if (index === 0 && firstStampWrapper) firstStampWrapper.classList.add('visible');
                         }, 300 + index * 150);
                     });
                     
