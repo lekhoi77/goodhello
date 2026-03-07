@@ -288,6 +288,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // =============================================
+    // BACKGROUND TRANSITION ON SCROLL
+    // =============================================
+    const bgOverlay = document.createElement('div');
+    bgOverlay.id = 'wishes-bg-overlay';
+    bgOverlay.style.cssText = [
+        'position:fixed',
+        'inset:0',
+        'pointer-events:none',
+        'z-index:-1',
+        'opacity:0',
+        'background:radial-gradient(71.35% 71.35% at 50% 28.65%, #FFCD88 0%, #FFF 100%)',
+        'background-attachment:fixed',
+        'background-repeat:no-repeat',
+        'will-change:opacity'
+    ].join(';');
+    document.body.appendChild(bgOverlay);
+
+    function initWishesBgScrollTrigger() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        // Fade in as wishes section enters viewport, scrub automatically reverses on scroll up
+        gsap.to(bgOverlay, {
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: wishesSection,
+                start: 'top 80%',
+                end: 'top 20%',
+                scrub: true,
+            }
+        });
+    }
+
+    if (document.readyState === 'complete') {
+        initWishesBgScrollTrigger();
+    } else {
+        window.addEventListener('load', initWishesBgScrollTrigger);
+    }
+
+    // =============================================
     // INITIALIZE
     // =============================================
     renderWishes();
