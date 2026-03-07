@@ -217,7 +217,11 @@ class UserLoader {
    */
   setFavoriteStamp(stampIndex) {
     const key = `favorite_stamp_${this.currentUser}`;
-    localStorage.setItem(key, stampIndex);
+    if (stampIndex === null) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, stampIndex);
+    }
   }
 }
 
@@ -342,6 +346,11 @@ class StampDetailsController {
         </svg>
         <span class="body-md">Choose as your Favorite</span>
       `;
+
+      // Notify invitation section to revert to placeholder
+      window.dispatchEvent(new CustomEvent('favoriteStampChanged', {
+        detail: { stampIndex: null }
+      }));
     } else {
       // Set new favorite
       window.userLoader.setFavoriteStamp(stampIndex);

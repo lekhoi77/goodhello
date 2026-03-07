@@ -271,6 +271,17 @@
   display: none;
 }
 
+/* stamp-placeholder (letter): dasharray 6 4 → chu kỳ 10 */
+.stamp-placeholder {
+  animation: stampMarchPlaceholder 0.8s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes stampMarchPlaceholder {
+  to { stroke-dashoffset: -10; }
+}
+
+/* stamp-first-hint: dasharray 8 6 → chu kỳ 14 */
 @keyframes stampMarch {
   to { stroke-dashoffset: -14; }
 }

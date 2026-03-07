@@ -28,28 +28,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =============================================
     // 1. DISPLAY FAVORITE STAMP
     // =============================================
+    const PLACEHOLDER_STAMP_SRC = 'asset/stamp/placeholderstamp.png';
+
+    function scrollToStampsSection() {
+        const stampsSection = document.querySelector('.stamps-section');
+        if (!stampsSection) return;
+        if (window.lenis) {
+            window.lenis.scrollTo(stampsSection, { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+        } else {
+            stampsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function showPlaceholderStamp() {
+        if (invitationStamp) {
+            invitationStamp.innerHTML = `<img src="${PLACEHOLDER_STAMP_SRC}" alt="Place your stamp here" style="cursor:pointer;" />`;
+            invitationStamp.style.cursor = 'pointer';
+            invitationStamp.onclick = scrollToStampsSection;
+        }
+    }
+
     function displayFavoriteStamp() {
         if (!window.userLoader) {
             console.error('User loader not initialized');
+            showPlaceholderStamp();
             return;
         }
 
         const favoriteIndex = window.userLoader.getFavoriteStamp();
+
+        if (favoriteIndex === null) {
+            showPlaceholderStamp();
+            return;
+        }
+
         const userData = window.userLoader.userData;
 
         if (!userData || !userData.stamps) {
             console.error('No user stamp data available');
+            showPlaceholderStamp();
             return;
         }
 
-        // Use favorite stamp or default to first stamp
-        const stampIndex = favoriteIndex !== null ? parseInt(favoriteIndex) : 0;
+        const stampIndex = parseInt(favoriteIndex);
         const stamp = userData.stamps[stampIndex];
 
         if (stamp && invitationStamp) {
             invitationStamp.innerHTML = `
                 <img src="${stamp.src}" alt="${stamp.alt}" />
             `;
+            invitationStamp.style.cursor = '';
+            invitationStamp.onclick = null;
+        } else {
+            showPlaceholderStamp();
         }
     }
 
