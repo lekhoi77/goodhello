@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         let firstStampWrapper = null;
-        if (stampItems[0]) {
+        const isVinhNghi = window.userLoader.currentUser === 'vinhnghi';
+        if (stampItems[0] && !isVinhNghi) {
             firstStampWrapper = document.createElement('div');
             firstStampWrapper.className = 'stamp-first-hint-wrapper';
             firstStampWrapper.innerHTML = `
