@@ -16,7 +16,7 @@ class AudioManager {
         this.preferences = {
             enabled: localStorage.getItem('audioEnabled') !== 'false',
             currentTrackId: 'motthoi-truantfu',
-            volume: parseFloat(localStorage.getItem('audioVolume')) || 0.2 // Default 20%
+            volume: parseFloat(localStorage.getItem('audioVolume')) || 0.5 // Default 50%
         };
 
         // Track definitions (use paths without spaces for reliability)
