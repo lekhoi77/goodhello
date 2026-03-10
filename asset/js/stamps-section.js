@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     let y = centerY + radius * Math.sin(angle) - h / 2;
                     
                     if (index === 0) y += 100;
+                    if (index === 1) {
+                        x += 20; // Di chuyển stamp số 2 sang phải 20px
+                        y += 10; // Di chuyển stamp số 2 xuống dưới 10px
+                    }
                     if (index === 3) y -= 100;
                     
                     const rotation = fixedRotations[index] || 0;
