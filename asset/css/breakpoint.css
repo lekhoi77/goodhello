@@ -27,9 +27,9 @@
     animation-delay: var(--float-delay, 0s);
   }
 
-  /* Hover: chỉ dừng float animation.
-     Transform (straighten + scale) do main.css xử lý: scale(1.1) translateY(-20px).
-     Transition trên .stamp-item smooth từ vị trí float hiện tại → hover state. */
+  /* Hover visual được xử lý bởi JS (smooth-hover logic trong stamps-section.js).
+     CSS chỉ định nghĩa transform target, JS sẽ capture vị trí animation live
+     trước khi transition để tránh snap. */
   .stamp-item:hover {
     animation: none !important;
   }
@@ -250,6 +250,10 @@
   flex-shrink: 0;
   transform: none !important;
   animation: none !important;
+}
+
+.stamp-first-hint-wrapper.breathing .stamp-item {
+  animation: stamp-breathing 2s ease-in-out infinite !important;
 }
 
 .stamp-first-hint-wrapper .stamp-hint-svg {

@@ -173,6 +173,49 @@ document.addEventListener('DOMContentLoaded', async () => {
             stamp.addEventListener('mouseleave', resetHandler);
         });
 
+        // Smooth hover transition: capture live animation position before transitioning.
+        // CSS transitions won't fire on a property controlled by a running animation —
+        // so we manually lock the element at its current animated position, kill the
+        // animation, then let the hover CSS rule trigger a clean transition.
+        stampItems.forEach((stamp, index) => {
+            const el = (index === 0 && firstStampWrapper) ? firstStampWrapper : stamp;
+
+            el.addEventListener('mouseenter', () => {
+                if (!isHoverEnabled || window.innerWidth <= 768) return;
+
+                // 1. Read the live animated transform value
+                const liveTransform = getComputedStyle(el).transform;
+
+                // 2. Disable transition to prevent any accidental flicker, kill animation,
+                //    then lock element at its current animated position
+                el.style.transition = 'none';
+                el.style.animation = 'none';
+                el.style.transform = liveTransform;
+
+                // 3. First reflow: commits the locked state so the browser registers it
+                el.getBoundingClientRect();
+
+                // 4. Must wait for next frame before releasing — CSS spec requires the
+                //    transition to be present in the "before-change style" snapshot for it
+                //    to fire. By using rAF + a second reflow, we ensure the browser
+                //    snapshots transition: 0.3s ease BEFORE the transform changes.
+                requestAnimationFrame(() => {
+                    el.style.transition = '';          // Re-enable transition
+                    el.getBoundingClientRect();         // Second reflow: register transition as before-change style
+                    el.style.transform = '';            // Release → hover CSS rule takes over → transition fires cleanly
+                });
+            });
+
+            el.addEventListener('mouseleave', () => {
+                if (window.innerWidth <= 768) return;
+
+                // Re-enable float animation after the hover-out transition completes
+                el.addEventListener('transitionend', () => {
+                    el.style.animation = '';
+                }, { once: true });
+            });
+        });
+
         // Initialize stamp details controller
         const detailsContainer = document.getElementById('stamp-details-container');
         window.stampDetailsController.init(detailsContainer, stampsSection);
@@ -182,7 +225,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             stamp.addEventListener('click', () => {
                 // Dismiss breathing hint on any stamp click
                 if (firstStampWrapper) {
-                    stampItems[0].classList.remove('stamp-breathing');
+                    firstStampWrapper.classList.remove('breathing');
                     firstStampWrapper.classList.add('hint-dismissed');
                 }
                 // Play click sound effect
@@ -218,7 +261,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         isHoverEnabled = true;
                         if (swipeIndicator) swipeIndicator.classList.add('visible');
                         if (firstStampWrapper && !firstStampWrapper.classList.contains('hint-dismissed')) {
-                            stampItems[0].classList.add('stamp-breathing');
+                            firstStampWrapper.classList.add('breathing');
                         }
                     }, totalAnimationTime);
                 }
