@@ -5,8 +5,8 @@
       "title": "Phat La's Graduation Ceremony",
       "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
       "description": "Phát mời bạn đến dự lễ tốt nghiệp đại học.",
-      "start": "20260404T140000",
-      "end": "20260404T170000"
+      "start": "20260404T100000",
+      "end": "20260404T130000"
     },
     "stamps": [
       {
@@ -54,45 +54,45 @@
       "title": "Le Facteur's Graduation Ceremony",
       "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
       "description": "Le Facteur mời bạn đến dự lễ tốt nghiệp đại học.",
-      "start": "20260404T140000",
-      "end": "20260404T170000"
+      "start": "20260404T100000",
+      "end": "20260404T130000"
     },
     "stamps": [
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-1.png",
         "alt": "Le Facteur 1",
-        "title": "Le Facteur 1",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Post Office indacorner",
+        "description": "The passion and dedication started way back in high school. We've been through hella ups and downs, plenty of setbacks, but somehow the core squad is still standing strong to this day. Shout out to the brothers, and may y'all keep your swords sharp in your own battles."
       },
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-2.png",
         "alt": "Le Facteur 2",
-        "title": "Le Facteur 2",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Tang Thuong 601",
+        "description": "Those first shaky days in a strange place, at a brand new school. The first rented room of my life — where dreams started cooking up and where those first stumbles were taken care of. Grateful for all the firsts… the ones that are still here today, and even the ones that ended the very first time."
       },
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-3.png",
         "alt": "Le Facteur 3",
-        "title": "Le Facteur 3",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Young Boys EEC01",
+        "description": "Really lucky to find people on the same wavelength in the middle of a sea of strangers. From just some kids back then to grown men now, making decisions that shape our own lives. Peace out!"
       },
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-4.png",
         "alt": "Le Facteur 4",
-        "title": "Le Facteur 4",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Dalat <br> immersive",
+        "description": "A little reward after those long days grinding on campus. I'm really just immersing myself in the vibe of this place. This is my second time in Dalat, but only now do I get the chance to slow down and actually take in every moment here. Maybe Dalat isn't quite the same as it used to be, but the vibe of this place will probably always have a spot in the hearts of anyone who's ever been here. And thank you too, babe"
       },
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-5.png",
         "alt": "Le Facteur 5",
-        "title": "Le Facteur 5",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Phan Thiet 8386",
+        "description": "The first out-of-town trip for the 8386 crew. Another memory in the books. Might be a long while before we get another trip like this again… probably after one or two of the boys come back from the army. Haha."
       },
       {
         "src": "asset/stamp/lefacteur/stamp-lefacteur-6.png",
         "alt": "Le Facteur 6",
-        "title": "Le Facteur 6",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Long Way <br> Riding",
+        "description": "Getting to know you was the first time I stepped out of my comfort zone — riding my motorbike over 160 km back and forth. It was the first time I discovered how beautiful the world can be when I explore it myself. It was also the first time I realized I had been stuck for too long because of my own stubbornness and outdated mindset. And you were the first person who saw that and helped me break free from it. Merci beaucoup!"
       }
     ],
     "details": null
@@ -150,48 +150,97 @@
   "huukhai": {
     "mainTitle": "A 3-year<br>journey",
     "event": {
-      "title": "Khai's Graduation Ceremony",
+      "title": "Huu Khai's Graduation Ceremony",
       "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
-      "description": "Khai mời bạn đến lễ tốt nghiệp...",
-      "start": "20260404T140000",
-      "end": "20260404T170000"
+      "description": "Hữu Khải mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T100000",
+      "end": "20260404T130000"
     },
     "stamps": [
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-1.png",
         "alt": "Huu Khai 1",
-        "title": "Huu Khai 1",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "My Belonging Love",
+        "description": "Some of the most meaningful things in life appear when we least expect them. Through my university journey, I was fortunate enough to meet someone who would become my lifelong companion - my beloved girlfriend. Every step together has shown me just how much she means to me. Through laughter, challenges, and countless memories, I’ve come to realize that she is not just part of my story, but a place where I truly belong. My hope is that we continue walking side by side for many years to come."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-2.png",
         "alt": "Huu Khai 2",
-        "title": "Huu Khai 2",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Field <br> Trip",
+        "description": "Every great achievement begins with small steps of learning. During our field trips with the 8386 Crews, we gathered bits of knowledge from real-world experiences through observing, questioning, and discovering together. Those lessons, though sometimes simple at first glance, became the foundation of something far greater. By combining our efforts, ideas, and determination, we were able to turn those small pieces into an accomplishment that truly amazed us all."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-3.png",
         "alt": "Huu Khai 3",
-        "title": "Huu Khai 3",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Last Day at University",
+        "description": "Life is a journey filled with ups and downs, but what makes it meaningful are the memories we create along the way. As our final day at university arrived, we realized how much we had experienced together: late nights, shared struggles, laughter, and moments that shaped who we are today. Through all those experiences, we didn’t just earn a degree; we built friendships and bonds that will last far beyond the campus. Looking back, what we truly created was not just memories, but a heck of a good time and relationships that we will carry with us for the rest of our lives."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-4.png",
         "alt": "Huu Khai 4",
-        "title": "Huu Khai 4",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "GD <br> QP",
+        "description": "The military study days were chaotic, exhausting yet unbelievably energetic just like the spirit of freshmen stepping into university life. For two weeks at the military training center, we lived, ate, sang, and laughed together under a completely different routine. The early mornings, the strict discipline, and the endless moments of fun created an experience none of us will ever forget. Somewhere between the drills and the laughter, those two weeks quietly shaped us: teaching us discipline, resilience, and the value of standing together as one."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-5.png",
         "alt": "Huu Khai 5",
-        "title": "Huu Khai 5",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "Growing <br> Up",
+        "description": "Growing up and pursuing a career can be challenging, but it is also a truly rewarding journey. The very first opportunities I received from my teachers gave me the chance to step into the real world, learn, and gain valuable experience. Through those early encounters, I gradually discovered the path I wanted to follow and the values I wished to pursue. Those moments became the foundation for my first steps into the professional world, where every experience serves as a new lesson on the road to maturity."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-6.png",
         "alt": "Huu Khai 6",
-        "title": "Huu Khai 6",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "title": "University <br> bros",
+        "description": "College life would never have been the same without the friends who filled it with unforgettable moments. From random late-night talks to spontaneous adventures, these are the people who turned ordinary days into memories worth keeping forever. Even as life slowly pulls us toward different paths, I know the laughter and stories we shared will always remain a special part of my journey. Some friendships may grow quieter with time, but the memories will never fade."
+      }
+    ],
+    "details": null
+  },
+  "quocbao": {
+    "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Quoc Bao's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Quốc Bảo mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T100000",
+      "end": "20260404T130000"
+    },
+    "stamps": [
+      {
+        "src": "asset/stamp/quocbao/stamp-quocbao-1.png",
+        "alt": "Quoc Bao 1",
+        "title": "First Camping Trip",
+        "description": "Beyond the glow of the flickering campfire, you'll find a group of freshmen—a bit green, a little naive, but radiating just like those golden sparks. Within them, the fire of youth burns bright, fueled by an eternal longing. And so, the story begins..."
+      },
+      {
+        "src": "asset/stamp/quocbao/stamp-quocbao-2.png",
+        "alt": "Quoc Bao 2",
+        "title": "Sai Gon to Da Lat",
+        "description": "Young hearts are always chasing distant horizons—the realms of wild freedom and boundless wandering. We've just ticked off an 800km journey from Saigon to Da Lat on our trusty bikes. From conquering winding mountain passes to nearly getting stuck in hidden waterfalls, all shared over steaming meals in the Highland's spring chill. Here's to many more miles and many more memories together..."
+      },
+      {
+        "src": "asset/stamp/quocbao/stamp-quocbao-3.png",
+        "alt": "Quoc Bao 3",
+        "title": "Vui Hoi Trang Ram",
+        "description": "Driven by a heart that loves to give, I found in Vui Hoi Trang Ram a place to share kindness and bond with like-minded friends. This journey has made my uni life so much more colorful and memorable than I ever imagined. A massive thank you to everyone…"
+      },
+      {
+        "src": "asset/stamp/quocbao/stamp-quocbao-4.png",
+        "alt": "Quoc Bao 4",
+        "title": "Me and my Crew",
+        "description": "If you want to go fast, go alone; but if you want to go far and have a blast, go together. That's us—8386 Crews. We've fought side by side through every academic battle and faced down every deadline together. From the toughest moments to the times we almost called it quits, here we are, still standing as one. Even as we start looking toward our own paths and personal goals, we'll always be on the same front line."
+      },
+      {
+        "src": "asset/stamp/quocbao/stamp-quocbao-5.png",
+        "alt": "Quoc Bao 5",
+        "title": "Spark of Youth",
+        "description": "Strumming, singing, and music—they've always been the soul-healing medicine through my darkest days. At every Vui Hoi Trang Ram, my only wish is to let my voice soar, spreading a spark of youthful energy and passion to all the little ones. My hope for you all is to grow into wonderful citizens, living with a heart that beats for the community..."
+      },
+      {
+        "src": "asset/stamp/quocbao/stamp-quocbao-6.png",
+        "alt": "Quoc Bao 6",
+        "title": "MoMo’s <br> Journey",
+        "description": "When it comes to my career, MoMo is where my journey truly began. It's been an incredible privilege to learn and grow alongside such brilliant mentors—people who are not only masters of their craft but also incredibly dedicated and supportive from day one. I truly hope that my chapter at MoMo becomes even more vibrant and bright in the days to come. My deepest thanks to Ms. Nhung, Mr. Ny, and the whole team for everything!"
       }
     ],
     "details": null
@@ -202,8 +251,8 @@
       "title": "Vinh Nghi's Graduation Ceremony",
       "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
       "description": "Vinh Nghi mời bạn đến dự lễ tốt nghiệp đại học.",
-      "start": "20260404T140000",
-      "end": "20260404T170000"
+      "start": "20260404T160000",
+      "end": "20260404T190000"
     },
     "stamps": [
       {
@@ -241,6 +290,56 @@
         "alt": "Vinh Nghi 6",
         "title": "Which abyss is deepest?",
         "description": "Which abyss is deepest? Stepping out of the lecture hall and into my very first Mid-Autumn volunteer campaign! It was an unforgettable experience performing and bringing high energy to the kids with my amazing teammates. This student life is so much more meaningful when we share our youth and laughter with the community."
+      }
+    ],
+    "details": null
+  }
+  ,
+  "kietluong": {
+    "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Kiet Luong's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Kiệt Lương mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260329T090000",
+      "end": "20260329T120000"
+    },
+    "stamps": [
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 1",
+        "title": "Kiet Luong 1",
+        "description": "Nội dung stamp của Kiệt Lương (1) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 2",
+        "title": "Kiet Luong 2",
+        "description": "Nội dung stamp của Kiệt Lương (2) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 3",
+        "title": "Kiet Luong 3",
+        "description": "Nội dung stamp của Kiệt Lương (3) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 4",
+        "title": "Kiet Luong 4",
+        "description": "Nội dung stamp của Kiệt Lương (4) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 5",
+        "title": "Kiet Luong 5",
+        "description": "Nội dung stamp của Kiệt Lương (5) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 6",
+        "title": "Kiet Luong 6",
+        "description": "Nội dung stamp của Kiệt Lương (6) — placeholder, sẽ thay sau."
       }
     ],
     "details": null

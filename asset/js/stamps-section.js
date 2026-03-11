@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         let firstStampWrapper = null;
-        if (stampItems[0]) {
+        const isVinhNghi = window.userLoader.currentUser === 'vinhnghi';
+        if (stampItems[0] && !isVinhNghi) {
             firstStampWrapper = document.createElement('div');
             firstStampWrapper.className = 'stamp-first-hint-wrapper';
             firstStampWrapper.innerHTML = `
@@ -52,6 +53,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     let y = centerY + radius * Math.sin(angle) - h / 2;
                     
                     if (index === 0) y += 100;
+                    if (index === 1) {
+                        x += 20; // Di chuyển stamp số 2 sang phải 20px
+                        y += 10; // Di chuyển stamp số 2 xuống dưới 10px
+                    }
                     if (index === 3) y -= 100;
                     
                     const rotation = fixedRotations[index] || 0;
