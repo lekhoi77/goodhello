@@ -928,6 +928,19 @@
    WISHES SECTION
    ============================================= */
 
+/* Remove rounded corners on wish cards (override main.css) */
+.wish-paper {
+  border-radius: 0 !important;
+}
+
+/* Desktop: widen wish cards (mobile keeps its own override below) */
+@media (min-width: 1025px) {
+  .wish-paper {
+    width: 450px;
+    min-width: 450px;
+  }
+}
+
 @media (max-width: 768px) {
   .wish-paper {
     width: 180px;

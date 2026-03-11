@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =============================================
     function renderWishes() {
         const containerWidth = wishesContainer.offsetWidth;
-        const paperWidth = window.innerWidth <= 768 ? 240 : window.innerWidth <= 1024 ? 280 : 400;
+        const paperWidth = window.innerWidth <= 768 ? 240 : window.innerWidth <= 1024 ? 280 : 450;
         const paperHeight = 116; // Min height
         
         wishesData.forEach((wish, index) => {
