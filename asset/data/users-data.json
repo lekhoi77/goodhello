@@ -149,9 +149,9 @@
   "huukhai": {
     "mainTitle": "A 3-year<br>journey",
     "event": {
-      "title": "Khai's Graduation Ceremony",
+      "title": "Huu Khai's Graduation Ceremony",
       "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
-      "description": "Khai mời bạn đến lễ tốt nghiệp...",
+      "description": "Hữu Khải mời bạn đến dự lễ tốt nghiệp đại học.",
       "start": "20260404T140000",
       "end": "20260404T170000"
     },
@@ -160,37 +160,37 @@
         "src": "asset/stamp/huukhai/stamp-huukhai-1.png",
         "alt": "Huu Khai 1",
         "title": "Huu Khai 1",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "description": "Nội dung stamp của Hữu Khải (1) — placeholder, sẽ thay sau."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-2.png",
         "alt": "Huu Khai 2",
         "title": "Huu Khai 2",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "description": "Nội dung stamp của Hữu Khải (2) — placeholder, sẽ thay sau."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-3.png",
         "alt": "Huu Khai 3",
         "title": "Huu Khai 3",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "description": "Nội dung stamp của Hữu Khải (3) — placeholder, sẽ thay sau."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-4.png",
         "alt": "Huu Khai 4",
         "title": "Huu Khai 4",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "description": "Nội dung stamp của Hữu Khải (4) — placeholder, sẽ thay sau."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-5.png",
         "alt": "Huu Khai 5",
         "title": "Huu Khai 5",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "description": "Nội dung stamp của Hữu Khải (5) — placeholder, sẽ thay sau."
       },
       {
         "src": "asset/stamp/huukhai/stamp-huukhai-6.png",
         "alt": "Huu Khai 6",
         "title": "Huu Khai 6",
-        "description": "Lorem ipsum dolor sit amet consectetur. Lectus sed quam diam gravida aenean sit varius integer. Cras vel vitae et orci adipiscing rutrum nec. Posuere sed donec risus sit ligula. Turpis ultrices mauris morbi quisque. Massa sit dolor placerat velit. Elementum sapien aliquet massa amet habitant nunc. pus."
+        "description": "Nội dung stamp của Hữu Khải (6) — placeholder, sẽ thay sau."
       }
     ],
     "details": null
@@ -289,6 +289,56 @@
         "alt": "Vinh Nghi 6",
         "title": "Which abyss is deepest?",
         "description": "Which abyss is deepest? Stepping out of the lecture hall and into my very first Mid-Autumn volunteer campaign! It was an unforgettable experience performing and bringing high energy to the kids with my amazing teammates. This student life is so much more meaningful when we share our youth and laughter with the community."
+      }
+    ],
+    "details": null
+  }
+  ,
+  "kietluong": {
+    "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Kiet Luong's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Kiệt Lương mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260404T140000",
+      "end": "20260404T170000"
+    },
+    "stamps": [
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 1",
+        "title": "Kiet Luong 1",
+        "description": "Nội dung stamp của Kiệt Lương (1) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 2",
+        "title": "Kiet Luong 2",
+        "description": "Nội dung stamp của Kiệt Lương (2) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 3",
+        "title": "Kiet Luong 3",
+        "description": "Nội dung stamp của Kiệt Lương (3) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 4",
+        "title": "Kiet Luong 4",
+        "description": "Nội dung stamp của Kiệt Lương (4) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 5",
+        "title": "Kiet Luong 5",
+        "description": "Nội dung stamp của Kiệt Lương (5) — placeholder, sẽ thay sau."
+      },
+      {
+        "src": "asset/stamp/placeholderstamp.png",
+        "alt": "Kiet Luong 6",
+        "title": "Kiet Luong 6",
+        "description": "Nội dung stamp của Kiệt Lương (6) — placeholder, sẽ thay sau."
       }
     ],
     "details": null
