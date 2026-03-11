@@ -100,6 +100,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // =============================================
+    // 1.5. UPDATE DATE/TIME DISPLAY FROM USER EVENT
+    // =============================================
+    const dateTimeValueEl = document.getElementById('date-time-value');
+
+    function formatEventDateTime(eventData) {
+        const raw = (eventData && eventData.start) || '20260404T100000';
+        // Expect format YYYYMMDDTHHmmSS
+        const year = raw.slice(0, 4);
+        const month = raw.slice(4, 6);
+        const day = raw.slice(6, 8);
+        const hour = raw.slice(9, 11);
+        const minute = raw.slice(11, 13);
+
+        const monthNames = [
+            'January','February','March','April','May','June',
+            'July','August','September','October','November','December'
+        ];
+        const monthIndex = Math.max(0, Math.min(11, parseInt(month, 10) - 1));
+        const monthName = monthNames[monthIndex];
+
+        return `${hour}:${minute}, ${parseInt(day, 10)} ${monthName} ${year}`;
+    }
+
+    if (dateTimeValueEl && window.userLoader && window.userLoader.userData) {
+        const userData = window.userLoader.userData || {};
+        const eventData = userData.event || {};
+        dateTimeValueEl.textContent = formatEventDateTime(eventData);
+    }
+
+    // =============================================
     // 2. CALENDAR BUTTON - GOOGLE CALENDAR (PER USER)
     // =============================================
     if (calendarBtn) {
