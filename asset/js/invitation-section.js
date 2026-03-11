@@ -112,10 +112,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const eventLocation = eventData.location || '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
             const eventDescription = eventData.description || 'Join me for my graduation ceremony!';
             
-            // Date: April 4, 2026, 14:00 (2:00 PM)
+            // Date: April 4, 2026, 10:00 (10:00 AM)
             // Format: YYYYMMDDTHHmmSS
-            const startDate = eventData.start || '20260404T140000';
-            const endDate = eventData.end || '20260404T170000'; // 3 hours duration
+            const startDate = eventData.start || '20260404T100000';
+            const endDate = eventData.end || '20260404T130000'; // 3 hours duration
             
             // Build Google Calendar URL
             const calendarUrl = new URL('https://calendar.google.com/calendar/render');
