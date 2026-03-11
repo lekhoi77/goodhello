@@ -140,6 +140,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Rotate straight and scale up immediately
         this.style.transform = 'rotate(0deg) scale(1.1)';
         
+        // Remove wiggle hint if still playing
+        this.classList.remove('hint-wiggle');
+
+        // Dismiss drag hint text on first drag
+        hideDragHint();
+        
         // Add dragging class
         this.classList.add('dragging');
         
@@ -231,10 +237,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // =============================================
+    // DRAG HINT TEXT
+    // =============================================
+    const dragHintEl = document.getElementById('drag-hint');
+    let dragHintDismissed = false;
+
+    function showDragHint() {
+        if (!dragHintEl || dragHintDismissed) return;
+        dragHintEl.classList.add('visible');
+    }
+
+    function hideDragHint() {
+        if (!dragHintEl) return;
+        dragHintEl.classList.add('hide');
+        setTimeout(() => {
+            dragHintEl.classList.remove('visible', 'hide');
+            dragHintDismissed = true;
+        }, 400);
+    }
+
+    // =============================================
     // ANIMATE WISHES BOUNCE
     // =============================================
     function animateWishesBounce() {
         const papers = wishesContainer.querySelectorAll('.wish-paper');
+        const lastIndex = papers.length - 1;
         
         papers.forEach((paper, index) => {
             // Stagger the animation
@@ -250,6 +277,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 setTimeout(() => {
                     paper.classList.add('visible');
                     paper.classList.remove('falling');
+
+                    // Wiggle hint — stagger each card slightly so they don't all wiggle at once
+                    setTimeout(() => {
+                        paper.classList.add('hint-wiggle');
+                        paper.addEventListener('animationend', () => {
+                            paper.classList.remove('hint-wiggle');
+                        }, { once: true });
+                    }, index * 120);
+
+                    // Show drag hint text after the last card has landed
+                    if (index === lastIndex) {
+                        setTimeout(() => showDragHint(), index * 120 + 800);
+                    }
                 }, 1800); // Match the animation duration
             }, index * 150); // Slightly longer stagger for better visual
         });

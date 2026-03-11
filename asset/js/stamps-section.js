@@ -23,11 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (stampItems[0] && !isVinhNghi) {
             firstStampWrapper = document.createElement('div');
             firstStampWrapper.className = 'stamp-first-hint-wrapper';
-            firstStampWrapper.innerHTML = `
-                <svg class="stamp-hint-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <rect class="stamp-hint-rect" x="0" y="0" width="100" height="100" fill="none" stroke="currentColor"/>
-                </svg>
-            `;
             stampsGrid.insertBefore(firstStampWrapper, stampItems[0]);
             firstStampWrapper.appendChild(stampItems[0]);
         }
@@ -185,7 +180,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Add click handlers to stamps to show details
         stampItems.forEach((stamp, index) => {
             stamp.addEventListener('click', () => {
-                if (index === 0 && firstStampWrapper) firstStampWrapper.classList.add('hint-dismissed');
+                // Dismiss breathing hint on any stamp click
+                if (firstStampWrapper) {
+                    stampItems[0].classList.remove('stamp-breathing');
+                    firstStampWrapper.classList.add('hint-dismissed');
+                }
                 // Play click sound effect
                 if (window.playSFX) {
                     window.playSFX('stamp-click', 0.7);
@@ -213,11 +212,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }, 300 + index * 150);
                     });
                     
-                    // Enable hover + show swipe indicator after animation completes
+                    // Enable hover + show swipe indicator + start breathing after animation completes
                     const totalAnimationTime = 300 + (stampItems.length - 1) * 150 + 600;
                     setTimeout(() => {
                         isHoverEnabled = true;
                         if (swipeIndicator) swipeIndicator.classList.add('visible');
+                        if (firstStampWrapper && !firstStampWrapper.classList.contains('hint-dismissed')) {
+                            stampItems[0].classList.add('stamp-breathing');
+                        }
                     }, totalAnimationTime);
                 }
             });
