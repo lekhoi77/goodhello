@@ -25,6 +25,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (stored) guestNameEl.textContent = stored;
     }
 
+    // Update displayed event time per user if specified
+    const userData = window.userLoader && window.userLoader.userData ? window.userLoader.userData : {};
+    const eventData = userData.event || {};
+    if (eventData.displayTime) {
+        const dateTimeEl = document.querySelector('.detail-value');
+        if (dateTimeEl) dateTimeEl.textContent = eventData.displayTime;
+    }
+
     // =============================================
     // 1. DISPLAY FAVORITE STAMP
     // =============================================
@@ -112,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const eventLocation = eventData.location || '59c Nguyen Dinh Chieu Street, District 3, Ho Chi Minh City';
             const eventDescription = eventData.description || 'Join me for my graduation ceremony!';
             
-            // Date: April 4, 2026, 14:00 (2:00 PM)
+            // Date/time loaded per-user from users-data.json event.start / event.end
             // Format: YYYYMMDDTHHmmSS
             const startDate = eventData.start || '20260404T140000';
             const endDate = eventData.end || '20260404T170000'; // 3 hours duration
