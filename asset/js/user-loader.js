@@ -376,13 +376,8 @@ class StampDetailsController {
         <span class="body-md">Your Favorite</span>
       `;
       
-      // Show notification toast
-      this.showNotification();
-      
-      // Dispatch custom event for invitation card to update
-      window.dispatchEvent(new CustomEvent('favoriteStampChanged', { 
-        detail: { stampIndex } 
-      }));
+      // Animate stamp flying to invitation card (handles dispatch + notification)
+      this.playFavoriteAnimation(parseInt(stampIndex), buttonElement);
     }
   }
 
@@ -404,6 +399,152 @@ class StampDetailsController {
     setTimeout(() => {
       toast.classList.remove('show');
     }, 5000);
+  }
+
+  playFavoriteAnimation(stampIndex, buttonElement) {
+    const isMobile = window.innerWidth <= 768;
+
+    // Play stamp-click SFX on all devices
+    if (window.playSFX) {
+      window.playSFX('stamp-click', 1.0);
+    }
+
+    if (isMobile) {
+      // Mobile: fallback to original toast behavior
+      this.showNotification();
+      window.dispatchEvent(new CustomEvent('favoriteStampChanged', {
+        detail: { stampIndex }
+      }));
+      return;
+    }
+
+    // Desktop: full animation
+
+    // 1. Fire confetti particles at button position
+    this.fireParticles(buttonElement);
+
+    // 2. Clone stamp image and fly it off toward bottom-center of screen
+    const detailSection = this.detailSections[stampIndex];
+    const stampImg = detailSection ? detailSection.querySelector('.stamp-detail-image img') : null;
+
+    if (stampImg && window.gsap) {
+      const rect = stampImg.getBoundingClientRect();
+      const clone = stampImg.cloneNode(true);
+      clone.style.cssText = [
+        'position:fixed',
+        `top:${rect.top}px`,
+        `left:${rect.left}px`,
+        `width:${rect.width}px`,
+        `height:${rect.height}px`,
+        'z-index:10000',
+        'pointer-events:none',
+        'margin:0',
+        'border-radius:4px',
+        'object-fit:cover',
+      ].join(';');
+      document.body.appendChild(clone);
+
+      // Hide original so only the flying clone is visible
+      stampImg.style.opacity = '0';
+
+      window.gsap.to(clone, {
+        y: window.innerHeight - rect.top + 80,
+        x: (window.innerWidth / 2) - rect.left - (rect.width / 2),
+        scale: 0.15,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.in',
+        onComplete: () => clone.remove()
+      });
+    }
+
+    // 3. Dispatch event now so invitation card gets the new stamp immediately
+    window.dispatchEvent(new CustomEvent('favoriteStampChanged', {
+      detail: { stampIndex }
+    }));
+
+    // 4. Hide invitation stamp so it can bounce-in dramatically after scroll
+    const invStamp = document.getElementById('invitation-stamp');
+    if (invStamp && window.gsap) {
+      window.gsap.set(invStamp, { scale: 0.3, opacity: 0 });
+    }
+
+    // 5. Close overlay after brief delay (lets fly animation start first)
+    setTimeout(() => {
+      this.hideAllDetails();
+
+      // 6. Scroll to invitation section (Lenis is re-enabled by hideAllDetails)
+      const invitationSection = document.querySelector('.invitation-section');
+      if (invitationSection) {
+        setTimeout(() => {
+          if (window.lenis) {
+            window.lenis.scrollTo(invitationSection, {
+              duration: 1.2,
+              easing: (t) => 1 - Math.pow(1 - t, 3)
+            });
+          } else {
+            invitationSection.scrollIntoView({ behavior: 'smooth' });
+          }
+
+          // 7. Bounce stamp in after scroll completes
+          setTimeout(() => {
+            if (invStamp && window.gsap) {
+              window.gsap.to(invStamp, {
+                scale: 1,
+                opacity: 1,
+                duration: 0.6,
+                ease: 'back.out(1.7)'
+              });
+            }
+            if (window.playSFX) {
+              window.playSFX('notification', 0.4);
+            }
+          }, 1300);
+        }, 100);
+      }
+    }, 350);
+  }
+
+  fireParticles(buttonElement) {
+    if (!window.gsap) return;
+
+    const rect = buttonElement.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const colors = ['#0038BC', '#FF6B6B', '#FFD93D', '#4D96FF', '#6BCB77', '#FF9F43'];
+    const count = 14;
+
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('div');
+      const size = 6 + Math.random() * 5;
+      const isCircle = Math.random() > 0.4;
+      dot.style.cssText = [
+        'position:fixed',
+        `left:${cx}px`,
+        `top:${cy}px`,
+        `width:${size}px`,
+        `height:${size}px`,
+        `border-radius:${isCircle ? '50%' : '2px'}`,
+        `background:${colors[i % colors.length]}`,
+        'pointer-events:none',
+        'z-index:10001',
+        'transform:translate(-50%,-50%)',
+      ].join(';');
+      document.body.appendChild(dot);
+
+      const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+      const distance = 45 + Math.random() * 65;
+
+      window.gsap.to(dot, {
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        opacity: 0,
+        scale: 0.2,
+        duration: 0.45 + Math.random() * 0.35,
+        ease: 'power2.out',
+        onComplete: () => dot.remove()
+      });
+    }
   }
 
   loadFavoriteState() {

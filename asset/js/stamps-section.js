@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 // Play click sound effect
                 if (window.playSFX) {
-                    window.playSFX('stamp-click', 0.7);
+                    window.playSFX('paper', 0.7);
                 }
                 
                 window.stampDetailsController.showDetail(index);
