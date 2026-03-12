@@ -286,6 +286,10 @@ class StampDetailsController {
       // Show the selected section
       if (this.detailSections[stampIndex]) {
         this.detailSections[stampIndex].style.display = 'flex';
+
+        // Restore stamp image opacity in case it was hidden by fly animation
+        const detailImg = this.detailSections[stampIndex].querySelector('.stamp-detail-image img');
+        if (detailImg) detailImg.style.opacity = '';
         
         // Scroll to top of the details container
         this.container.scrollTop = 0;

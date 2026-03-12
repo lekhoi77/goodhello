@@ -82,7 +82,7 @@ class AudioManager {
             { id: 'envelope-open', file: 'asset/audio/sfx/envelope-open.mp3' },
             { id: 'stamp-hover', file: 'asset/audio/sfx/stamp-hover.mp3' },
             { id: 'stamp-click', file: 'asset/audio/sfx/stampsound.wav' },
-            { id: 'paper', file: 'asset/audio/sfx/paper.wav' },
+            { id: 'paper', file: 'asset/audio/sfx/getstamp.wav' },
             { id: 'notification', file: 'asset/audio/sfx/notification.mp3' },
             { id: 'wish-drop', file: 'asset/audio/sfx/wish-drop.mp3' },
             { id: 'button-click', file: 'asset/audio/sfx/button-click.mp3' }
