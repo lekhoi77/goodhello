@@ -213,19 +213,39 @@ Dự án này là một personal project với scope nhỏ, nên không có form
 ---
 
 ## Takeaways for Future Iterations
-**1. Stamp Gate trên mobile cần re-evaluate**
-Scroll lock chỉ apply desktop. Trên mobile, user có thể scroll thẳng xuống invitation mà không cần chọn stamp. Cần quyết định: có muốn enforce narrative trên mobile không và mechanism phù hợp là gì.
-**2. Thêm social sharing**
-Web Share API (`navigator.share`) có thể cho phép user chia sẻ link invitation của mình — viral loop tiềm năng đang bỏ trống.
-**3. Tách stamp content ra khỏi JSON trong repo**
-Hiện tại mỗi khi thêm user hoặc update nội dung cần commit lại code. Nên tách ra một Google Sheet hoặc headless CMS để non-technical users tự update stamp descriptions.
-**4. Xử lý missing stamp images gracefully**
-Một số user chỉ có một vài stamp images thực tế. Cần fallback UI rõ ràng phân biệt "chưa có ảnh" vs "placeholder intentional".
-**5. Loading state cho Wish Board**
-Google Apps Script cold start có thể chậm. Hiện không có skeleton loading rõ ràng — user mobile trên mạng yếu thấy section trống mà không biết đang loading.
-**6. PDF export quality**
-`html2canvas` bị giới hạn bởi CSS transforms và cross-origin images. Cần test kỹ trên mobile và thêm error handling rõ ràng khi capture thất bại.
-**7. Audio autoplay strategy**
-Delay 5 giây là workaround inelegant. Music nên bắt đầu ngay tại thời điểm user submit tên (đã có user gesture) thay vì dùng `setTimeout`.
-**8. Scale architecture cho cohorts lớn hơn**
-Nếu muốn scale lên 20–30 người/cohort, cần pipeline tự động:
+1. **Stamp Gate trên mobile cần re-evaluate**
+   - Scroll lock hiện chỉ áp dụng trên desktop.
+   - Trên mobile, user có thể scroll thẳng xuống invitation mà không cần chọn stamp.
+   - Cần quyết định: có muốn enforce narrative trên mobile không, và mechanism phù hợp là gì.
+
+2. **Thêm social sharing**
+   - Web Share API (`navigator.share`) có thể cho phép user chia sẻ link invitation của mình.
+   - Đây là một viral loop tiềm năng đang bỏ trống.
+
+3. **Tách stamp content ra khỏi JSON trong repo**
+   - Hiện tại mỗi khi thêm user hoặc update nội dung cần commit lại code.
+   - Nên tách ra một Google Sheet hoặc headless CMS để non-technical users tự update stamp descriptions.
+
+4. **Xử lý missing stamp images gracefully**
+   - Một số user chỉ có một vài stamp images thực tế.
+   - Cần fallback UI rõ ràng phân biệt “chưa có ảnh” vs “placeholder intentional”.
+
+5. **Loading state cho Wish Board**
+   - Google Apps Script cold start có thể chậm.
+   - Nên có skeleton/spinner rõ ràng để tránh cảm giác section bị trống.
+
+6. **PDF export quality**
+   - `html2canvas` bị giới hạn bởi CSS transforms và cross-origin images.
+   - Cần test kỹ trên mobile và thêm error handling rõ ràng khi capture thất bại.
+
+7. **Audio autoplay strategy**
+   - Delay 5 giây là workaround chưa tối ưu.
+   - Music nên bắt đầu ngay tại thời điểm user submit tên (đã có user gesture) thay vì dùng `setTimeout`.
+
+8. **Scale architecture cho cohorts lớn hơn**
+   - Nếu muốn scale lên 20–30 người/cohort, cần pipeline tự động, ví dụ:
+     - Form intake (thu thập user slug + event details + stamp content)
+     - Upload & validate stamp images
+     - Generate data entry (thay vì sửa tay `users-data.json`)
+     - Provision subdomain / routing
+     - Deploy
