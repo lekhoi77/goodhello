@@ -132,7 +132,6 @@ Truy cập URL → Modal bị skip (name từ localStorage) ↓ Envelope animati
 ---
 
 ## Skeleton
-
 Mô tả wireframe layout cho từng section (desktop):
 **1. Guest Name Modal**
 Full-screen overlay (backdrop blur). Center: label → input field (single line) → submit button. Validation inline (2–50 ký tự).
