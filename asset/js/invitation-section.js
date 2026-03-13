@@ -204,9 +204,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             overlay.innerHTML =
                 '<div class="wish-modal">' +
                 '<div class="wish-modal-content">' +
+                '<div class="wish-modal-body">' +
+                '<div class="wish-presets">' +
+                '<p class="wish-presets-label">Not sure what to say?</p>' +
+                '<button type="button" class="wish-preset-btn" data-template="Good luck on your big day, so proud of you!">' +
+                '<span class="wish-preset-icon">🎓</span>' +
+                '<span class="wish-preset-text">Good luck on your big day, so proud of you!</span>' +
+                '</button>' +
+                '<button type="button" class="wish-preset-btn" data-template="Vay la xong mot chang duong dai roi, chuc homie nhieu dieu hay o phia truoc.">' +
+                '<span class="wish-preset-icon">✨</span>' +
+                '<span class="wish-preset-text">Vay la xong mot chang duong dai roi, chuc homie nhieu dieu hay o phia truoc.</span>' +
+                '</button>' +
+                '<button type="button" class="wish-preset-btn" data-template="Congrats on graduating — the best is still ahead">' +
+                '<span class="wish-preset-icon">🔥</span>' +
+                '<span class="wish-preset-text">Congrats on graduating — the best is still ahead</span>' +
+                '</button>' +
+                '</div>' +
                 '<div class="wish-modal-field">' +
                 '<textarea id="wish-message-input" class="wish-textarea" placeholder="Good luck! or xin chao, chuc ban thanh cong :3" rows="4" maxlength="500"></textarea>' +
                 '<div class="wish-modal-error" id="wish-modal-error"></div>' +
+                '</div>' +
                 '</div>' +
                 '<div class="wish-modal-actions">' +
                 '<button type="button" class="wish-btn wish-btn-cancel body-md" id="wish-cancel-btn">Cancel</button>' +
@@ -223,6 +240,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             var errorEl = document.getElementById('wish-modal-error');
             var submitBtn = document.getElementById('wish-submit-btn');
             var cancelBtn = document.getElementById('wish-cancel-btn');
+
+            var presetBtns = overlay.querySelectorAll('.wish-preset-btn');
+            presetBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    textarea.value = btn.getAttribute('data-template');
+                    errorEl.style.display = 'none';
+                    textarea.focus();
+                });
+            });
 
             function closeModal() {
                 overlay.classList.remove('active');
