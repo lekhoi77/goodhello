@@ -198,6 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (messageBtn) {
         messageBtn.addEventListener('click', () => {
+            messageBtn.style.animation = 'none';
             var overlay = document.createElement('div');
             overlay.className = 'wish-modal-overlay';
             overlay.id = 'wish-modal-overlay';
