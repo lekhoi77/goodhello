@@ -38,7 +38,7 @@ Thay vì một tấm card tĩnh, Goodhello là một single-page web app deploy 
 
 ### Vấn đề cần giải quyết
 
-Thiệp mời tốt nghiệp thông thường (giấy, hoặc ảnh tĩnh trên mạng xã hội) thiếu tính cá nhân hóa và không tạo được emotional connection giữa người mời và người được mời. Người nhận đọc xong thường không nhớ, không tương tác thêm.
+Thiệp mời tốt nghiệp thông thường (giấy, hoặc ảnh tĩnh trên mạng xã hội) thiếu tính cá nhân hóa (nếu sử dụng template sẵn) và không tạo được emotional connection giữa người mời và người được mời. Người nhận đọc xong thường không nhớ nếu không có remind, không tương tác thêm.
 
 ### Target Users
 
@@ -133,20 +133,37 @@ Truy cập URL → Modal bị skip (name từ localStorage) ↓ Envelope animati
 
 ## Skeleton
 Mô tả wireframe layout cho từng section (desktop):
-**1. Guest Name Modal**
-Full-screen overlay (backdrop blur). Center: label → input field (single line) → submit button. Validation inline (2–50 ký tự).
-**2. Hero — Envelope**
-100vh section. Center: envelope wrapper với fixed aspect ratio, các lớp SVG stack theo thứ tự back → flap → letter → front. Dưới envelope: dashed "Place stamp here" placeholder (marching-ants animation, click để scroll xuống stamps).
-**3. Stamps Section**
-Desktop: large title text bên trái (thay đổi theo stamp đang hover), 6 stamps sắp xếp vòng tròn bán kính 450px bên phải — mỗi stamp có rotation riêng và float animation riêng.
-Mobile: horizontal snap carousel (~70vw per item).
-Stamp Detail Overlay: full-screen takeover, stamp image to (center), title + description, nút Favorite (bottom).
-**4. Invitation Card**
-Background gradient. Card nằm giữa, rotate -4°, có shadow và texture. Trên card: greeting (tên khách + tên chủ nhân), stamp (top-right), event info, 4 action buttons (Calendar / Map / Wish / PDF).
-**5. Wishes Board**
-Background shift màu ấm (#FFCD88). Title font cursive phía trên. Wish cards: absolute positioned, overlap, random rotation, drag-and-drop. Drag hint text bottom-left.
-**6. Footer**
-Calendar grid tháng 4/2026 (3 cột cho ngày 3–4–5). Ngày 4: highlighted blue + rotated note "Graduation Day". Ngày 5: credits.
+
+1. **Guest Name Modal**
+   - Full-screen overlay (backdrop blur).
+   - Center: label → input field (single line) → submit button.
+   - Validation inline (2–50 ký tự).
+
+2. **Hero — Envelope**
+   - 100vh section.
+   - Center: envelope wrapper với fixed aspect ratio, các lớp SVG stack theo thứ tự back → flap → letter → front.
+   - Dưới envelope: dashed "Place stamp here" placeholder (marching-ants animation, click để scroll xuống stamps).
+
+3. **Stamps Section**
+   - Desktop: large title text bên trái (thay đổi theo stamp đang hover), 6 stamps sắp xếp vòng tròn bán kính 450px bên phải — mỗi stamp có rotation riêng và float animation riêng.
+   - Mobile: horizontal snap carousel (~70vw per item).
+   - Stamp Detail Overlay: full-screen takeover, stamp image to (center), title + description, nút Favorite (bottom).
+
+4. **Invitation Card**
+   - Background gradient.
+   - Card nằm giữa, rotate -4°, có shadow và texture.
+   - Trên card: greeting (tên khách + tên chủ nhân), stamp (top-right), event info, 4 action buttons (Calendar / Map / Wish / PDF).
+
+5. **Wishes Board**
+   - Background shift màu ấm (#FFCD88).
+   - Title font cursive phía trên.
+   - Wish cards: absolute positioned, overlap, random rotation, drag-and-drop.
+   - Drag hint text bottom-left.
+
+6. **Footer**
+   - Calendar grid tháng 4/2026 (3 cột cho ngày 3–4–5).
+   - Ngày 4: highlighted blue + rotated note "Graduation Day".
+   - Ngày 5: credits.
 ---
 
 ## Survey
