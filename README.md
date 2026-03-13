@@ -30,7 +30,7 @@ Thay vì một tấm card tĩnh, Goodhello là một single-page web app deploy 
 | **Content Creator** | Viết stamp descriptions (personal stories) cho từng user, curation 9 background music tracks |
 | **Data / Backend** | Cấu hình Google Apps Script làm API layer (wish board, visit tracking); Vercel deploy config |
 
-> Dự án này được thực hiện bởi **lefacteur** (`@postoffice indacorner`) với vai trò solo.
+> Dự án này được thực hiện bởi **lefacteur** ([LinkedIn](https://www.linkedin.com/in/vxlkhoi/)) với vai trò solo.
 
 ---
 
