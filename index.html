@@ -334,6 +334,26 @@
         -webkit-overflow-scrolling: touch;
         touch-action: pan-y;
       }
+
+      /* Breathing effect for Favorite button to draw attention */
+      .favorite-button:not(.active) {
+        animation: fav-breath 1.8s ease-in-out infinite;
+      }
+
+      @keyframes fav-breath {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 56, 188, 0);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(0, 56, 188, 0.25);
+          transform: scale(1.03);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 56, 188, 0);
+          transform: scale(1);
+        }
+      }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
