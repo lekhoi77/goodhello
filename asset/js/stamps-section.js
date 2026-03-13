@@ -269,7 +269,42 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, { threshold: 0.3 });
 
         observer.observe(stampsSection);
-        
+
+        // --- Stamp Gate Lock ---
+        let _scrollLockFn = null;
+
+        function applyStampLock() {
+            document.body.classList.add('stamps-locked');
+            if (!window.lenis || window.innerWidth <= 768) return;
+            _scrollLockFn = ({ scroll }) => {
+                const lockBottom = stampsSection.offsetTop + stampsSection.offsetHeight;
+                if (scroll > lockBottom) {
+                    window.lenis.scrollTo(lockBottom, { duration: 0.4 });
+                }
+            };
+            window.lenis.on('scroll', _scrollLockFn);
+        }
+
+        function removeStampLock() {
+            document.body.classList.remove('stamps-locked');
+            if (window.lenis && _scrollLockFn) {
+                window.lenis.off('scroll', _scrollLockFn);
+                _scrollLockFn = null;
+            }
+        }
+
+        // Apply lock if no favorite chosen yet (desktop only)
+        if (window.userLoader.getFavoriteStamp() === null && window.innerWidth > 768) {
+            applyStampLock();
+        }
+
+        // Unlock when stamp is chosen
+        window.addEventListener('favoriteStampChanged', (e) => {
+            if (e.detail && e.detail.stampIndex !== null) {
+                removeStampLock();
+            }
+        });
+
     } catch (error) {
         console.error('Failed to initialize stamps section:', error);
     }

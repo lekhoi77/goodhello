@@ -305,6 +305,37 @@
       </div>
     </footer>
 
+    <style>
+      .invitation-section, .wishes-section, .footer-section {
+        transition: filter 0.8s ease, opacity 0.8s ease;
+      }
+      body.stamps-locked .invitation-section,
+      body.stamps-locked .wishes-section,
+      body.stamps-locked .footer-section {
+        filter: blur(10px);
+        opacity: 0.5;
+        pointer-events: none;
+        user-select: none;
+      }
+      .stamp-lock-hint {
+        display: none;
+        text-align: center;
+        padding: 16px;
+        opacity: 0.5;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+      }
+      body.stamps-locked .stamp-lock-hint {
+        display: block;
+      }
+      /* Allow touch scrolling inside the stamp detail overlay on mobile,
+         overriding any touch-action: none set by Lenis on <html> */
+      .stamp-details-container {
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+      }
+    </style>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
