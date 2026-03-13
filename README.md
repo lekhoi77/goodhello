@@ -106,8 +106,110 @@ Nội dung và tính năng bổ trợ cần có để các chức năng chính h
 
 ---
 
+
 ## Structure Stage
 
 ### Information Architecture
 
 Sản phẩm là một **linear narrative experience** — toàn bộ nội dung nằm trên một trang cuộn dọc theo thứ tự:
+[Modal] → [Hero: Envelope] → [Stamps Section] → [Invitation Card] → [Wishes Board] → [Footer]
+
+### User Flow — First-time visitor
+Truy cập URL (subdomain detection) ↓ Modal: Nhập tên → Submit ↓ (background: ghi visit vào Google Sheets) Envelope animation tự động chạy ↓ Scroll xuống → Stamps Section ↓ Click vào từng stamp → Xem detail overlay ↓ Chọn "Favorite" stamp ↓ (confetti + stamp fly animation) Auto-scroll → Invitation Card (stamp bounce vào card) ↓ Từ card, user có thể: ├── Add to Calendar ├── View on Map ├── Leave a wish → Modal → Submit └── Download PDF ↓ Scroll xuống → Wish Board (drag cards) ↓ Footer (April calendar / credits)
+
+### User Flow — Returning visitor
+Truy cập URL → Modal bị skip (name từ localStorage) ↓ Envelope animation → Scroll tự do (Stamp Gate không kích hoạt nếu đã chọn stamp)
+
+
+### State Management
+
+| State | Lưu ở | Ảnh hưởng |
+|---|---|---|
+| `guest_name_{user}` | localStorage | Hiển thị tên trên card, skip modal |
+| `chosen_stamp_{user}` | localStorage | Unlock stamp gate, hiện stamp trên card |
+| `audioEnabled`, `currentTrack`, `audioVolume` | localStorage | Nhớ audio preference |
+| Wishes data | Google Sheets (remote, 5-min cache) | Nội dung wish board |
+---
+
+## Skeleton
+
+Mô tả wireframe layout cho từng section (desktop):
+**1. Guest Name Modal**
+Full-screen overlay (backdrop blur). Center: label → input field (single line) → submit button. Validation inline (2–50 ký tự).
+**2. Hero — Envelope**
+100vh section. Center: envelope wrapper với fixed aspect ratio, các lớp SVG stack theo thứ tự back → flap → letter → front. Dưới envelope: dashed "Place stamp here" placeholder (marching-ants animation, click để scroll xuống stamps).
+**3. Stamps Section**
+Desktop: large title text bên trái (thay đổi theo stamp đang hover), 6 stamps sắp xếp vòng tròn bán kính 450px bên phải — mỗi stamp có rotation riêng và float animation riêng.
+Mobile: horizontal snap carousel (~70vw per item).
+Stamp Detail Overlay: full-screen takeover, stamp image to (center), title + description, nút Favorite (bottom).
+**4. Invitation Card**
+Background gradient. Card nằm giữa, rotate -4°, có shadow và texture. Trên card: greeting (tên khách + tên chủ nhân), stamp (top-right), event info, 4 action buttons (Calendar / Map / Wish / PDF).
+**5. Wishes Board**
+Background shift màu ấm (#FFCD88). Title font cursive phía trên. Wish cards: absolute positioned, overlap, random rotation, drag-and-drop. Drag hint text bottom-left.
+**6. Footer**
+Calendar grid tháng 4/2026 (3 cột cho ngày 3–4–5). Ngày 4: highlighted blue + rotated note "Graduation Day". Ngày 5: credits.
+---
+
+## Survey
+
+Dự án này là một personal project với scope nhỏ, nên không có formal research phase. Tuy nhiên các design decisions phản ánh một số **implicit assumptions** đã được kiểm chứng qua observation:
+| Assumption | Design Response |
+|---|---|
+| User lần đầu sẽ không biết phải làm gì | Modal tên như step 1 rõ ràng; envelope animation như intro trước khi vào nội dung |
+| User có thể skip stamps và đi thẳng xuống invitation | Stamp Gate — blur + scroll lock enforcement |
+| Font tiếng Việt không render đúng với Mythshire | Strip diacritics utility cho tất cả user-generated text |
+| Autoplay audio bị browser block | Delay 5s + toast warning + volume fade-in |
+| Mobile chiếm tỉ lệ đáng kể | Responsive breakpoints toàn bộ, carousel thay circular layout, audio disabled |
+| Khách muốn lưu lại lời mời | PDF export với html2canvas + jsPDF |
+| Không muốn setup backend phức tạp | Google Sheets + Apps Script làm database |
+**Câu hỏi cần trả lời trong lần research tiếp theo:**
+1. Người dùng có hiểu mục đích của Stamp Gate không, hay cảm thấy bị "blocked" frustrating?
+2. Thời gian hoàn thành toàn bộ flow (modal → wish submit) là bao nhiêu? Có quá dài?
+3. Tỉ lệ người thực sự để lại wish là bao nhiêu so với tổng visit?
+4. Trên mobile, stamp carousel có đủ discoverable không?
+---
+
+## Result
+
+### Output
+- Web experience hoàn chỉnh, deploy trên Vercel tại `goodhello.space`.
+- Multi-user architecture phục vụ 6+ sinh viên, mỗi người 1 subdomain riêng.
+- 6 sections với đầy đủ animation, interaction, và utility features.
+- Backend-less data layer (Google Sheets) với 3 endpoints: visit recording, wish submission, wish fetching.
+- Hệ thống audio với 9 tracks, có selector + volume control.
+- Mobile-responsive với behavior riêng biệt (không chỉ scale down).
+
+### Outcome
+- Tạo ra một digital artifact mang giá trị kỷ niệm — khách có thể relive lại 3 năm đại học của chủ nhân qua 6 stamps.
+- Invite flow được gamify nhẹ (stamp selection mechanic) khiến người dùng tương tác chủ động thay vì đọc thụ động.
+- Personalization thực sự: tên khách trên card, stamp họ chọn phản ánh gu riêng.
+- Wish board tạo không gian cộng đồng — khách thấy lời chúc từ người khác, cảm giác cùng tham dự một sự kiện.
+### Metrics
+
+| Metric | Cách đo | Mục tiêu |
+|---|---|---|
+| Visit count per user | Google Sheets `recordVisit` logs | Biết mỗi sinh viên có bao nhiêu khách mở link |
+| Wish submission rate | Số rows Sheets / số lượt visit | Tỉ lệ engagement của wish feature |
+| Stamp selection rate | Thêm vào `recordVisit` payload | Xem Stamp Gate có bị bỏ qua không |
+| Time on page | Microsoft Clarity session recordings | Đánh giá depth of engagement |
+| Device split | GA4 device category | Validate responsive priority |
+| Track preference | Log khi user chọn track | Biết track nào được nghe nhiều nhất |
+---
+
+## Takeaways for Future Iterations
+**1. Stamp Gate trên mobile cần re-evaluate**
+Scroll lock chỉ apply desktop. Trên mobile, user có thể scroll thẳng xuống invitation mà không cần chọn stamp. Cần quyết định: có muốn enforce narrative trên mobile không và mechanism phù hợp là gì.
+**2. Thêm social sharing**
+Web Share API (`navigator.share`) có thể cho phép user chia sẻ link invitation của mình — viral loop tiềm năng đang bỏ trống.
+**3. Tách stamp content ra khỏi JSON trong repo**
+Hiện tại mỗi khi thêm user hoặc update nội dung cần commit lại code. Nên tách ra một Google Sheet hoặc headless CMS để non-technical users tự update stamp descriptions.
+**4. Xử lý missing stamp images gracefully**
+Một số user chỉ có một vài stamp images thực tế. Cần fallback UI rõ ràng phân biệt "chưa có ảnh" vs "placeholder intentional".
+**5. Loading state cho Wish Board**
+Google Apps Script cold start có thể chậm. Hiện không có skeleton loading rõ ràng — user mobile trên mạng yếu thấy section trống mà không biết đang loading.
+**6. PDF export quality**
+`html2canvas` bị giới hạn bởi CSS transforms và cross-origin images. Cần test kỹ trên mobile và thêm error handling rõ ràng khi capture thất bại.
+**7. Audio autoplay strategy**
+Delay 5 giây là workaround inelegant. Music nên bắt đầu ngay tại thời điểm user submit tên (đã có user gesture) thay vì dùng `setTimeout`.
+**8. Scale architecture cho cohorts lớn hơn**
+Nếu muốn scale lên 20–30 người/cohort, cần pipeline tự động:
