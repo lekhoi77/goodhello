@@ -8,7 +8,7 @@
 
 **Goodhello** là một web experience cá nhân hóa, được xây dựng để gửi lời mời tốt nghiệp đến từng người khách theo một cách đáng nhớ và cảm xúc hơn so với thiệp mời truyền thống.
 
-Thay vì một tấm card tĩnh, Goodhello là một single-page web app deploy trên Vercel, trong đó mỗi sinh viên tốt nghiệp sở hữu một **subdomain riêng** (ví dụ: `phatla.goodhello.space`, `quocbao.goodhello.space`). Khách truy cập sẽ trải qua một hành trình tương tác gồm: khai báo tên, mở phong bì thư mời, duyệt qua 6 "con tem" đại diện cho những ký ức đại học của chủ nhân, chọn một con tem yêu thích — sau đó mới được mở thiệp mời chính thức kèm các action thực tế như thêm lịch, xem địa điểm, để lại lời chúc, và tải về PDF.
+Thay vì một tấm card tĩnh, Goodhello là một single-page web app deploy trên Vercel, trong đó mỗi sinh viên tốt nghiệp sở hữu một **subdomain riêng** (ví dụ: `phatla.goodhello.space`, `quocbao.goodhello.space`). Khách truy cập sẽ trải qua một hành trình tương tác gồm: khai báo tên, mở phong bì thư mời, duyệt qua stamp đại diện cho những mảnh ký ức đại học của chủ nhân chúng, chọn một con tem yêu thích — sau đó mới được mở thiệp mời chính thức kèm các action thực tế như thêm lịch, xem địa điểm, để lại lời chúc, và tải về PDF.
 
 **Ngữ cảnh:** Nhóm sinh viên UEH/BIT khóa 2023–2026. Sự kiện tốt nghiệp diễn ra ngày 4/4/2026 tại 59c Nguyễn Đình Chiểu, Q.3, TP.HCM.
 
