@@ -383,7 +383,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // =============================================
-    // 5. SCROLL ENTRANCE ANIMATION
+    // 5. UPDATE FOOTER CALENDAR BASED ON USER EVENT
+    // =============================================
+    (function updateFooterCalendar() {
+        const evData = (window.userLoader && window.userLoader.userData && window.userLoader.userData.event) || {};
+        const raw = evData.start || '20260404T100000';
+        const year  = parseInt(raw.slice(0, 4), 10);
+        const month = parseInt(raw.slice(4, 6), 10) - 1;
+        const day   = parseInt(raw.slice(6, 8), 10);
+
+        const eventDate = new Date(year, month, day);
+        const prevDate  = new Date(year, month, day - 1);
+        const nextDate  = new Date(year, month, day + 1);
+
+        const dayNames   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        const monthNames = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
+                            'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+
+        const footerMonth = document.querySelector('.footer-month');
+        if (footerMonth) footerMonth.textContent = `${monthNames[eventDate.getMonth()]}/${year}`;
+
+        const dayblocks = document.querySelectorAll('.dayblock');
+        if (dayblocks.length >= 3) {
+            [prevDate, eventDate, nextDate].forEach((d, i) => {
+                const numEl  = dayblocks[i].querySelector('.number');
+                const dateEl = dayblocks[i].querySelector('.date');
+                if (numEl)  numEl.textContent  = d.getDate();
+                if (dateEl) dateEl.textContent = dayNames[d.getDay()];
+            });
+        }
+    })();
+
+    // =============================================
+    // 6. SCROLL ENTRANCE ANIMATION
     // =============================================
     let hasAnimated = false;
     const observer = new IntersectionObserver((entries) => {
