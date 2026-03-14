@@ -2,11 +2,19 @@
 // INVITATION SECTION
 // =============================================
 document.addEventListener('DOMContentLoaded', async () => {
-    // Wait for user data to be loaded
-    if (!window.userLoader || !window.userLoader.userData) {
-        console.log('Waiting for user data...');
-        await new Promise(resolve => setTimeout(resolve, 500));
+    // Poll until userLoader.userData is populated (stamps-section.js calls init() async in parallel).
+    // If data never arrives (e.g. returning visitor path skips init), call init() ourselves.
+    async function waitForUserData(maxMs = 3000, interval = 80) {
+        const deadline = Date.now() + maxMs;
+        while (!(window.userLoader && window.userLoader.userData)) {
+            if (Date.now() >= deadline) break;
+            await new Promise(r => setTimeout(r, interval));
+        }
+        if (!(window.userLoader && window.userLoader.userData) && window.userLoader) {
+            await window.userLoader.init().catch(() => {});
+        }
     }
+    await waitForUserData();
 
     const invitationSection = document.querySelector('.invitation-section');
     const invitationCard = document.querySelector('.invitation-card');
