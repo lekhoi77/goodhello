@@ -8,12 +8,23 @@
     />
     <title>Goodhello – Login</title>
 
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.gstatic.com" />
+
     <link rel="icon" href="asset/img/websiteicon.svg" type="image/svg+xml" />
+
+    <!-- Fonts loaded via <link> instead of @import to avoid render-blocking -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=My+Soul&display=swap" />
+
     <link rel="stylesheet" href="asset/css/designsystem.css" />
     <link rel="stylesheet" href="asset/css/login.css" />
 
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <!-- defer prevents render-blocking -->
+    <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   </head>
   <body class="login-page">
     <div class="login-shell">
@@ -22,6 +33,10 @@
           class="login-illustration"
           src="https://placehold.co/520x562"
           alt="Goodhello illustration"
+          fetchpriority="high"
+          loading="eager"
+          width="520"
+          height="562"
         />
 
         <div class="login-content">
@@ -113,8 +128,8 @@
       </div>
     </div>
 
-    <script src="asset/js/firebase-client.js"></script>
-    <script src="asset/js/login-page.js"></script>
+    <script defer src="asset/js/firebase-client.js"></script>
+    <script defer src="asset/js/login-page.js"></script>
   </body>
 </html>
 
