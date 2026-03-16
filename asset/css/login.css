@@ -1,0 +1,231 @@
+/* Login page layout – built on top of design system tokens */
+
+body.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 139px 120px 259px;
+  background:
+    radial-gradient(
+      ellipse 71.35% 71.35% at 50% 28.65%,
+      #ffe4bf 0%,
+      var(--colors-white, #ffffff) 100%
+    ),
+    #ffffff;
+}
+
+.login-shell {
+  width: 100%;
+  max-width: 1440px;
+}
+
+.login-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 96px;
+  padding: 32px;
+  background: var(--colors-white, #ffffff);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-md, 20px);
+}
+
+.login-illustration {
+  flex: 1 1 0;
+  height: 562px;
+  border-radius: var(--radius-md, 20px);
+  object-fit: cover;
+}
+
+.login-content {
+  flex: 1 1 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.login-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.login-heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-title {
+  width: 100%;
+  color: var(--colors-primary-500, #0038bc);
+  font-family: "Mythshire", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 72px;
+  letter-spacing: 0.18px;
+}
+
+.login-description-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.login-description {
+  flex: 1 1 0;
+  font-family: "Poor Story", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 18px;
+  line-height: 25.2px;
+  letter-spacing: 1.8px;
+  color: #adb5bd;
+}
+
+.login-description strong {
+  color: #343a40;
+}
+
+.login-google-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--colors-white, #ffffff);
+  border-radius: var(--radius-xs, 8px);
+  border: 1px solid var(--colors-black, #2a2a2a);
+  font-family: "Poor Story", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 18px;
+  line-height: 25.2px;
+  letter-spacing: 1.8px;
+  color: var(--colors-black, #2a2a2a);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-google-btn:hover {
+  border-color: var(--colors-primary-500, #0038bc);
+  background: var(--colors-primary-50, #f0f3fb);
+}
+
+.login-google-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.login-footer-label-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.login-footer-label {
+  flex: 1 1 0;
+  font-family: "Poor Story", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 18px;
+  line-height: 25.2px;
+  letter-spacing: 1.8px;
+  color: #adb5bd;
+}
+
+.login-social-row {
+  width: 100%;
+  display: flex;
+  gap: 32px;
+}
+
+.login-social-btn {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius-xs, 8px);
+  border: 1px solid var(--colors-primary-500, #0038bc);
+  background: var(--colors-white, #ffffff);
+  font-family: "Poor Story", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 18px;
+  line-height: 25.2px;
+  letter-spacing: 1.8px;
+  color: var(--colors-primary-500, #0038bc);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-social-btn:hover {
+  background: var(--colors-primary-50, #f0f3fb);
+}
+
+.login-social-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-social-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;
+}
+
+/* Simple responsiveness */
+@media (max-width: 1024px) {
+  body.login-page {
+    padding: 80px 24px 120px;
+  }
+
+  .login-card {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .login-illustration {
+    width: 100%;
+    height: auto;
+  }
+
+  .login-social-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  body.login-page {
+    padding: 48px 16px 80px;
+  }
+
+  .login-title {
+    font-size: 40px;
+    line-height: 1.2;
+  }
+
+  .login-description,
+  .login-footer-label {
+    font-size: 16px;
+    letter-spacing: 1.2px;
+  }
+}

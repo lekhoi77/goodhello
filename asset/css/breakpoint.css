@@ -937,6 +937,36 @@
   border-radius: 0 !important;
 }
 
+/* =============================================
+   GRADIENT BLOB DECORATIONS — fixed, toàn trang
+   ============================================= */
+
+.gradient-blob {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+  mix-blend-mode: multiply;
+}
+
+.gradient-blob img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.gradient-blob--1 { width: clamp(320px, 42vw, 640px); }
+.gradient-blob--2 { width: clamp(280px, 36vw, 560px); }
+.gradient-blob--3 { width: clamp(260px, 32vw, 500px); }
+
+@media (max-width: 768px) {
+  .gradient-blob--1 { width: clamp(200px, 60vw, 320px); }
+  .gradient-blob--2 { width: clamp(180px, 52vw, 280px); }
+  .gradient-blob--3 { width: clamp(160px, 46vw, 260px); }
+}
+
 /* Desktop: widen wish cards (mobile keeps its own override below) */
 @media (min-width: 1025px) {
   .wish-paper {

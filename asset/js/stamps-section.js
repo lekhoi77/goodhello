@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // 3. Hover interaction (desktop only)
+        // Khi rời chuột khỏi stamp, giữ nguyên title cuối cùng (không reset về default).
         stampItems.forEach(stamp => {
             const hoverHandler = () => {
                 if (!isHoverEnabled) return;
@@ -164,13 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             };
 
-            const resetHandler = () => {
-                if (!isHoverEnabled) return;
-                stampsTitle.innerHTML = defaultTitle;
-            };
-
             stamp.addEventListener('mouseenter', hoverHandler);
-            stamp.addEventListener('mouseleave', resetHandler);
         });
 
         // Smooth hover transition: capture live animation position before transitioning.

@@ -1,0 +1,291 @@
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=My+Soul&display=swap");
+
+/* Reset & base elements */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+canvas,
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+@font-face {
+  font-family: "Mythshire";
+  src: url("../font/Mythshire Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Design tokens */
+:root {
+  /* Colors */
+  --colors-black: #2a2a2a;
+  --colors-white: #ffffff;
+
+  --colors-primary-50: #f0f3fb;
+  --colors-primary-100: #cad6f1;
+  --colors-primary-200: #97aee4;
+  --colors-primary-300: #6587d7;
+  --colors-primary-400: #325fc9;
+  --colors-primary-500: #0038bc;
+  --colors-primary-600: #002d97;
+  --colors-primary-700: #002784;
+  --colors-primary-800: #002272;
+  --colors-primary-900: #001c5f;
+  --colors-primary-950: #001443;
+
+  --colors-neutral-100: #f8f8f3;
+  --colors-neutral-200: #f4f4ee;
+  --colors-neutral-300: #f1f1e9;
+  --colors-neutral-400: #eeeee4;
+  --colors-neutral-500: #ebebdf;
+  --colors-neutral-600: #bcbcb3;
+  --colors-neutral-700: #a5a59d;
+  --colors-neutral-800: #8e8e87;
+  --colors-neutral-900: #777771;
+
+  /* Typography scale */
+  --heading-1-size: 160px;
+  --heading-1-line-height: 0.8;
+  --heading-2-size: 120px;
+  --heading-2-line-height: 0.6;
+  --heading-3-size: 60px;
+  --heading-3-line-height: 120px;
+  --heading-4-size: 40px;
+  --heading-4-line-height: 120px;
+  --heading-5-size: 30px;
+  --heading-5-line-height: 120px;
+  --heading-6-size: 24px;
+  --heading-6-line-height: 120px;
+
+  --body-lg-size: 24px;
+  --body-lg-line-height: 1.4;
+  --body-lg-letter-spacing: 0.1em;
+  --body-md-size: 20px;
+  --body-md-line-height: 1.4;
+  --body-sm-size: 18px;
+  --body-sm-line-height: 1.4;
+  --body-xs-size: 16px;
+  --body-xs-line-height: 1.2;
+
+  /* Radius scale */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-pill: 9999px;
+}
+
+/* Typography utilities */
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4,
+.heading-5,
+.heading-6 {
+  font-family: "Mythshire", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.heading-1 {
+  font-size: var(--heading-1-size);
+  line-height: var(--heading-1-line-height);
+}
+
+.heading-2 {
+  font-size: var(--heading-2-size);
+  line-height: var(--heading-2-line-height);
+}
+
+.heading-3 {
+  font-size: var(--heading-3-size);
+  line-height: var(--heading-3-line-height);
+}
+
+.heading-4 {
+  font-size: var(--heading-4-size);
+  line-height: var(--heading-4-line-height);
+}
+
+.heading-5 {
+  font-size: var(--heading-5-size);
+  line-height: var(--heading-5-line-height);
+}
+
+.heading-6 {
+  font-size: var(--heading-6-size);
+  line-height: var(--heading-6-line-height);
+}
+
+.body-lg,
+.body-md,
+.body-sm,
+.body-xs {
+  font-family: "Poor Story", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-weight: 400;
+}
+
+.body-lg {
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-line-height);
+  letter-spacing: var(--body-lg-letter-spacing);
+}
+
+.body-md {
+  font-size: var(--body-md-size);
+  line-height: var(--body-md-line-height);
+}
+
+.body-sm {
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-line-height);
+}
+
+.body-xs {
+  font-size: var(--body-xs-size);
+  line-height: var(--body-xs-line-height);
+}
+
+/* Radius utilities */
+.radius-xs {
+  border-radius: var(--radius-xs);
+}
+
+.radius-sm {
+  border-radius: var(--radius-sm);
+}
+
+.radius-md {
+  border-radius: var(--radius-md);
+}
+
+.radius-pill {
+  border-radius: var(--radius-pill);
+}
+
+/* Shared button styles */
+.btn-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--colors-black);
+  background: var(--colors-white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.btn-icon-sm {
+  padding: 8px;
+  gap: 8px;
+  border-radius: var(--radius-xs);
+}
+
+.btn-icon-sm svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-icon:hover,
+.btn-icon.show-hint {
+  border: 1px solid var(--colors-primary-50);
+  background: var(--colors-primary-300);
+  color: var(--colors-primary-50);
+}
+
+.btn-icon:hover svg path,
+.btn-icon.show-hint svg path {
+  fill: var(--colors-primary-50);
+}
+
+.btn-icon.active {
+  border: 1px solid var(--colors-primary-500);
+  background: var(--colors-white);
+}
+
+.btn-icon.active svg path {
+  fill: var(--colors-primary-500);
+}
+
+.btn-icon.active:hover {
+  border: 1px solid var(--colors-primary-500);
+  background: var(--colors-white);
+  color: inherit;
+}
+
+.btn-icon.active:hover svg path {
+  fill: var(--colors-primary-500);
+}
+
+.btn-icon svg {
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.btn-icon:focus {
+  outline: none;
+}
+
+.btn-icon:active:not(.active) {
+  transform: scale(0.95);
+}
+

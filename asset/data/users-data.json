@@ -350,45 +350,46 @@
       "title": "Meifan's Graduation Ceremony",
       "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
       "description": "Meifan mời bạn đến dự lễ tốt nghiệp đại học.",
-      "start": "20260404T100000",
-      "end": "20260404T130000"
+      "start": "20260404T160000",
+      "end": "20260404T190000",
+      "displayTime": "16:00, 4 April 2026"
     },
     "stamps": [
       {
         "src": "asset/stamp/meifanpkng/stamp-meifanpkng-1.png",
         "alt": "Meifan - Stamp 1",
-        "title": "Chapter One",
-        "description": "The very first page of a journey worth remembering."
+        "title": "Before the Goodbye",
+        "description": "Before we all went our separate ways, we took one last photo together—freezing a moment from the final days of our university life."
       },
       {
         "src": "asset/stamp/meifanpkng/stamp-meifanpkng-2.png",
         "alt": "Meifan - Stamp 2",
-        "title": "Growing Days",
-        "description": "Every stumble, every lesson, every small win — all part of the growth."
+        "title": "Volunteer Trip Memories",
+        "description": "One of the most memorable volunteer trips of my university years. A simple moment filled with laughter, teamwork, and the joy of doing something meaningful together."
       },
       {
         "src": "asset/stamp/meifanpkng/stamp-meifanpkng-3.png",
         "alt": "Meifan - Stamp 3",
-        "title": "The Ones Who Stayed",
-        "description": "Friends who became family through the chaos of university life."
+        "title": "Days in Military Training",
+        "description": "A snapshot from our military training days—challenging, unforgettable, and full of shared memories."
       },
       {
         "src": "asset/stamp/meifanpkng/stamp-meifanpkng-4.png",
         "alt": "Meifan - Stamp 4",
-        "title": "Beyond the Classroom",
-        "description": "The memories made outside of lectures that shaped who I am."
+        "title": "Effort into Achievement",
+        "description": "Another proud moment in my research journey, celebrating the hard work and dedication of our team."
       },
       {
         "src": "asset/stamp/meifanpkng/stamp-meifanpkng-5.png",
         "alt": "Meifan - Stamp 5",
-        "title": "Finding My Way",
-        "description": "Navigating uncertainty and discovering what truly matters along the way."
+        "title": "My First Research Award",
+        "description": "My first time receiving an award for a research project at university. A small but meaningful milestone that made all the effort and late nights worth it."
       },
       {
         "src": "asset/stamp/meifanpkng/stamp-meifanpkng-6.png",
         "alt": "Meifan - Stamp 6",
-        "title": "Hello, What's Next",
-        "description": "Closing this chapter with gratitude, and stepping into the next with hope."
+        "title": "Last Volunteer Days",
+        "description": "Our final volunteer trip together—filled with laughter, friendship, and memories that will stay with us long after the journey ends."
       }
     ],
     "details": null

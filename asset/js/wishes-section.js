@@ -314,6 +314,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =============================================
     window.wishesSectionRefresh = function () {
         if (!window.googleSheetsAPI || !window.googleSheetsAPI.getWishes) return Promise.resolve();
+        const previousCount = wishesData.length;
         return window.googleSheetsAPI.getWishes(host, false).then(function (result) {
             if (result.success && Array.isArray(result.wishes)) {
                 wishesData = result.wishes.map(function (w) {
@@ -323,7 +324,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             wishesContainer.innerHTML = '';
             renderWishes();
             var papers = wishesContainer.querySelectorAll('.wish-paper');
-            papers.forEach(function (paper) { paper.classList.add('visible'); });
+            papers.forEach(function (paper, index) {
+                if (index < previousCount) {
+                    // Wish cũ: hiện ngay không cần animation
+                    paper.classList.add('visible');
+                } else {
+                    // Wish mới: chạy hiệu ứng rơi
+                    paper.classList.add('falling');
+                    if (window.playSFX) {
+                        window.playSFX('wish-drop', 0.5);
+                    }
+                    setTimeout(function () {
+                        paper.classList.add('visible');
+                        paper.classList.remove('falling');
+                    }, 1800);
+                }
+            });
         });
     };
 
