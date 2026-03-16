@@ -28,6 +28,7 @@
     }
 
     var db = firebase.firestore(app);
+    var auth = firebase.auth(app);
 
     window.firebaseClient = {
         /**
@@ -41,6 +42,37 @@
                 message: message,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
+        },
+
+        /**
+         * Lưu một "stamp" cá nhân gắn với tài khoản Firebase
+         * @returns {Promise}
+         */
+        addUserStamp: function (host, guestName, message) {
+            var user = auth.currentUser;
+            if (!user) {
+                return Promise.reject(new Error('User must be signed in to add stamp.'));
+            }
+            return db.collection('user_uploads').add({
+                userId: user.uid,
+                host: host,
+                guestName: guestName,
+                message: message,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                source: 'creator-corner'
+            });
+        },
+
+        /**
+         * Lấy danh sách stamp theo user
+         * @returns {Promise<QuerySnapshot>}
+         */
+        getUserStamps: function (userId, limitCount) {
+            return db.collection('user_uploads')
+                .where('userId', '==', userId)
+                .orderBy('createdAt', 'desc')
+                .limit(limitCount || 20)
+                .get();
         },
 
         /**
@@ -68,6 +100,40 @@
                 guestName: guestName,
                 visitedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
+        },
+
+        /**
+         * Khởi tạo Auth helpers cho frontend (email/password + Google)
+         */
+        initAuth: function () {
+            var googleProvider = new firebase.auth.GoogleAuthProvider();
+
+            return {
+                signUpWithEmail: function (email, password) {
+                    return auth.createUserWithEmailAndPassword(email, password);
+                },
+                signInWithEmail: function (email, password) {
+                    return auth.signInWithEmailAndPassword(email, password);
+                },
+                signInWithGoogle: function () {
+                    return auth.signInWithPopup(googleProvider);
+                },
+                signOut: function () {
+                    return auth.signOut();
+                },
+                onAuthStateChanged: function (cb) {
+                    return auth.onAuthStateChanged(cb);
+                },
+                getCurrentUser: function () {
+                    return auth.currentUser;
+                },
+                addUserStamp: function (host, guestName, message) {
+                    return window.firebaseClient.addUserStamp(host, guestName, message);
+                },
+                getUserUploads: function (userId, limitCount) {
+                    return window.firebaseClient.getUserStamps(userId, limitCount);
+                }
+            };
         }
     };
 })();

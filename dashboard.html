@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Goodhello – Creator Dashboard</title>
+  <link rel="icon" href="asset/img/websiteicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="asset/css/main.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 32px 16px 48px;
+      color: var(--colors-black, #2a2a2a);
+    }
+    .dash-shell {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .dash-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dash-brand img {
+      width: 32px;
+      height: 32px;
+    }
+    .dash-title {
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .dash-subtitle {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    .dash-link-back {
+      font-size: 0.8rem;
+      text-decoration: none;
+      color: #0038bc;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dash-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .card {
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: #fff;
+      padding: 20px 18px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.03);
+    }
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card-caption {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 18px;
+    }
+    .user-auth-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .user-auth-row input[type="email"],
+    .user-auth-row input[type="password"] {
+      flex: 1 1 160px;
+      min-width: 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 0.88rem;
+    }
+    .user-auth-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .btn-small {
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #0038bc;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-ghost {
+      background: #fff;
+      color: #0038bc;
+      border: 1px solid rgba(0, 56, 188, 0.15);
+    }
+    .user-auth-status {
+      font-size: 0.78rem;
+      min-height: 1.2em;
+      opacity: 0.85;
+    }
+    .user-auth-status.error { color: #c62828; opacity: 1; }
+    .user-auth-status.success { color: #2e7d32; opacity: 1; }
+
+    .user-upload-form {
+      margin-top: 18px;
+      border-top: 1px dashed rgba(0,0,0,0.08);
+      padding-top: 14px;
+    }
+    .user-upload-label {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+    .user-upload-form textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 0.88rem;
+    }
+    .user-upload-meta {
+      font-size: 0.73rem;
+      opacity: 0.7;
+      margin-top: 5px;
+    }
+    .user-upload-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 360px;
+      overflow: auto;
+      margin-top: 8px;
+      padding-right: 4px;
+    }
+    .user-upload-item {
+      padding: 9px 11px;
+      border-radius: 11px;
+      background: #fafafa;
+      border: 1px dashed rgba(0,0,0,0.06);
+      font-size: 0.82rem;
+    }
+    .user-upload-item-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.72rem;
+      opacity: 0.7;
+      margin-bottom: 3px;
+    }
+    .user-upload-empty {
+      font-size: 0.78rem;
+      opacity: 0.7;
+    }
+    .dash-hint {
+      font-size: 0.76rem;
+      opacity: 0.7;
+      margin-top: 10px;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding-top: 20px;
+      }
+      .dash-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+  <div class="dash-shell">
+    <header class="dash-header">
+      <div>
+        <div class="dash-brand">
+          <img src="asset/img/websiteicon.svg" alt="Goodhello">
+          <div>
+            <div class="dash-title body-xs">GOODHELLO CREATOR DASHBOARD</div>
+            <div class="dash-subtitle body-xs">Sign in to save and manage your own stamps.</div>
+          </div>
+        </div>
+      </div>
+      <a class="dash-link-back" href="./">
+        <!-- simple arrow -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+        Back to invitation
+      </a>
+    </header>
+
+    <main class="dash-grid">
+      <section class="card">
+        <h2 class="card-title body-xs">Account</h2>
+        <p class="card-caption body-xs">
+          Create an account with email or sign in with Google to manage your personal stamps.
+        </p>
+
+        <div id="user-auth-block">
+          <div class="user-auth-row">
+            <input type="email" id="auth-email" placeholder="you@example.com" autocomplete="email">
+            <input type="password" id="auth-password" placeholder="Password" autocomplete="current-password">
+          </div>
+          <div class="user-auth-actions">
+            <button type="button" class="btn-small" id="btn-signup-email">Sign up</button>
+            <button type="button" class="btn-small btn-ghost" id="btn-signin-email">Sign in</button>
+            <button type="button" class="btn-small btn-ghost" id="btn-signin-google">
+              Continue with Google
+            </button>
+          </div>
+          <div class="user-auth-status" id="auth-status"></div>
+          <p class="dash-hint body-xs">
+            After signing in, every stamp you save will be linked to your account.
+          </p>
+        </div>
+
+        <div id="user-signedin-block" style="display:none;">
+          <div class="user-auth-status success" id="signedin-info"></div>
+          <div class="user-auth-actions" style="margin-top:8px;">
+            <button type="button" class="btn-small btn-ghost" id="btn-signout">Sign out</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="card-title body-xs">Your stamps</h2>
+        <p class="card-caption body-xs">
+          Capture quick notes, milestones, or memories – each entry is stamped with your uid and server time.
+        </p>
+
+        <div class="user-upload-form">
+          <div class="user-upload-label body-xs">
+            New stamp
+          </div>
+          <textarea id="user-upload-message" maxlength="500" placeholder="Today I feel..."></textarea>
+          <div class="user-upload-meta body-xs">
+            The stamp will be linked to your Firebase account (uid) and server timestamp. By default the host comes from the current subdomain.
+          </div>
+          <div class="user-auth-actions" style="margin-top:10px;">
+            <button type="button" class="btn-small" id="btn-submit-upload">Save stamp</button>
+          </div>
+        </div>
+
+          <div class="user-upload-list" id="user-upload-list">
+            <div class="user-upload-empty body-xs">
+              You have no personal stamps yet. Save your first one to see it here.
+            </div>
+          </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="asset/js/firebase-client.js"></script>
+  <script src="asset/js/auth-upload.js"></script>
+</body>
+</html>
+
