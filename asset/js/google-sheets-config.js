@@ -16,7 +16,10 @@
  */
 
 const GOOGLE_SHEETS_CONFIG = {
-    // Your Google Apps Script Web App URL
+    // Đặt thành true để dùng Firebase (Firestore), false để quay lại Apps Script
+    USE_FIREBASE: true,
+
+    // Your Google Apps Script Web App URL (giữ lại để fallback khi USE_FIREBASE = false)
     // Format: https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
     webAppUrl: 'https://script.google.com/macros/s/AKfycbwYFidWreUFr4sbbjO32osWNm90An3IfuuCfbKcT_ZVGeSdRDSyYIOB2F_cSSqhpe7YAQ/exec',
     
