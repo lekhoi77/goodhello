@@ -402,6 +402,68 @@
 }
 
 /* =============================================
+   STAMP UNLOCK HINT (desktop only)
+   ============================================= */
+
+/* Wrapper bọc stamp + hint, flex column */
+.invitation-stamp-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.stamp-unlock-hint {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .stamp-unlock-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 56, 188, 0.15);
+    border-radius: 999px;
+    padding: 6px 14px 6px 10px;
+
+    font-size: 0.76rem;
+    font-family: "Poor Story", system-ui, sans-serif;
+    color: #0038bc;
+    letter-spacing: 0.02em;
+
+    box-shadow: 0 4px 16px rgba(0, 56, 188, 0.09);
+
+    animation: hintBreath 2.6s ease-in-out infinite;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  @keyframes hintBreath {
+    0%, 100% { opacity: 0.8;  transform: translateY(0);   }
+    50%       { opacity: 1;   transform: translateY(-3px); }
+  }
+
+  .stamp-unlock-hint.hidden {
+    opacity: 0 !important;
+    pointer-events: none;
+    transform: translateY(6px) !important;
+    animation: none !important;
+  }
+}
+
+/* Mobile: ẩn wrapper area, dùng lại invitation-stamp trực tiếp */
+@media (max-width: 768px) {
+  .invitation-stamp-area {
+    gap: 0;
+  }
+}
+
+/* =============================================
    INVITATION SECTION
    ============================================= */
 
@@ -466,7 +528,11 @@
   .invitation-stamp {
     width: 160px;
     height: 160px;
-    order: -1; /* Put stamp before greeting */
+  }
+
+  /* Wrapper stamp lên trước greeting trên mobile */
+  .invitation-stamp-area {
+    order: -1;
   }
 
   .invitation-greeting {
@@ -944,7 +1010,7 @@
 .gradient-blob {
   position: fixed;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   opacity: 0;
   will-change: transform, opacity;
   mix-blend-mode: multiply;
@@ -957,9 +1023,21 @@
   object-fit: contain;
 }
 
-.gradient-blob--1 { width: clamp(320px, 42vw, 640px); }
-.gradient-blob--2 { width: clamp(280px, 36vw, 560px); }
-.gradient-blob--3 { width: clamp(260px, 32vw, 500px); }
+/* Mỗi blob bắt đầu off-screen ngay từ lần paint đầu tiên,
+   trước khi JS / GSAP kịp chạy. GSAP sẽ đọc giá trị này
+   làm điểm bắt đầu rồi animate đến landing zone. */
+.gradient-blob--1 {
+  width: clamp(320px, 42vw, 640px);
+  transform: translate(-140vw, -25vh);
+}
+.gradient-blob--2 {
+  width: clamp(280px, 36vw, 560px);
+  transform: translate(140vw, -20vh);
+}
+.gradient-blob--3 {
+  width: clamp(260px, 32vw, 500px);
+  transform: translate(-25vw, 140vh);
+}
 
 @media (max-width: 768px) {
   .gradient-blob--1 { width: clamp(200px, 60vw, 320px); }

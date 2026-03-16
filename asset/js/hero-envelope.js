@@ -15,37 +15,44 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(letterGroup, { y: 350 });
 
     // ---- Blob drift logic ----
-    // Mỗi blob sẽ đi đến các điểm ngẫu nhiên trong viewport, lặp mãi mãi.
-    function randomPos(blobEl) {
-        const bw = blobEl.offsetWidth  || 400;
-        const bh = blobEl.offsetHeight || 400;
+    // Drift đến 1 điểm ngẫu nhiên trong viewport (±25% ngoài cạnh cho tự nhiên)
+    function randomPos() {
         const vw = window.innerWidth;
         const vh = window.innerHeight;
-        // Cho phép tràn ra ngoài 1 chút (30%) để trông tự nhiên hơn
-        const margin = 0.3;
+        const margin = 0.25;
         return {
-            x: (Math.random() * (1 + margin * 2) - margin) * vw - bw * 0.4,
-            y: (Math.random() * (1 + margin * 2) - margin) * vh - bh * 0.4,
+            x: (Math.random() * (1 + margin * 2) - margin) * vw,
+            y: (Math.random() * (1 + margin * 2) - margin) * vh,
         };
     }
 
     function driftBlob(el, minDur, maxDur) {
         if (!el) return;
-        const { x, y } = randomPos(el);
+        const { x, y } = randomPos();
         const dur = minDur + Math.random() * (maxDur - minDur);
         gsap.to(el, {
             x, y,
-            rotation: (Math.random() - 0.5) * 30,
+            rotation: (Math.random() - 0.5) * 25,
             duration: dur,
             ease: 'sine.inOut',
             onComplete: () => driftBlob(el, minDur, maxDur)
         });
     }
 
-    // Off-screen start positions (trái, phải, dưới)
-    if (blob1) gsap.set(blob1, { x: -700,  y: -200, opacity: 0 });
-    if (blob2) gsap.set(blob2, { x: window.innerWidth + 400, y: -100, opacity: 0 });
-    if (blob3) gsap.set(blob3, { x: -300,  y: window.innerHeight + 400, opacity: 0 });
+    // KHÔNG dùng gsap.set() — CSS đã đặt blob off-screen từ lần paint đầu.
+    // GSAP sẽ đọc giá trị CSS transform làm điểm xuất phát tự động.
+
+    // Landing zones cố định (không random) để slide-in luôn mượt,
+    // không phụ thuộc vào offsetWidth/Height khi ảnh chưa load xong.
+    function getLandingZones() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        return [
+            { x: vw * 0.03,  y: vh * 0.04  },   // blob1: góc trên-trái
+            { x: vw * 0.50,  y: vh * -0.08 },   // blob2: trên-giữa phải
+            { x: vw * -0.10, y: vh * 0.48  },   // blob3: giữa-trái
+        ];
+    }
 
     function startHeroAnimation() {
         const mainTimeline = gsap.timeline({
@@ -53,29 +60,27 @@ document.addEventListener('DOMContentLoaded', () => {
             delay: 0.3
         });
 
-        // Slide blobs in từ ngoài màn hình, stagger nhau, rồi bắt đầu drift liên tục
-        const blobEase = 'power3.out';
-        if (blob1) {
-            const p1 = randomPos(blob1);
-            gsap.to(blob1, {
-                x: p1.x, y: p1.y, opacity: 0.85, duration: 2.0, ease: blobEase, delay: 0.2,
-                onComplete: () => driftBlob(blob1, 8, 14)
+        // Slide blobs vào từ vị trí off-screen CSS → landing zone cố định
+        const blobEase  = 'power3.out';
+        const zones     = getLandingZones();
+        const configs   = [
+            { el: blob1, opacity: 0.85, duration: 2.0, delay: 0.2,  drift: [8,  14] },
+            { el: blob2, opacity: 0.75, duration: 2.4, delay: 0.55, drift: [10, 16] },
+            { el: blob3, opacity: 0.70, duration: 2.1, delay: 0.9,  drift: [9,  15] },
+        ];
+
+        configs.forEach(({ el, opacity, duration, delay, drift }, i) => {
+            if (!el) return;
+            gsap.to(el, {
+                x: zones[i].x,
+                y: zones[i].y,
+                opacity,
+                duration,
+                ease: blobEase,
+                delay,
+                onComplete: () => driftBlob(el, drift[0], drift[1])
             });
-        }
-        if (blob2) {
-            const p2 = randomPos(blob2);
-            gsap.to(blob2, {
-                x: p2.x, y: p2.y, opacity: 0.75, duration: 2.4, ease: blobEase, delay: 0.6,
-                onComplete: () => driftBlob(blob2, 10, 16)
-            });
-        }
-        if (blob3) {
-            const p3 = randomPos(blob3);
-            gsap.to(blob3, {
-                x: p3.x, y: p3.y, opacity: 0.70, duration: 2.2, ease: blobEase, delay: 1.0,
-                onComplete: () => driftBlob(blob3, 9, 15)
-            });
-        }
+        });
 
         mainTimeline.to(envelopeWrapper, {
             y: '-40%',

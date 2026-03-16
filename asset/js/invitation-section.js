@@ -100,6 +100,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Stamp unlock hint (desktop only)
+    const stampUnlockHint = document.getElementById('stamp-unlock-hint');
+
+    function hideStampUnlockHint() {
+        if (stampUnlockHint) stampUnlockHint.classList.add('hidden');
+    }
+
+    // Hide hint immediately if stamp was already chosen (returning visitor)
+    if (window.userLoader && window.userLoader.getFavoriteStamp() !== null) {
+        hideStampUnlockHint();
+    }
+
     // Display stamp immediately
     displayFavoriteStamp();
 
@@ -111,8 +123,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Custom event listener for same-window updates
-    window.addEventListener('favoriteStampChanged', () => {
+    window.addEventListener('favoriteStampChanged', (e) => {
         displayFavoriteStamp();
+        // Hide hint as soon as a stamp is picked
+        if (e.detail && e.detail.stampIndex !== null) {
+            hideStampUnlockHint();
+        }
     });
 
     // =============================================
