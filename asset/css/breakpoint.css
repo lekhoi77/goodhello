@@ -405,62 +405,55 @@
    STAMP UNLOCK HINT (desktop only)
    ============================================= */
 
-/* Wrapper bọc stamp + hint, flex column */
 .invitation-stamp-area {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
   flex-shrink: 0;
 }
 
+/* Wrapper that holds the section + the hint overlay */
+.invitation-section-wrapper {
+  position: relative;
+}
+
+/* Hidden by default; shown via body.stamps-locked in index.html <style> */
 .stamp-unlock-hint {
   display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+
+  height: 39px;
+  padding: 10px 20px;
+  background: var(--colors-white, #fff);
+  border: 1px solid var(--colors-black, #2a2a2a);
+  border-radius: 8px;
+
+  font-size: 18px;
+  font-family: "Poor Story", system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 0.032px;
+  color: var(--colors-black, #2a2a2a);
+
+  animation: hintBreath 2.6s ease-in-out infinite;
 }
 
-@media (min-width: 769px) {
-  .stamp-unlock-hint {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 56, 188, 0.15);
-    border-radius: 999px;
-    padding: 6px 14px 6px 10px;
-
-    font-size: 0.76rem;
-    font-family: "Poor Story", system-ui, sans-serif;
-    color: #0038bc;
-    letter-spacing: 0.02em;
-
-    box-shadow: 0 4px 16px rgba(0, 56, 188, 0.09);
-
-    animation: hintBreath 2.6s ease-in-out infinite;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  @keyframes hintBreath {
-    0%, 100% { opacity: 0.8;  transform: translateY(0);   }
-    50%       { opacity: 1;   transform: translateY(-3px); }
-  }
-
-  .stamp-unlock-hint.hidden {
-    opacity: 0 !important;
-    pointer-events: none;
-    transform: translateY(6px) !important;
-    animation: none !important;
-  }
+@keyframes hintBreath {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1; }
 }
 
-/* Mobile: ẩn wrapper area, dùng lại invitation-stamp trực tiếp */
-@media (max-width: 768px) {
-  .invitation-stamp-area {
-    gap: 0;
-  }
+.stamp-unlock-hint.hidden {
+  display: none !important;
 }
 
 /* =============================================
