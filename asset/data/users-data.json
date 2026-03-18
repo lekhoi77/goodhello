@@ -394,6 +394,57 @@
     ],
     "details": null
   },
+  "jh26ftu": {
+    "mainTitle": "A 3-year<br>journey",
+    "event": {
+      "title": "Jh26FTU's Graduation Ceremony",
+      "location": "431 Hoang Van Thu Street, Tan Son Nhat Ward, HCMC",
+      "locationDisplay": "431 Hoang Van Thu Street,\nTan Son Nhat Ward",
+      "mapUrl": "https://www.google.com/maps/search/431+Hoang+Van+Thu,+Phuong+Tan+Son+Nhat,+Ho+Chi+Minh+City",
+      "description": "Jh26FTU mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260418T160000",
+      "end": "20260418T190000"
+    },
+    "stamps": [
+      {
+        "src": "asset/stamp/jh26ftu/stamp-jh26ftu-1.png",
+        "alt": "Jh26FTU - Stamp 1",
+        "title": "Chapter One",
+        "description": "The very first page of a journey worth remembering."
+      },
+      {
+        "src": "asset/stamp/jh26ftu/stamp-jh26ftu-2.png",
+        "alt": "Jh26FTU - Stamp 2",
+        "title": "Growing Days",
+        "description": "Every stumble, every lesson, every small win — all part of the growth."
+      },
+      {
+        "src": "asset/stamp/jh26ftu/stamp-jh26ftu-3.png",
+        "alt": "Jh26FTU - Stamp 3",
+        "title": "The Ones Who Stayed",
+        "description": "Friends who became family through the chaos of university life."
+      },
+      {
+        "src": "asset/stamp/jh26ftu/stamp-jh26ftu-4.png",
+        "alt": "Jh26FTU - Stamp 4",
+        "title": "Beyond the Classroom",
+        "description": "The memories made outside of lectures that shaped who I am."
+      },
+      {
+        "src": "asset/stamp/jh26ftu/stamp-jh26ftu-5.png",
+        "alt": "Jh26FTU - Stamp 5",
+        "title": "Finding My Way",
+        "description": "Navigating uncertainty and discovering what truly matters along the way."
+      },
+      {
+        "src": "asset/stamp/jh26ftu/stamp-jh26ftu-6.png",
+        "alt": "Jh26FTU - Stamp 6",
+        "title": "Hello, What's Next",
+        "description": "Closing this chapter with gratitude, and stepping into the next with hope."
+      }
+    ],
+    "details": null
+  },
   "jahy": {
     "mainTitle": "A 3-year<br>journey",
     "event": {

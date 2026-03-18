@@ -193,13 +193,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =============================================
+    // 2.5. UPDATE LOCATION DISPLAY FROM USER EVENT
+    // =============================================
+    const locationValueEl = document.getElementById('location-value');
+    if (locationValueEl && window.userLoader && window.userLoader.userData) {
+        const evData = window.userLoader.userData.event || {};
+        if (evData.locationDisplay) {
+            locationValueEl.innerHTML = evData.locationDisplay.replace(/\n/g, '<br>');
+        } else if (evData.location) {
+            locationValueEl.textContent = evData.location;
+        }
+    }
+
+    // =============================================
     // 3. LOCATION BUTTON - GOOGLE MAPS
     // =============================================
     if (locationBtn) {
         locationBtn.addEventListener('click', () => {
-            const mapsUrl = 'https://maps.app.goo.gl/RGrHNW3o5mDidn2d8';
-            
-            // Open in new tab
+            const evData = (window.userLoader && window.userLoader.userData && window.userLoader.userData.event) || {};
+            const mapsUrl = evData.mapUrl || 'https://maps.app.goo.gl/RGrHNW3o5mDidn2d8';
             window.open(mapsUrl, '_blank');
         });
     }
