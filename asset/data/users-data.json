@@ -445,6 +445,56 @@
     ],
     "details": null
   },
+  "catunn": {
+    "mainTitle": "A journey<br>to remember",
+    "event": {
+      "title": "Catunn's Graduation Ceremony",
+      "location": "59c Nguyen Dinh Chieu Street, District 3, HCMC",
+      "description": "Catunn mời bạn đến dự lễ tốt nghiệp đại học.",
+      "start": "20260920T163000",
+      "end": "20260920T193000",
+      "displayTime": "16:30, 20 September 2026"
+    },
+    "stamps": [
+      {
+        "src": "asset/stamp/catunn/stamp-catunn-1.png",
+        "alt": "Catunn - Stamp 1",
+        "title": "601/22/11 CMT8",
+        "description": "My first rented room when I moved to the city for university. A few friends crowded around a laptop, a microphone passed around, and suddenly the room felt a little more like home. This address will always remind me of where it all began."
+      },
+      {
+        "src": "asset/stamp/catunn/stamp-catunn-2.png",
+        "alt": "Catunn - Stamp 2",
+        "title": "Your Day,<br>My Turn Soon",
+        "description": "A graduation gown, a bouquet, and a photo to remember the day. Being there to celebrate your milestone makes me think about my own turn someday. For now, I'm just happy to stand beside you and share a little of your joy."
+      },
+      {
+        "src": "asset/stamp/catunn/stamp-catunn-3.png",
+        "alt": "Catunn - Stamp 3",
+        "title": "The Boys,<br>All Here",
+        "description": "Five of us, a few peace signs, and smiles that say enough. I like how a simple photo can bring back the feeling of being around the boys. Nothing fancy, just a moment I'm glad we kept."
+      },
+      {
+        "src": "asset/stamp/catunn/stamp-catunn-4.png",
+        "alt": "Catunn - Stamp 4",
+        "title": "Everyone,<br>Squeeze In",
+        "description": "Some standing, some crouching, everyone finding a little space in the frame. Photos like this make me want to pause and look at every face. So many people to remember, all tucked into one small picture."
+      },
+      {
+        "src": "asset/stamp/catunn/stamp-catunn-5.png",
+        "alt": "Catunn - Stamp 5",
+        "title": "A Little<br>Sunshine",
+        "description": "Under the trees, with finger hearts and the biggest smiles. There's something about this photo that makes the whole day feel warm again. If I could keep a little piece of these years in my pocket, it might look like this."
+      },
+      {
+        "src": "asset/stamp/catunn/stamp-catunn-6.png",
+        "alt": "Catunn - Stamp 6",
+        "title": "One More<br>Meal Together",
+        "description": "A table full of food and familiar faces, with everyone leaning in for a photo before we get back to eating. These are the gatherings I hope we keep making time for. Wherever life takes us next, let's still find a table big enough for everyone."
+      }
+    ],
+    "details": null
+  },
   "jahy": {
     "mainTitle": "A 3-year<br>journey",
     "event": {
