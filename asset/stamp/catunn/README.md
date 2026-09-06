@@ -4,7 +4,7 @@
 
 ## Hoàn thiện trước khi gửi thiệp
 
-- Thay `stamp-catunn-1.png` đến `stamp-catunn-6.png` bằng ảnh tem thật, giữ nguyên tên file.
+- Thay `stamp-catunn-1.webp` đến `stamp-catunn-6.webp` bằng ảnh tem thật, giữ nguyên tên file.
 - Cập nhật `mainTitle`, `stamps[].title` và `stamps[].description` trong hồ sơ `catunn`.
 - Thời gian bắt đầu: 16:30 ngày 20/09/2026. Giờ kết thúc tạm đặt 19:30 (giữ thời lượng mẫu 3 giờ), cần xác nhận lại. Footer tự hiển thị 19–20–21/09 và SEPTEMBER/2026 theo ngày sự kiện.
 - Cập nhật thông tin `event`: tên hiển thị, mô tả và địa điểm. Địa chỉ 59c Nguyễn Đình Chiểu hiện chỉ là dữ liệu mẫu từ hồ sơ có sẵn, chưa phải thông tin đã xác nhận của Catunn.
