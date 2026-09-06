@@ -191,13 +191,14 @@
   }
 }
 
-/* Swipe indicator cho mobile stamps section (góc phải trên) */
+/* Swipe hint below the mobile carousel, away from the title. */
 .stamps-swipe-indicator {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
+  position: relative;
+  align-self: center;
+  margin: 0.75rem 1.5rem 0;
   display: flex;
   align-items: center;
+  gap: 8px;
   opacity: 0;
   pointer-events: none;
   z-index: 10;
@@ -216,7 +217,15 @@
 
 @keyframes swipeArrowBlink {
   0%, 100% { opacity: 1;   transform: translateX(0); }
-  50%       { opacity: 0.2; transform: translateX(5px); }
+  50%       { opacity: 0.65; transform: translateX(-5px); }
+}
+
+@media (min-width: 769px) {
+  .stamps-swipe-indicator { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamps-swipe-indicator.visible { animation: none; opacity: 1; }
 }
 
 /* Viền dash chạy nối đuôi (marching ants) trên stamp đầu tiên — xoay theo stamp
@@ -369,6 +378,17 @@
 
 /* Mobile - 768px and below */
 @media (max-width: 768px) {
+  .stamp-detail-section {
+    justify-content: flex-start;
+    min-height: 100%;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .stamp-detail-content {
+    flex: none;
+    width: 100%;
+  }
+
   /* Reset scale — ở mobile detail section đã column nên ảnh full width,
      scale(1.5) sẽ tràn ra ngoài */
   .stamp-detail-image img {

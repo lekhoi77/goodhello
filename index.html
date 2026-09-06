@@ -176,7 +176,7 @@
     </section>
 
     <!-- Stamp Details Sections -->
-    <section class="stamp-details-container" id="stamp-details-container" style="display: none;">
+    <section class="stamp-details-container" id="stamp-details-container" data-lenis-prevent style="display: none;">
         <!-- Details sections will be dynamically generated here -->
     </section>
 
@@ -361,6 +361,10 @@
       .stamp-details-container {
         -webkit-overflow-scrolling: touch;
         touch-action: pan-y;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+        height: 100vh;
+        height: 100dvh;
       }
 
       /* Breathing effect for Favorite button to draw attention */

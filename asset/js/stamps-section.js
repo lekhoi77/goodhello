@@ -110,19 +110,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 2. Mobile: native swipe carousel + title sync + swipe indicator
         function initMobileCarousel() {
             if (window.innerWidth > 768) return;
+            stampsGrid.setAttribute('data-lenis-prevent', '');
 
             // Init title với stamp đầu tiên
             if (stampItems[0]) {
                 stampsTitle.innerHTML = formatTitle(stampItems[0].dataset.title || defaultTitle);
             }
 
-            // Tạo swipe indicator (góc phải trên của section)
+            // Keep the swipe hint in the layout below the carousel.
             swipeIndicator = document.createElement('div');
-            swipeIndicator.className = 'stamps-swipe-indicator';
+            swipeIndicator.className = 'stamps-swipe-indicator visible body-xs';
             swipeIndicator.innerHTML = `
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
+                <span>Swipe left to explore</span>
             `;
             stampsSection.appendChild(swipeIndicator);
 
@@ -130,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let titleSyncTimeout;
             stampsGrid.addEventListener('scroll', () => {
                 // Ẩn indicator ngay khi user bắt đầu swipe
-                if (swipeIndicator) swipeIndicator.classList.add('hidden');
+                if (swipeIndicator && stampsGrid.scrollLeft > 12) swipeIndicator.classList.add('hidden');
 
                 clearTimeout(titleSyncTimeout);
                 titleSyncTimeout = setTimeout(() => {
